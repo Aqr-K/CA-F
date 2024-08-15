@@ -19,7 +19,8 @@
                     <hr class="flex-1 opacity-35 divider"
                         :style="{ 'border-color': $vuetify.theme.current.colors.divider }">
                 </div>
-                <v-list-item class="h-[75px] text-[16px]" :active="route.path === item.to"
+                <v-list-item class="h-[75px] text-[16px]"
+                    :active="route.path === item.to || (route.path.startsWith('/sync_config') && item.to.startsWith('/sync_list'))"
                     v-for="(item, index) in category.items" :key="index" :to="item.to" :prepend-icon="item.icon" link>
                     <v-list-item-title class="w-min"><span class="text-[16px] font-[450]">{{ item.title
                             }}</span></v-list-item-title>
@@ -89,14 +90,14 @@ const handleScroll = (event) => {
     }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .v-list-item--active {
     background: rgba(var(--v-theme-primary)) !important;
     color: white !important;
 }
 
-.v-list-item:hover {
-    color: rgba(var(--v-theme-on-surface)) !important;
+.v-list-item--active:hover {
+    color: white !important;
 }
 
 .side-bar {
