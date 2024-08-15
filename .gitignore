@@ -1,0 +1,17 @@
+# 忽略所有 __pycache__ 目录
+__pycache__/
+
+.vscode/
+
+# 忽略所有 .idea 目录
+.idea/
+
+downloads/
+log/*
+config/*
+backup/*
+db/*
+.DS_Store
+*.yaml
+
+node_modules/

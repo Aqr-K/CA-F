@@ -1,0 +1,33 @@
+{
+  "name": "cloudassistant-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.4.47",
+    "@vueuse/components": "^10.11.1",
+    "@vueuse/core": "^10.11.1",
+    "axios": "^1.7.3",
+    "unplugin-auto-import": "^0.18.2",
+    "vite-plugin-vuetify": "^2.0.4",
+    "vue": "^3.4.31",
+    "vue-router": "^4.4.3",
+    "vue3-perfect-scrollbar": "^2.0.0",
+    "vuetify": "^3.6.14",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.5",
+    "dart-sass": "^1.25.0",
+    "sass": "^1.77.8",
+    "sass-loader": "^16.0.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.4",
+    "vue-tsc": "^2.0.24"
+  }
+}

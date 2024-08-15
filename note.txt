@@ -1,0 +1,14 @@
+在 Vuetify 的主题系统中, surface 和 on-surface 是两个不同但相关的概念:
+
+surface:
+surface 是一种 UI 元素的背景颜色。
+它通常用于卡片、对话框等承载内容的容器元素。
+surface 的颜色通常是中性色或较浅的色调,以确保内容有良好的可读性。
+on-surface:
+on-surface 是用于在 surface 背景上显示内容的文本颜色。
+它确保文本在 surface 背景上有足够的对比度和可读性。
+on-surface 颜色通常是深色,以确保在浅色 surface 背景上有良好的可视效果。
+简单来说:
+
+surface 定义了 UI 元素的背景颜色。
+on-surface 定义了在 surface 背景上显示内容时使用的文本颜色。
