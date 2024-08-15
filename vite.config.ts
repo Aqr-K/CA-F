@@ -3,6 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import vuetify from "vite-plugin-vuetify";
 import { fileURLToPath } from "node:url";
 import AutoImport from "unplugin-auto-import/vite";
+import VueDevTools from "vite-plugin-vue-devtools";
 
 export default defineConfig({
   plugins: [
@@ -11,6 +12,7 @@ export default defineConfig({
         defineModel: true,
       },
     }),
+    VueDevTools(),
     vuetify({
       autoImport: true,
     }),

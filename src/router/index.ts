@@ -27,6 +27,14 @@ const router = createRouter({
             requiresAuth: true,
           },
         },
+        {
+          name: "SyncConfig",
+          path: "sync_config/:id",
+          component: () => import("../pages/sync_config.vue"),
+          meta: {
+            requiresAuth: true,
+          },
+        },
       ],
     },
   ],

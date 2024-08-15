@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineModel } from 'vue';
+import { ref, watch } from 'vue';
 
 const drawer = defineModel("drawer")
 let localDrawer = ref<boolean>(<boolean>drawer.value)
@@ -64,7 +64,7 @@ const categories = [
     },
     {
         title: "刮削同步",
-        items: [{ title: "目录配置", to: "/scrape_sync_list", icon: "mdi-folder", isActive: false },
+        items: [{ title: "目录配置", to: "/scrape_synclist", icon: "mdi-folder", isActive: false },
         { title: "添加同步", to: "/add_scrpe_sync", icon: "mdi-plus", isActive: false },]
     },
     {
