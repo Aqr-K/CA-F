@@ -1,0 +1,189 @@
+<style>
+    *{margin: 0;
+    padding: 0;
+    list-style: none;
+    }
+    ul.file-tree{
+        padding-left: 30px;
+        padding: 5px;
+        cursor: pointer;
+        color: #4F6174;
+    }
+    ul.file-tree a:hover {
+        color: #007bff !important;
+    }
+    .file-tree-modal.modal-dialog  #folder-choose.modal-content{
+        height: 60vh;
+        margin-top: -50px;
+    }
+    .modal-dialog {
+    pointer-events: auto !important;
+}
+li.active > span > a{
+    background-color: #007bff;
+    color: #fff !important;
+}
+li.active > span > a:hover{
+    background-color: #007bff;
+    color: #fff !important;
+}
+</style>
+  <!-- Modal -->
+  <div class="modal fade" id="folder-choose" tabindex="-1" aria-labelledby="folder-chooseLabel" aria-hidden="true">
+    <div class="file-tree-modal modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="folder-chooseLabel">选择文件夹</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div id="app">
+                <file-tree class="file-tree" :data="dir_list"></file-tree>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary btn-modal-save">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    var folder_choosed = "";
+    $(".btn-modal-save").click(function() {
+        // 获取 #folder-choose 的 data 属性，设为 name
+        var name = $("#folder-choose").data("recipient");
+        $("input[name='" + name + "']").val(folder_choosed);
+        $('#folder-choose').modal('hide');
+           // 遍历所有 Vue 实例
+           //并重置 isShow 属性
+        // resetIsShowRecursive(app);
+        // resetcurrentChooseRecursive(app);
+    });
+   // 递归遍历并重置 isShow 属性
+function resetIsShowRecursive(vm) {
+    // 检查是否包含 dir_list 数据
+    if (vm.$data.dir_list) {
+        // 将 dir_list 中每个节点的 isShow 设置为 false
+        vm.$data.dir_list.forEach(node => {
+            node.isShow = false;
+        });
+    }
+    // 递归遍历所有子组件
+    vm.$children.forEach(child => {
+        resetIsShowRecursive(child);
+    });
+}
+
+   // 递归遍历并重置 isShow 属性
+   function resetcurrentChooseRecursive(vm) {
+    // 检查是否包含 dir_list 数据
+    if (vm.$data.dir_list) {
+        // 将 dir_list 中每个节点的 isShow 设置为 false
+        vm.$data.dir_list.forEach(node => {
+            node.currentChoose = false;
+        });
+    }
+    // 递归遍历所有子组件
+    vm.$children.forEach(child => {
+        resetcurrentChooseRecursive(child);
+    });
+}
+
+$('#folder-choose').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  var syncListTranslate = {{ config_list_translate | tojson | safe }};
+  modal.data('recipient', recipient);
+  modal.find('.modal-title').text("选择" + syncListTranslate[recipient])
+//   var element = $(".file-tree > li > span");
+//     if (!element.find("i").hasClass("icon-folder-open")) {
+//         element.trigger("click");
+//     }
+})
+    Vue.component('file-tree', {
+     delimiters: ['[[', ']]'],
+     props: {
+         data: {
+             type: Array,
+             required: true
+         },
+         keys: {
+             type: Object,
+             default() {
+                 return {
+                     label: "folder_name",
+                     labelValue: "folder_path",
+                     children: 'children'
+                 };
+             }
+         },
+     },
+     data() {
+         return {
+             dir_list: this.data.map(r => {
+                 return {
+                     label: r[this.keys.label],
+                     labelValue: r[this.keys.labelValue],
+                     children: r[this.keys.children],
+                     isShow: false,
+                     currentChoose: false
+                 }
+             })
+         }
+     }, 
+     methods: {
+     async fetchData(item) {
+       // 发送请求到后端获取数据
+       try {
+         const response = await axios.post('/get_sub_dir', { folder_path: item.labelValue });
+         // 处理后端返回的数据
+         item.children = response.data.children;
+        //  item.isShow = true;
+       } catch (error) {
+         console.error('Error fetching data:', error);
+       }
+     },
+     handleClick(item) {
+        folder_choosed = item.labelValue
+        resetcurrentChooseRecursive(app)
+        item.currentChoose = true
+        this.dir_list.forEach(node => {
+                if (node !== item) {
+                node.isShow = false;
+                }
+            });
+      // 不管有没有子节点一律重新获取,因为本地文件夹列表可能会更新
+        item.isShow = !item.isShow;
+       this.fetchData(item);
+     },
+   },
+     template: `
+            <ul>
+                <li v-for="item in dir_list" :class="{ 'active': item.currentChoose}">
+                    <span  @click="handleClick(item)">
+                    <i :class="{'iconfont': true, 'icon-folder-open': item.isShow, 'icon-folder-close': !item.isShow}"></i>
+                    <a :rel="item.labelValue">[[ item.label ]]</a>
+                    </span>
+                    <file-tree style="padding-left:25px" class="file-tree" v-show="item.isShow" v-if="item.children && item.children.length" :data="item.children"></file-tree>
+                </li>
+            </ul>
+     `
+ });
+
+    var app = new Vue({
+                 el: '#app',
+                 delimiters: ['[[', ']]'],
+                 data() {
+                     return {
+                         dir_list:  {{ dir_list | tojson | safe }},
+                         currentChoose: null, // 用于保存当前选中项的 labelValue
+   }},
+
+ });
+   </script>

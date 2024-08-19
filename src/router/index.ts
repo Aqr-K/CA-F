@@ -35,6 +35,13 @@ const router = createRouter({
             requiresAuth: true,
           },
         },
+        {
+          path: "add_sync",
+          component: () => import("../pages/add_sync.vue"),
+          meta: {
+            requiresAuth: true,
+          },
+        },
       ],
     },
   ],

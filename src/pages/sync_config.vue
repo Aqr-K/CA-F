@@ -38,11 +38,11 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
 import SnackBar from '@/layouts/components/SnackBar.vue'
+import api from '@/api'
 
 const route = useRoute()
 const { id } = route.params
 
-import api from '@/api'
 
 const configList = ref([])
 
@@ -53,7 +53,7 @@ let syncConfigId = ""
 
 async function fetchSyncConfig() {
     try {
-        const response = await api.post(`/sync_config/${id}`)
+        const response = await api.post(`/autosymlink/sync_config/${id}`)
         syncConfigId = response.sync_config.id
         updateConfigList(response.sync_config)
 
@@ -148,10 +148,10 @@ function updateConfigList(configs: any[]) {
         {
             title: "软链接配置",
             items: [
-                { key: "symlink_mode", label: "软链接模式", value: configs.symlink_mode },
-                { key: "strm_mode", label: "strm模式", value: configs.strm_mode },
+                { key: "symlink_mode", label: "软链接模式", value: configs.symlink_mode, options: ["symlink", "strm"] },
+                { key: "strm_mode", label: "strm模式", value: configs.strm_mode, options: ["cloud", "local"] },
                 { key: "symlink_size", label: "软链接大小", value: configs.symlink_size },
-                { key: "cloud_type", label: "挂载类型", value: configs.cloud_type },
+                { key: "cloud_type", label: "挂载类型", value: configs.cloud_type, options: ["cd2", "alist"] },
                 { key: "cloud_url", label: "云端地址", value: configs.cloud_url },
                 { key: "clouddrive2_path", label: "cd2根目录", value: configs.clouddrive2_path },
                 { key: "alist_path", label: "alist根目录", value: configs.alist_path }

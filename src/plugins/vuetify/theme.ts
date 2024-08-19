@@ -6,12 +6,15 @@ const theme: VuetifyOptions["theme"] = {
     light: {
       dark: false,
       colors: {
-        primary: "#1E88E5",
+        primary: "#3D6FD5",
         secondary: "#8A8D93",
         "on-secondary": "#fff",
         divider: "#6B7280",
         success: "#56CA00",
+        // 滚动条颜色
         scrollbar: "#E5E5E5",
+        // 输入框颜色
+        "input-grey": "#838188",
         info: "#16B1FF",
         warning: "#FFB400",
         error: "#FF4C51",
@@ -59,7 +62,7 @@ const theme: VuetifyOptions["theme"] = {
     dark: {
       dark: true,
       colors: {
-        primary: "#2196F3",
+        primary: "#3D6FD5",
         secondary: "#8A8D93",
         "on-secondary": "#fff",
         success: "#56CA00",
@@ -67,7 +70,11 @@ const theme: VuetifyOptions["theme"] = {
         warning: "#FFB400",
         error: "#FF4C51",
         divider: "#E7E3FC80",
+        "tree-node-active": "#2D3241",
+        // 滚动条颜色
         scrollbar: "#343A52",
+        // 输入框颜色
+        "input-grey": "#838188",
         "on-primary": "#FFFFFF",
         "on-success": "#FFFFFF",
         "on-warning": "#FFFFFF",

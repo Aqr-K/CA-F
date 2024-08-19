@@ -18,11 +18,11 @@
     "vue": "^3.4.31",
     "vue-router": "^4.4.3",
     "vue3-perfect-scrollbar": "^2.0.0",
-    "vuetify": "^3.6.14",
+    "vuetify": "^3.6.8",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.5",
+    "@vitejs/plugin-vue": "^5.1.2",
     "dart-sass": "^1.25.0",
     "sass": "^1.77.8",
     "sass-loader": "^16.0.0",

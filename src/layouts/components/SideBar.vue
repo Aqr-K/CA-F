@@ -11,6 +11,7 @@
             </div>
         </template>
         <PerfectScrollbar ref="scrollbar">
+            <!-- 大分类名称 -->
             <div v-for="(category, index) in categories" :key="index" class="mr-5">
                 <div class="mb-2 flex items-center">
                     <hr class="flex-1 opacity-35 divider"
@@ -19,7 +20,8 @@
                     <hr class="flex-1 opacity-35 divider"
                         :style="{ 'border-color': $vuetify.theme.current.colors.divider }">
                 </div>
-                <v-list-item class="h-[75px] text-[16px]"
+                <!-- 具体分类 -->
+                <v-list-item class="h-[30px] text-[16px] my-5 pl-5"
                     :active="route.path === item.to || (route.path.startsWith('/sync_config') && item.to.startsWith('/sync_list'))"
                     v-for="(item, index) in category.items" :key="index" :to="item.to" :prepend-icon="item.icon" link>
                     <v-list-item-title class="w-min"><span class="text-[16px] font-[450]">{{ item.title
@@ -47,7 +49,6 @@ watch(() => drawer.value, (newVal) => {
 watch(localDrawer, (newVal) => {
     drawer.value = newVal
 });
-
 
 
 const route = useRoute()
@@ -92,8 +93,9 @@ const handleScroll = (event) => {
 </script>
 <style lang="scss" scoped>
 .v-list-item--active {
-    background: rgba(var(--v-theme-primary)) !important;
+    background: linear-gradient(-72.47deg, rgb(var(--v-theme-primary)) 22.16%, rgba(var(--v-theme-primary), .7) 76.47%) !important;
     color: white !important;
+    // border-radius: 0 20px 20px 0 !important;
 }
 
 .v-list-item--active:hover {
@@ -107,31 +109,35 @@ const handleScroll = (event) => {
     /* 去除边框 */
 }
 
-.side-bar .ps__thumb-y {
+:deep(.ps__thumb-y) {
     background-color: rgba(var(--v-theme-perfect-scrollbar-thumb), 1);
 }
 
-.ps .ps__rail-x:hover,
-.ps .ps__rail-y:hover,
-.ps .ps__rail-x:focus,
-.ps .ps__rail-y:focus,
-.ps .ps__rail-x.ps--clicking,
-.ps .ps__rail-y.ps--clicking {
+:deep(.v-list-item__spacer) {
+    width: 10px !important;
+}
+
+:deep(.ps .ps__rail-x:hover),
+:deep(.ps .ps__rail-y:hover),
+:deep(.ps .ps__rail-x:focus),
+:deep(.ps .ps__rail-y:focus),
+:deep(.ps .ps__rail-x.ps--clicking),
+:deep(.ps .ps__rail-y.ps--clicking) {
     background-color: transparent;
 }
 
-.ps .ps__rail-x:hover,
-.ps .ps__rail-y:hover,
-.ps .ps__rail-x:focus,
-.ps .ps__rail-y:focus,
-.ps .ps__rail-x.ps--clicking,
-.ps .ps__rail-y.ps--clicking {
+:deep(.ps .ps__rail-y:hover),
+:deep(.ps .ps__rail-x:hover),
+:deep(.ps .ps__rail-x:focus),
+:deep(.ps .ps__rail-y:focus),
+:deep(.ps .ps__rail-x.ps--clicking),
+:deep(.ps .ps__rail-y.ps--clicking) {
     background-color: transparent;
 }
 
-.ps .ps__rail-y:hover>.ps__thumb-y,
-.ps .ps__rail-y:focus>.ps__thumb-y,
-.ps .ps__rail-y.ps--clicking .ps__thumb-y {
+:deep(.ps .ps__rail-y:hover>.ps__thumb-y),
+:deep(.ps .ps__rail-y:focus>.ps__thumb-y),
+:deep(.ps .ps__rail-y.ps--clicking .ps__thumb-y) {
     background-color: rgba(var(--v-theme-perfect-scrollbar-thumb), 1);
     width: 11px;
 }

@@ -59,14 +59,15 @@
 
 </template>
 <script setup lang="ts">
-import { ref, reactive } from "vue"
+import { ref } from "vue"
 import api from '@/api'
+import { SyncList } from '@/api/types'
 
-const syncList = ref([])
+const syncList = ref<SyncList>([]);
 
 async function fetchSyncList() {
     try {
-        const response = await api.post('/sync_list')
+        const response = await api.post('/autosymlink/sync_list')
         syncList.value = response.sync_list
 
     } catch (error) {

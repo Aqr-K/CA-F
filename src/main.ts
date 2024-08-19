@@ -9,6 +9,8 @@ import vuetify from "@/plugins/vuetify";
 import Vuex from "vuex";
 import { PerfectScrollbarPlugin } from "vue3-perfect-scrollbar";
 import "vue3-perfect-scrollbar/style.css";
+import PathList from "./components/input/PathList.vue";
+import PathInput from "./components/input/PathInput.vue";
 
 // 创建 Vuex 实例
 const store = new Vuex.Store({
@@ -27,6 +29,9 @@ const store = new Vuex.Store({
 });
 
 const app = createApp(App);
+
+// 注册全局组件
+app.component("VPathList", PathList).component("VPathInput", PathInput);
 
 app.use(vuetify).use(PerfectScrollbarPlugin).use(router).use(store); // 注册 Vuex 实例
 app.mount("#app");
