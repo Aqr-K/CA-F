@@ -9,35 +9,11 @@
                         </v-card-item>
                         <v-card-item>
                             <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-1 ">
-                                <div class="flex items-center flex-left my-5">
+                                <div v-for="(swite, index) in observerSwites" class="flex items-center flex-left my-5">
                                     <span class="text-[14px] font-bold w-[95px] text-left">
-                                        实时监控：
+                                        {{ swite.label }}：
                                     </span>
-                                    <v-switch v-model="syncConfig.observer_enabled"></v-switch>
-                                </div>
-                                <div class="flex items-center flex-left my-5">
-                                    <span class="text-[14px] font-bold w-[95px] text-left">
-                                        更新软链接：
-                                    </span>
-                                    <v-switch v-model="syncConfig.observer_symlink_creator"></v-switch>
-                                </div>
-                                <div class="flex items-center flex-left my-5">
-                                    <span class="text-[14px] font-bold w-[95px] text-left">
-                                        更新元数据：
-                                    </span>
-                                    <v-switch v-model="syncConfig.observer_metadata_copyer"></v-switch>
-                                </div>
-                                <div class="flex items-center flex-left my-5">
-                                    <span class="text-[14px] font-bold w-[95px] text-left">
-                                        删除软链接：
-                                    </span>
-                                    <v-switch v-model="syncConfig.observer_symlink_checker"></v-switch>
-                                </div>
-                                <div class="flex items-center flex-left my-5">
-                                    <span class="text-[14px] font-bold w-[95px] text-left">
-                                        删除元数据：
-                                    </span>
-                                    <v-switch v-model="syncConfig.observer_metadata_checker"></v-switch>
+                                    <v-switch v-model="syncConfig[swite.key]"></v-switch>
                                 </div>
                             </div>
                         </v-card-item>
@@ -54,5 +30,12 @@ import { ref, defineModel } from 'vue';
 
 const cardHeight = ref("h-[510px]")
 const syncConfig = defineModel<SyncItem>('syncConfig');
+const observerSwites = ref([
+    { label: '实时监控：', key: 'observer_enabled' },
+    { label: '更新软链接：', key: 'observer_symlink_creator' },
+    { label: '更新元数据：', key: 'observer_metadata_copyer' },
+    { label: '删除软链接：', key: 'observer_symlink_checker' },
+    { label: '删除元数据：', key: 'observer_metadata_checker' },
+]);
 </script>
 <style></style>

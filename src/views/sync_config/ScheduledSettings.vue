@@ -22,7 +22,6 @@
                                 <v-switch v-model="syncConfig.sync_scheduled"></v-switch>
                             </div>
                             <v-text-field label="备份时间" v-model="syncConfig.backup_time" class="my-5"></v-text-field>
-
                             <v-text-field label="备份后缀" v-model="syncConfig.backup_ext" class="my-5"></v-text-field>
                         </v-card-item>
                     </v-card>

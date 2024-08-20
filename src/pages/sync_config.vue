@@ -94,6 +94,7 @@ const syncConfig = ref(<SyncItem>{
     symlink_ext: "",
     metadata_ext: ""
 })
+
 let syncConfigId = ""
 
 const activeTab = ref(route.query.tab)
