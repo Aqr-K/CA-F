@@ -67,8 +67,8 @@ const syncList = ref<SyncList>([]);
 
 async function fetchSyncList() {
     try {
-        const response = await api.post('/autosymlink/sync_list')
-        syncList.value = response.sync_list
+        const data: SyncList = await api.get('/autosymlink/sync_list')
+        syncList.value = data
 
     } catch (error) {
         console.error('Error fetching sync list:', error)

@@ -3,7 +3,7 @@
         :style="{ background: $vuetify.theme.current.colors.background }">
 
         <template v-slot:prepend>
-            <div id="logo" class="mt-10 ml-5 mb-5 flex-center">
+            <div id="logo" class="my-10 flex justify-center">
                 <!-- 放置你的标志图片，修改 'your_logo_path' 为实际路径 -->
                 <img v-if="$vuetify.theme.current.dark" src="@/assets/resource/dark.png" alt="Logo"
                     style="max-width: 75%" />

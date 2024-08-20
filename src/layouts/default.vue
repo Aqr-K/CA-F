@@ -30,7 +30,7 @@ import { useTheme } from 'vuetify'
 import { ref } from 'vue'
 import { useDisplay } from 'vuetify'
 import { RouterView } from 'vue-router';
-import SideBar from './components/SideBar.vue'
+import SideBar from '@/layouts/components/SideBar.vue'
 
 const { mdAndDown } = useDisplay()
 

@@ -4,6 +4,7 @@ import vuetify from "vite-plugin-vuetify";
 import { fileURLToPath } from "node:url";
 import AutoImport from "unplugin-auto-import/vite";
 import VueDevTools from "vite-plugin-vue-devtools";
+import path from "path";
 
 export default defineConfig({
   plugins: [
@@ -37,7 +38,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "@": path.resolve(__dirname, "src"),
       "@resource": fileURLToPath(
         new URL("./src/assets/resource/", import.meta.url)
       ),

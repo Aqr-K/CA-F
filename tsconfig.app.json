@@ -21,18 +21,6 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
-   "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@layouts/*": [
-        "src/@layouts/*"
-      ],
-      "@layouts": [
-        "src/@layouts"
-      ],
-    },
 }

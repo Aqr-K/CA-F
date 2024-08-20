@@ -8,5 +8,32 @@
       "path": "./tsconfig.node.json"
     }
   ],
-  
+    "compilerOptions": {
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+    "@": [
+	     "src"
+	   ],
+	   "@/*": [
+	     "src/*"
+	   ],
+      "@layouts/*": [
+        "src/@layouts/*"
+      ],
+      "@layouts": [
+        "src/@layouts"
+      ],
+    },
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ],
 }

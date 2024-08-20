@@ -14,9 +14,9 @@ import api from '@/api'
 
 // 输入变量为默认路径
 const props = defineProps({
-    root: {
+    modelValue: {
         type: String,
-        default: '',
+        default: '/',
     }
 })
 
@@ -42,7 +42,8 @@ async function fetchDirs(item: any) {
 }
 
 async function initialDirs() {
-    let data = await api.get('/local/listdir?path=/')
+    // let data = await api.get('/local/listdir?path=' + (props.modelValue ? props.modelValue : '/'));
+    let data: [] = await api.get('/local/listdir?path=/');
     treeItems.value = data
 }
 
@@ -56,7 +57,6 @@ const selectedPath = computed(() => {
 
 // 监听目录变化
 watch(activedDirs, newVal => {
-
     if (!newVal.length) return
     emit('update:modelValue', selectedPath.value)
 })
