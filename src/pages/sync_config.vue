@@ -3,7 +3,7 @@
     <div v-if="syncConfig.id">
         <v-tabs v-model="activeTab" show-arrows class="v-tabs-pill">
             <v-tab v-for="item in tabs" :key="item.icon" :value="item.tab"
-                selected-class="v-slide-group-item--active v-tab--selected">
+                selected-class="v-slide-group-item--active v-tab--selected" @click="jumpTab(item.tab)">
                 <div>
                     <v-icon size="20" start :icon="item.icon" />
                     {{ item.title }}
@@ -11,7 +11,6 @@
             </v-tab>
         </v-tabs>
         <v-window v-model="activeTab" class="mt-5 disable-tab-transition" :touch="false">
-            <!-- 用户 -->
             <v-window-item value="symlink">
                 <transition name="fade-slide" appear>
                     <div>
@@ -44,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, ref } from 'vue'
+import { ref } from 'vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
 import SnackBar from '@/layouts/components/SnackBar.vue'
@@ -98,17 +97,14 @@ const syncConfig = ref(<SyncItem>{
 let syncConfigId = ""
 
 const activeTab = ref(route.query.tab)
-const isLoading = ref(true)
 
 const tabs = [{ tab: "symlink", icon: "mdi-link-variant", title: "软链接" }, { tab: "scheduled_task", icon: "mdi-calendar-clock", title: "定时任务" }, { tab: "sync_observer", icon: "mdi-eye", title: "实时监控" },]
 
 async function fetchSyncConfig() {
     try {
-        const data: SyncItem = await api.post(`/autosymlink/sync_config/${id}`)
+        const data: SyncItem = await api.get(`/autosymlink/sync_config/${id}`)
         syncConfigId = data.id
         syncConfig.value = data
-
-
     } catch (error) {
         console.error('Error fetching sync config:', error)
     }
@@ -117,7 +113,7 @@ async function fetchSyncConfig() {
 
 async function saveConfig() {
     try {
-        const response: SaveResponse = await api.post(`/autosymlink/save_sync_config`, syncConfig.value)
+        const response: SaveResponse = await api.post(`/autosymlink/save_config`, syncConfig.value)
         snackbarRef.value?.showSnackBar(response.save_status, response.message)
 
     } catch (error) {
@@ -126,6 +122,20 @@ async function saveConfig() {
 }
 
 async function deleteConfig() {
+    try {
+        const response: SaveResponse = await api.post(`/autosymlink/delete_config`, syncConfig.value)
+        snackbarRef.value?.showSnackBar(response.save_status, response.message)
+        setTimeout(() => {
+            router.push('/sync_list')
+        }, 1000); // 2 秒后执行 greet 函数
+
+    } catch (error) {
+        console.error('Error fetching sync config:', error)
+    }
+}
+
+function jumpTab(tab: string) {
+    router.push('/sync_config/' + syncConfig.value.id + "?tab=" + tab)
 }
 
 onMounted(fetchSyncConfig)
@@ -141,4 +151,8 @@ onMounted(fetchSyncConfig)
 :deep(.v-tab__slider) {
     display: none !important;
 }
+
+/* .v-window-item {
+    transition: none !important;
+} */
 </style>

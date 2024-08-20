@@ -1,5 +1,4 @@
 export interface SyncItem {
-  id: string;
   task_name: string;
   media_dir: string;
   symlink_dir: string;
@@ -35,6 +34,7 @@ export interface SyncItem {
   alist_path: string;
   symlink_ext: string; // e.g., ".mkv;.iso;.ts;.mp4;.avi;.rmvb;.wmv;.m2ts;.mpg;.flv;.rm;.mov"
   metadata_ext: string; // e.g., ".nfo;.jpg;jpeg;.png;.svg;.ass;.srt;.sup;.mp3;.flac;.wav;.aac"
+  id: string;
 }
 
 export interface SaveResponse {
