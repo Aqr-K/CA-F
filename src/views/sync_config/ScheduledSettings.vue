@@ -33,8 +33,8 @@
 </template>
 
 <script lang="ts" setup>
-import { SyncItem, SaveResponse } from '@/api/types';
-import { ref, defineModel } from 'vue';
+import { SyncItem } from '@/api/types';
+import { ref } from 'vue';
 
 const cardHeight = ref("h-[510px]")
 const syncConfig = defineModel<SyncItem>('syncConfig');

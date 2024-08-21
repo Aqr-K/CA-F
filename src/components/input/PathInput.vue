@@ -10,8 +10,6 @@
 <script setup lang="ts" name="PathInput">
 import { ref } from 'vue'
 
-import { defineProps } from 'vue'
-
 
 // 输入参数
 const props = defineProps({

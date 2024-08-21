@@ -69,7 +69,7 @@
 
 <script lang="ts" setup>
 import { SyncItem, SaveResponse } from '@/api/types';
-import { ref, defineModel } from 'vue';
+import { ref } from 'vue';
 
 const cardHeight = ref("h-[550px]")
 const syncConfig = defineModel<SyncItem>('syncConfig');

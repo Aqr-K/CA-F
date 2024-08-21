@@ -37,6 +37,16 @@ export interface SyncItem {
   id: string;
 }
 
+export interface GlobalSettings {
+  start_delay: number;
+  debug_mode: boolean;
+  config_file_watcher: boolean;
+  backup_dir: string;
+  username: string;
+  password: string;
+  http_proxy: string;
+}
+
 export interface SaveResponse {
   save_status: boolean;
   message: string;
