@@ -37,7 +37,7 @@ export interface SyncItem {
   id: string;
 }
 
-export interface GlobalSettings {
+export interface Settings {
   start_delay: number;
   debug_mode: boolean;
   config_file_watcher: boolean;
@@ -48,8 +48,9 @@ export interface GlobalSettings {
 }
 
 export interface SaveResponse {
-  save_status: boolean;
+  success: boolean;
   message: string;
+  data: any;
 }
 
 export type SyncList = SyncItem[];

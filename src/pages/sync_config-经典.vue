@@ -76,7 +76,7 @@ async function saveConfig() {
     syncConfig["id"] = syncConfigId
     try {
         const response: SaveResponse = await api.post(`/save_sync_config`, syncConfig)
-        snackbarRef.value?.showSnackBar(response.save_status, response.message)
+        snackbarRef.value?.showSnackBar(response.success, response.message)
 
     } catch (error) {
         console.error('Error fetching sync config:', error)

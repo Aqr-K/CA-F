@@ -9,11 +9,12 @@
                     <v-col v-for="item in config.items" cols="7" class="pb-10 ml-2">
                         <div class="flex items-center flex-left">
                             <v-select v-if="'options' in item" :id="item.label" :label="item.label"
-                                :items="item.options" v-model="item.value"></v-select>
+                                :items="item.options" v-model="settings[item.key]"></v-select>
                             <VPathInput v-else-if="item.key === ('backup_dir')" :label="item.label"
-                                v-model="item.value" />
-                            <v-text-field v-else-if="typeof item.value === 'string' || typeof item.value === 'number'"
-                                :id="item.label" :label="item.label" v-model="item.value"></v-text-field>
+                                v-model="settings[item.key]" />
+                            <v-text-field
+                                v-else-if="typeof settings[item.key] === 'string' || typeof settings[item.key] === 'number'"
+                                :id="item.label" :label="item.label" v-model="settings[item.key]"></v-text-field>
                         </div>
                     </v-col>
                     <v-col cols="7" class="pb-10">
@@ -39,20 +40,33 @@
     <SnackBar ref="snackbarRef" />
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="GlobalSettings">
 import { useRoute } from 'vue-router'
 import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api/index'
-import { GlobalSettings, SaveResponse } from '@/api/types';
+import { Settings, SaveResponse } from '@/api/types';
 const route = useRoute()
-const { id } = route.params
 
+const configList = ref([{
+    title: "常用设置",
+    items: [
+        { key: "start_delay", label: "延时启动" },
+        { key: "backup_dir", label: "备份文件夹" },
+        { key: "http_proxy", label: "http代理" },
+    ]
+},
+{
+    title: "登录设置",
+    items: [
+        { key: "username", label: "用户名" },
+        { key: "password", label: "密码" },
 
-const configList = ref([])
+    ]
+}])
 
 const snackbarRef = ref(null)
 
-const settings = ref(<GlobalSettings>{
+const settings = ref(<Settings>{
     start_delay: 0,
     debug_mode: false,
     config_file_watcher: false,
@@ -67,11 +81,10 @@ const switches = ref([
     { key: "config_file_watcher", label: "配置监测", value: settings.value.config_file_watcher },
 ])
 
-let syncConfigId = ""
 
 async function fetchSyncConfig() {
     try {
-        const data: GlobalSettings = await api.get(`/settings/global_settings`)
+        const data: Settings = await api.get(`/system/global_settings`)
         updateConfigList(data)
     } catch (error) {
         console.error('Error fetching sync config:', error)
@@ -79,17 +92,9 @@ async function fetchSyncConfig() {
 }
 
 async function saveConfig() {
-    let syncConfig = {};
-    for (let config of configList.value) {
-        for (let item of config.items) {
-            syncConfig[item.key] = item.value;
-        }
-    }
-
-    syncConfig["id"] = syncConfigId
     try {
-        const response: SaveResponse = await api.post(`/save_sync_config`, syncConfig)
-        snackbarRef.value?.showSnackBar(response.save_status, response.message)
+        const response: SaveResponse = await api.post(`/system/save_global_settings`, settings.value)
+        snackbarRef.value?.showSnackBar(response.success, response.message)
 
     } catch (error) {
         console.error('Error fetching sync config:', error)
@@ -99,26 +104,8 @@ async function saveConfig() {
 async function deleteConfig() {
 }
 
-function updateConfigList(configs: GlobalSettings) {
+function updateConfigList(configs: Settings) {
     settings.value = configs
-    configList.value = [
-        {
-            title: "常用设置",
-            items: [
-                { key: "start_delay", label: "延时启动", value: settings.value.start_delay },
-                { key: "backup_dir", label: "备份文件夹", value: settings.value.backup_dir },
-                { key: "http_proxy", label: "http代理", value: settings.value.http_proxy },
-            ]
-        },
-        {
-            title: "登录设置",
-            items: [
-                { key: "username", label: "用户名", value: settings.value.username },
-                { key: "password", label: "密码", value: settings.value.password },
-
-            ]
-        }
-    ];
 }
 onMounted(fetchSyncConfig)
 

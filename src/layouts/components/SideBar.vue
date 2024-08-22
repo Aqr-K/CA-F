@@ -71,8 +71,8 @@ const categories = [
     },
     {
         title: "系统",
-        items: [{ title: "常用工具", to: "/tools", icon: "mdi-tools", isActive: false },
-        { title: "全局设置", to: "/global_settings", icon: "mdi-cog", isActive: false },]
+        items: [{ title: "插件", to: "/plugins", icon: "mdi-dots-grid", isActive: false },
+        { title: "设置", to: "/settings", icon: "mdi-cog", isActive: false },]
     }
 ];
 const scrollbar = ref(null);

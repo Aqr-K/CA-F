@@ -38,7 +38,7 @@
 
 <script lang="ts" setup>
 import SnackBar from '@/layouts/components/SnackBar.vue'
-
+import api from '@/api';
 
 const snackbarRef = ref(null)
 
@@ -135,7 +135,7 @@ async function saveConfig() {
 
     try {
         const response = await api.post(`/autosymlink/save_sync_config`, syncConfig)
-        snackbarRef.value?.showSnackBar(response.save_status, response.message)
+        snackbarRef.value?.showSnackBar(response.success, response.message)
 
     } catch (error) {
         console.error('Error fetching sync config:', error)

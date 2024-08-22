@@ -115,7 +115,7 @@ async function fetchSyncConfig() {
 async function saveConfig() {
     try {
         const response: SaveResponse = await api.post(`/autosymlink/save_config`, syncConfig.value)
-        snackbarRef.value?.showSnackBar(response.save_status, response.message)
+        snackbarRef.value?.showSnackBar(response.success, response.message)
 
     } catch (error) {
         console.error('Error fetching sync config:', error)
@@ -125,7 +125,7 @@ async function saveConfig() {
 async function deleteConfig() {
     try {
         const response: SaveResponse = await api.post(`/autosymlink/delete_config`, syncConfig.value)
-        snackbarRef.value?.showSnackBar(response.save_status, response.message)
+        snackbarRef.value?.showSnackBar(response.success, response.message)
         setTimeout(() => {
             router.push('/sync_list')
         }, 1000); // 2 秒后执行 greet 函数

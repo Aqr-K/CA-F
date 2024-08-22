@@ -144,7 +144,7 @@ function resetConfig() {
 async function saveConfig() {
     try {
         const response: SaveResponse = await api.post(`/autosymlink/add_sync/save_config`, syncConfig.value)
-        snackbarRef.value?.showSnackBar(response.save_status, response.message)
+        snackbarRef.value?.showSnackBar(response.success, response.message)
 
     } catch (error) {
         console.error('Error fetching sync config:', error)
