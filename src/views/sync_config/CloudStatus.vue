@@ -8,10 +8,12 @@
                             <span class="text-[25px] font-bold">掉盘检测</span>
                         </v-card-item>
                         <v-card-item class="pt-3">
-                            <VPathInput label="文件路径" v-model="syncConfig.sign_file" />
+                            <VPathInput label="文件路径" v-model="syncConfig.sign_file"
+                                hint="掉盘检测的文件路径，选中对应的文件夹后，记得加上/文件名，如'/.../sign.txt''" />
                         </v-card-item>
                         <v-card-item class="pt-3">
-                            <v-text-field label="文件链接" v-model="syncConfig.sign_file_url" class="my-10">
+                            <v-text-field label="文件链接" v-model="syncConfig.sign_file_url" class="my-10"
+                                hint="掉盘检测的文件在网盘中的下载链接" persistent-hint>
                             </v-text-field>
                         </v-card-item>
                     </v-card>

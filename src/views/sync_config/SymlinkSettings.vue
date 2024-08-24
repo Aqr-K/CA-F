@@ -11,7 +11,7 @@
                             <v-text-field label="任务名称" v-model="syncConfig.task_name" class="mt-3"></v-text-field>
                         </v-card-item>
                         <v-card-item v-for="(input, index) in pathInputs" class="pt-3">
-                            <VPathInput :label="input.label" v-model="syncConfig[input.key]" />
+                            <VPathInput :label="input.label" v-model="syncConfig[input.key]" :hint="input.hint" />
                         </v-card-item>
                     </v-card>
                 </v-col>
@@ -27,7 +27,7 @@
                         </v-row>
                         <v-card-item>
                             <v-select label="元数据模式" :items="['下载模式', '本地模式']" v-model="syncConfig.metadata_copyer_mode"
-                                class="pt-3"></v-select>
+                                class="pt-3" hint="下载模式速度更快,适合网盘向本地同步;本地模式适合本地向网盘同步" persistent-hint></v-select>
                         </v-card-item>
                         <v-card-item>
                             <v-text-field label="同步线程数" v-model="syncConfig.num_threads" class="pt-3"></v-text-field>
@@ -41,11 +41,12 @@
                         </v-card-item>
                         <v-card-item v-for="(select, index) in selects" class="pt-3">
                             <v-select :label="select.label" :items="select.items" v-model="syncConfig[select.key]"
-                                class="pt-3">
+                                class="pt-3" :hint="select.hint" persistent-hint>
                             </v-select>
                         </v-card-item>
                         <v-card-item class="pt-3">
-                            <v-text-field label="云端地址" v-model="syncConfig.cloud_url" class="pt-3"></v-text-field>
+                            <v-text-field label="云端地址" v-model="syncConfig.cloud_url" class="pt-3"
+                                hint="bridge下要填本机ip,不能填localhost/127.0.0.1" persistent-hint></v-text-field>
                         </v-card-item>
                     </v-card>
                 </v-col>
@@ -68,14 +69,14 @@
 import { SyncItem } from '@/api/types';
 import { ref } from 'vue';
 
-const cardHeight = ref("h-[550px]")
+const cardHeight = ref("h-[650px]")
 const syncConfig = defineModel<SyncItem>('syncConfig');
 const pathInputs = ref([
-    { label: '媒体目录', key: 'media_dir' },
-    { label: '本地目录', key: 'symlink_dir' },
-    { label: '排除目录', key: 'exclude_folder' },
-    { label: 'cd2根目录', key: 'clouddrive2_path' },
-    { label: 'alist目录', key: 'alist_path' },
+    { label: '媒体目录', key: 'media_dir', hint: "视频所在的文件夹" },
+    { label: '本地目录', key: 'symlink_dir', hint: "程序会在此文件夹中创建软链接/strm文件,同步方向为媒体目录到本地目录,多目录同步时,本地目录不能完全相同" },
+    { label: '排除目录', key: 'exclude_folder', hint: "要排除同步的文件夹路径，多个路径以;隔开，被排除的文件夹不会被同步和监控" },
+    { label: 'cd2根目录', key: 'clouddrive2_path', hint: "挂载类型为cd2时要填，cd2的挂载点" },
+    { label: 'alist目录', key: 'alist_path', hint: "挂载类型为alist时要填，alist的挂载根目录" },
 ]);
 const switches = ref([
     { label: '更新软链接', key: 'symlink_creator' },
@@ -88,7 +89,7 @@ const switches = ref([
 ]);
 const selects = ref([
     { label: '链接模式', key: 'symlink_mode', items: ['symlink', 'strm'] },
-    { label: 'Strm模式', key: 'strm_mode', items: ['cloud', 'local'] },
+    { label: 'Strm模式', key: 'strm_mode', items: ['cloud', 'local'], hint: "cloud模式文件内是http开头的链接,local模式文件内是文件的路径" },
     { label: '挂载类型', key: 'cloud_type', items: ['cd2', 'alist'] },
 ]);
 const textFields = ref([

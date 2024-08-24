@@ -8,10 +8,8 @@
                 <v-switch label="启用通知" v-model="settings.switch" class="my-5 ml-3"></v-switch>
                 <v-row class="pb-5 px-3">
                     <v-col v-for="item in normalSettings.items" cols="12" md="6" class="mb-5">
-                        <div class="flex items-center flex-left">
-                            <v-text-field :id="item.label" :label="item.label"
-                                v-model="settings[item.key]"></v-text-field>
-                        </div>
+                        <v-text-field :id="item.label" :label="item.label" v-model="settings[item.key]"
+                            :hint="item.hint" persistent-hint></v-text-field>
                     </v-col>
                 </v-row>
             </v-card>
@@ -45,10 +43,14 @@ const isLoading = ref(true)
 const normalSettings = ref({
     title: "通知工具",
     items: [
-        { key: "bot_token", label: "备份文件夹" },
-        { key: "chat_id", label: "Chat ID" },
-        { key: "user_id", label: "用户白名单" },
-        { key: "admin_id", label: "管理员白名单" },
+        {
+            key: "bot_token", label: "Bot Token", hint: "Telegram机器人token，格式：789598:EGV-KOI56ghOkP-adx57W2v1u598ew1"
+        },
+        {
+            key: "chat_id", label: "Chat ID", hint: "接受消息通知的用户、群组或频道Chat ID"
+        },
+        { key: "user_id", label: "用户白名单", hint: "可使用Telegram机器人的用户ID清单，多个用户用,分隔，不填写则所有用户都能使用" },
+        { key: "admin_id", label: "管理员白名单", hint: "可使用管理菜单及命令的用户ID列表，多个ID使用,分隔" },
     ]
 })
 

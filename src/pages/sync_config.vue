@@ -99,7 +99,10 @@ const syncConfig = ref(<SyncItem>{
     clouddrive2_path: "",
     alist_path: "",
     symlink_ext: "",
-    metadata_ext: ""
+    metadata_ext: "",
+    sign_file: "",
+    sign_file_url: "",
+    cloud_status: false,
 })
 
 let syncConfigId = ""

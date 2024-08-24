@@ -2,7 +2,7 @@
     <VPathList v-model="path" @update:modelValue="updatePath">
         <template #activator="{ menuprops }">
             <VTextField v-model="props.modelValue" @input="handleInput" v-bind="menuprops" variant="underlined"
-                :label="label" />
+                :label="label" :hint="props.hint" persistent-hint />
         </template>
     </VPathList>
 </template>
@@ -21,6 +21,10 @@ const props = defineProps({
     modelValue: {
         type: String,
         required: true, // 必填参数
+    },
+    hint: {
+        type: String,
+        required: false, // 必填参数
     },
 })
 const path = ref(props.modelValue)
