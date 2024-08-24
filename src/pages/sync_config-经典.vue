@@ -1,7 +1,7 @@
 <template>
     <div v-if="configList.length > 0">
-        <v-card v-for="config in configList" class="pl-5 mb-5" style="width: auto;">
-            <v-card-item class="pt-3 justify-start category">
+        <v-card v-for="config in configList" class="px-5 mb-5" style="width: auto;">
+            <v-card-item class="pt-3 justify-start">
                 <span class="text-[25px] font-bold">{{ config.title }}</span>
             </v-card-item>
             <v-card-text class="pt-3 justify-start settings">
@@ -100,13 +100,6 @@ function updateConfigList(configs: SyncItem) {
                 { key: "media_dir", label: "媒体目录", value: configs.media_dir },
                 { key: "symlink_dir", label: "本地目录", value: configs.symlink_dir },
                 { key: "exclude_folder", label: "排除目录", value: configs.exclude_folder }
-            ]
-        },
-        {
-            title: "同步开关",
-            items: [
-                { key: "sync_enabled", label: "同步状态", value: configs.sync_enabled },
-                { key: "restart_sync_enabled", label: "重启全同步", value: configs.restart_sync_enabled }
             ]
         },
         {

@@ -1,9 +1,118 @@
 <template>
-
+    <div v-if="!isLoading">
+        <v-form>
+            <v-card class="px-5 mb-5" style="width: auto;">
+                <v-card-item class="pt-3 justify-start">
+                    <span class="text-[25px] font-bold">{{ normalSettings.title }}</span>
+                </v-card-item>
+                <v-switch label="启用通知" v-model="settings.switch" class="my-5 ml-3"></v-switch>
+                <v-row class="pb-5 px-3">
+                    <v-col v-for="item in normalSettings.items" cols="12" md="6" class="mb-5">
+                        <div class="flex items-center flex-left">
+                            <v-text-field :id="item.label" :label="item.label"
+                                v-model="settings[item.key]"></v-text-field>
+                        </div>
+                    </v-col>
+                </v-row>
+            </v-card>
+            <v-card class="px-5 mb-5" style="width: auto;">
+                <v-card-item class="pt-3 justify-start">
+                    <span class="text-[25px] font-bold">{{ notifyTypes.title }}</span>
+                </v-card-item>
+                <v-row class="pb-5">
+                    <v-col v-for="item in notifyTypes.items" cols="12" sm="4" md="3" lg="2" class="ml-5">
+                        <v-switch :label="item.label" v-model="settings[item.key]"></v-switch>
+                    </v-col>
+                </v-row>
+            </v-card>
+            <div class="mb-15">
+                <v-btn color="red" @click="deleteConfig">删除</v-btn>
+                <span class="mx-3"></span>
+                <v-btn @click="saveConfig">保存</v-btn>
+            </div>
+        </v-form>
+    </div>
+    <SnackBar ref="snackbarRef" />
 </template>
 
 <script lang="ts" setup>
+import { useRoute } from 'vue-router'
+import SnackBar from '@/layouts/components/SnackBar.vue'
+import api from '@/api/index'
+import { TelegramSettings, SaveResponse } from '@/api/types';
+const isLoading = ref(true)
+
+const normalSettings = ref({
+    title: "通知工具",
+    items: [
+        { key: "bot_token", label: "备份文件夹" },
+        { key: "chat_id", label: "Chat ID" },
+        { key: "user_id", label: "用户白名单" },
+        { key: "admin_id", label: "管理员白名单" },
+    ]
+})
+
+const notifyTypes = ref({
+    title: "推送设置",
+    items: [
+        { key: "observer_started", label: "监控状态" },
+        { key: "observer_enabled", label: "监控事件" },
+        { key: "cloud_watcher_enabled", label: "转存监控" },
+        { key: "sync_completed", label: "同步完成" },
+        { key: "backup_completed", label: "备份完成" },
+        { key: "cloud_path_unmount", label: "掉盘通知" },
+        { key: "filetrans_enbaled", label: "刮削完成" },
+    ]
+})
+
+
+const snackbarRef = ref(null)
+
+const settings = ref(<TelegramSettings>{
+    switch: false,
+    bot_token: "",
+    chat_id: "",
+    user_id: "",
+    admin_id: "",
+    observer_started: false,
+    observer_enabled: false,
+    cloud_watcher_enabled: false,
+    sync_completed: false,
+    backup_completed: false,
+    cloud_path_unmount: false,
+    filetrans_enbaled: false
+})
+
+
+async function fetchSyncConfig() {
+    try {
+        const response = await api.get('/system/settings/' + 'notify_config')
+        updateConfigList(response.telegram)
+        isLoading.value = false
+    } catch (error) {
+        console.error('Error fetching sync config:', error)
+    }
+}
+
+async function saveConfig() {
+    try {
+        let data = { settings: settings.value, name: "notify_config" }
+        const response: SaveResponse = await api.post(`/system/save_settings`, data)
+        snackbarRef.value?.showSnackBar(response.success, response.message)
+
+    } catch (error) {
+        console.error('Error fetching sync config:', error)
+    }
+}
+
+async function deleteConfig() {
+}
+
+function updateConfigList(configs: TelegramSettings) {
+    settings.value = configs
+}
+onMounted(fetchSyncConfig)
 
 </script>
 
-<style></style>
+<style scoped></style>

@@ -8,19 +8,9 @@
                             <span class="text-[25px] font-bold">定时任务</span>
                         </v-card-item>
                         <v-card-item>
-                            <div class="flex items-center flex-left">
-                                <span class="text-[14px] font-bold w-[95px] text-left">
-                                    定时同步：
-                                </span>
-                                <v-switch v-model="syncConfig.sync_scheduled"></v-switch>
-                            </div>
+                            <v-switch label="定时同步" v-model="syncConfig.sync_scheduled" class="mb-5"></v-switch>
                             <v-text-field label="同步时间" v-model="syncConfig.sync_time"></v-text-field>
-                            <div class="flex items-center flex-left mt-10">
-                                <span class="text-[14px] font-bold w-[95px] text-left">
-                                    定时备份：
-                                </span>
-                                <v-switch v-model="syncConfig.sync_scheduled"></v-switch>
-                            </div>
+                            <v-switch label="定时备份" v-model="syncConfig.sync_scheduled" class="mt-10"></v-switch>
                             <v-text-field label="备份时间" v-model="syncConfig.backup_time" class="my-5"></v-text-field>
                             <v-text-field label="备份后缀" v-model="syncConfig.backup_ext" class="my-5"></v-text-field>
                         </v-card-item>

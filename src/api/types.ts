@@ -3,8 +3,6 @@ export interface SyncItem {
   media_dir: string;
   symlink_dir: string;
   exclude_folder: string;
-  sync_enabled: boolean;
-  restart_sync_enabled: boolean;
   sync_scheduled: boolean;
   sync_time: string | number; // e.g., cron expression like "30 2 * * *"
   symlink_creator: boolean;
@@ -35,9 +33,12 @@ export interface SyncItem {
   symlink_ext: string; // e.g., ".mkv;.iso;.ts;.mp4;.avi;.rmvb;.wmv;.m2ts;.mpg;.flv;.rm;.mov"
   metadata_ext: string; // e.g., ".nfo;.jpg;jpeg;.png;.svg;.ass;.srt;.sup;.mp3;.flac;.wav;.aac"
   id: string;
+  sign_file: string;
+  sign_file_url: string;
+  cloud_status: boolean;
 }
 
-export interface Settings {
+export interface GlobalSettings {
   start_delay: number;
   debug_mode: boolean;
   config_file_watcher: boolean;
@@ -45,6 +46,21 @@ export interface Settings {
   username: string;
   password: string;
   http_proxy: string;
+}
+
+export interface TelegramSettings {
+  switch: boolean;
+  bot_token: string;
+  chat_id: string;
+  user_id: string;
+  admin_id: string;
+  observer_started: boolean;
+  observer_enabled: boolean;
+  cloud_watcher_enabled: boolean;
+  sync_completed: boolean;
+  backup_completed: boolean;
+  cloud_path_unmount: boolean;
+  filetrans_enbaled: boolean;
 }
 
 export interface SaveResponse {

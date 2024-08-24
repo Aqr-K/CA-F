@@ -1,6 +1,6 @@
 <template>
     <!-- 只有当syncConfig.id不为空时再呈现页面 -->
-    <div v-if="syncConfig.id">
+    <div v-if="!isLoading">
         <v-tabs v-model="activeTab" show-arrows class="v-tabs-pill">
             <v-tab v-for="item in tabs" :key="item.icon" :value="item.tab"
                 selected-class="v-slide-group-item--active v-tab--selected" @click="jumpTab(item.tab)">
@@ -32,6 +32,13 @@
                     </div>
                 </transition>
             </v-window-item>
+            <v-window-item value="cloud_status">
+                <transition name="fade-slide" appear>
+                    <div>
+                        <CloudStatus v-model:sync-config="syncConfig" />
+                    </div>
+                </transition>
+            </v-window-item>
         </v-window>
         <div class="my-10">
             <v-btn color="red" @click="deleteConfig">删除</v-btn>
@@ -52,9 +59,11 @@ import { SyncItem, SaveResponse } from '@/api/types';
 import SymlinkSettings from '@/views/sync_config/SymlinkSettings.vue'
 import ScheduledSettings from '@/views/sync_config/ScheduledSettings.vue'
 import ObserverSettings from '@/views/sync_config/ObserverSettings.vue'
+import CloudStatus from '@/views/sync_config/CloudStatus.vue'
 const route = useRoute()
 const { id } = route.params
 const snackbarRef = ref(null)
+const isLoading = ref(true)
 
 const syncConfig = ref(<SyncItem>{
     id: "",
@@ -62,8 +71,6 @@ const syncConfig = ref(<SyncItem>{
     media_dir: "",
     symlink_dir: "",
     exclude_folder: "",
-    sync_enabled: false,
-    restart_sync_enabled: false,
     sync_scheduled: false,
     sync_time: "",
     symlink_creator: false,
@@ -99,13 +106,14 @@ let syncConfigId = ""
 
 const activeTab = ref(route.query.tab)
 
-const tabs = [{ tab: "symlink", icon: "mdi-link-variant", title: "软链接" }, { tab: "scheduled_task", icon: "mdi-calendar-clock", title: "定时任务" }, { tab: "sync_observer", icon: "mdi-eye", title: "实时监控" },]
+const tabs = [{ tab: "symlink", icon: "mdi-link-variant", title: "软链接" }, { tab: "scheduled_task", icon: "mdi-calendar-clock", title: "定时任务" }, { tab: "sync_observer", icon: "mdi-eye", title: "实时监控" }, { tab: "cloud_status", icon: "mdi-weather-cloudy", title: "掉盘检测" }]
 
 async function fetchSyncConfig() {
     try {
         const data: SyncItem = await api.get(`/autosymlink/sync_config/${id}`)
         syncConfigId = data.id
         syncConfig.value = data
+        isLoading.value = false
     } catch (error) {
         console.error('Error fetching sync config:', error)
     }

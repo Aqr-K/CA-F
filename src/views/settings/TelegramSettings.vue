@@ -1,12 +1,12 @@
 <template>
-    <div v-if="!isLoading">
+    <div v-if="configList.length > 0">
         <v-form>
             <v-card v-for="config in configList" class="px-5 mb-5" style="width: auto;">
                 <v-card-item class="pt-3 justify-start category my-5">
                     <span class="text-[25px] font-bold">{{ config.title }}</span>
                 </v-card-item>
                 <v-row>
-                    <v-col v-for="item in config.items" cols="12" class="pb-10 ml-2">
+                    <v-col v-for="item in config.items" cols="7" class="pb-10 ml-2">
                         <div class="flex items-center flex-left">
                             <v-select v-if="'options' in item" :id="item.label" :label="item.label"
                                 :items="item.options" v-model="settings[item.key]"></v-select>
@@ -15,11 +15,6 @@
                             <v-text-field
                                 v-else-if="typeof settings[item.key] === 'string' || typeof settings[item.key] === 'number'"
                                 :id="item.label" :label="item.label" v-model="settings[item.key]"></v-text-field>
-                            <v-row v-else-if="item.key == 'switch_group'">
-                                <v-col v-for="(swite, index) in item.switches" cols="12" sm="6" md="4" lg="4">
-                                    <v-switch :label="swite.label" v-model="settings[swite.key]"></v-switch>
-                                </v-col>
-                            </v-row>
                         </div>
                     </v-col>
                 </v-row>
@@ -35,54 +30,61 @@
     <SnackBar ref="snackbarRef" />
 </template>
 
-<script lang="ts" setup name="GlobalSettings">
+<script lang="ts">
 import { useRoute } from 'vue-router'
 import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api/index'
-import { GlobalSettings, SaveResponse } from '@/api/types';
-const isLoading = ref(true)
+import { TelegramSettings, SaveResponse } from '@/api/types';
+const route = useRoute()
 
 const configList = ref([{
-    title: "常用设置",
+    title: "通知工具",
     items: [
-        { key: "start_delay", label: "延时启动" },
-        { key: "backup_dir", label: "备份文件夹" },
-        { key: "http_proxy", label: "http代理" },
-        {
-            key: "switch_group", switches: [{ key: "debug_mode", label: "调试模式" },
-            { key: "config_file_watcher", label: "配置监测" },
-            ]
-        },
-
+        { key: "switch", label: "延时启动" },
+        { key: "bot_token", label: "备份文件夹" },
+        { key: "chat_id", label: "http代理" },
+        { key: "user_id", label: "备份文件夹" },
+        { key: "admin_id", label: "http代理" },
     ]
 },
 {
-    title: "登录设置",
+    title: "推送设置",
     items: [
-        { key: "username", label: "用户名" },
-        { key: "password", label: "密码" },
-
+        { key: "observer_started", label: "监控状态" },
+        { key: "observer_enabled", label: "监控事件" },
+        { key: "cloud_watcher_enabled", label: "转存监控" },
+        { key: "sync_completed", label: "同步完成" },
+        { key: "backup_completed", label: "备份完成" },
+        { key: "cloud_path_unmount", label: "掉盘通知" },
+        { key: "filetrans_enbaled", label: "刮削完成" },
     ]
-}])
+}
+])
+
 
 const snackbarRef = ref(null)
 
-const settings = ref(<GlobalSettings>{
-    start_delay: 0,
-    debug_mode: false,
-    config_file_watcher: false,
-    backup_dir: "",
-    username: "",
-    password: "",
-    http_proxy: "",
+const settings = ref(<TelegramSettings>{
+    switch: false,
+    bot_token: "",
+    chat_id: "",
+    user_id: "",
+    admin_id: "",
+    observer_started: false,
+    observer_enabled: false,
+    cloud_watcher_enabled: false,
+    sync_completed: false,
+    backup_completed: false,
+    cloud_path_unmount: false,
+    filetrans_enbaled: false
 })
 
 
 async function fetchSyncConfig() {
     try {
-        const response: GlobalSettings = await api.get('/system/settings/' + 'global_settings')
-        updateConfigList(response)
-        isLoading.value = false
+        const response = await api.get('/system/settings/' + 'notify_config')
+        console.log(response)
+        updateConfigList(response.telegram)
     } catch (error) {
         console.error('Error fetching sync config:', error)
     }
@@ -90,12 +92,8 @@ async function fetchSyncConfig() {
 
 async function saveConfig() {
     try {
-        let data = { settings: settings.value, name: "global_settings" }
-        const response: SaveResponse = await api.post(`/system/save_settings`, data, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
+        let data = { settings: settings.value, name: "notify_config" }
+        const response: SaveResponse = await api.post(`/system/save_settings`, data)
         snackbarRef.value?.showSnackBar(response.success, response.message)
 
     } catch (error) {
@@ -106,7 +104,7 @@ async function saveConfig() {
 async function deleteConfig() {
 }
 
-function updateConfigList(configs: Settings) {
+function updateConfigList(configs: TelegramSettings) {
     settings.value = configs
 }
 onMounted(fetchSyncConfig)

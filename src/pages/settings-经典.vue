@@ -1,7 +1,7 @@
 <template>
     <div v-if="configList.length > 0">
         <v-form>
-            <v-card v-for="config in configList" class="pl-5 mb-5" style="width: auto;">
+            <v-card v-for="config in configList" class="px-5 mb-5" style="width: auto;">
                 <v-card-item class="pt-3 justify-start category my-5">
                     <span class="text-[25px] font-bold">{{ config.title }}</span>
                 </v-card-item>
@@ -44,7 +44,7 @@
 import { useRoute } from 'vue-router'
 import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api/index'
-import { Settings, SaveResponse } from '@/api/types';
+import { GlobalSettings, SaveResponse } from '@/api/types';
 const route = useRoute()
 
 const configList = ref([{
@@ -66,7 +66,7 @@ const configList = ref([{
 
 const snackbarRef = ref(null)
 
-const settings = ref(<Settings>{
+const settings = ref(<GlobalSettings>{
     start_delay: 0,
     debug_mode: false,
     config_file_watcher: false,
@@ -84,7 +84,7 @@ const switches = ref([
 
 async function fetchSyncConfig() {
     try {
-        const data: Settings = await api.get(`/system/global_settings`)
+        const data: GlobalSettings = await api.get(`/system/global_settings`)
         updateConfigList(data)
     } catch (error) {
         console.error('Error fetching sync config:', error)
@@ -104,7 +104,7 @@ async function saveConfig() {
 async function deleteConfig() {
 }
 
-function updateConfigList(configs: Settings) {
+function updateConfigList(configs: GlobalSettings) {
     settings.value = configs
 }
 onMounted(fetchSyncConfig)

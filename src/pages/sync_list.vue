@@ -1,7 +1,7 @@
 <template>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div v-for="item in syncList" :key="item.id" class="my-5">
-            <v-card class="py-5">
+            <v-card class="py-5 pr-5">
                 <v-card-item class="pt-3 justify-start task-name">
                     <RouterLink class=" text-[36px] text-[#2f94c3]"
                         :to="{ name: 'SyncConfig', params: { id: item.id } }">
@@ -14,14 +14,11 @@
                         {{ dir.label }}{{ item[dir.key] }}
                     </span>
                 </v-card-text>
-                <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-3 ml-9">
-                    <div v-for="(swite, index) in switches" class="flex items-center flex-left">
-                        <span class="text-[14px] font-bold w-[90px] text-left">
-                            {{ swite.label }}
-                        </span>
-                        <v-switch v-model="item[swite.key]"></v-switch>
-                    </div>
-                </div>
+                <v-row>
+                    <v-col v-for="(swite, index) in switches" cols="12" sm="6" md="4" lg="4" class="ml-8">
+                        <v-switch :label="swite.label" v-model="item[swite.key]"></v-switch>
+                    </v-col>
+                </v-row>
             </v-card>
         </div>
     </div>
@@ -35,11 +32,9 @@ import { SyncList } from '@/api/types'
 const syncList = ref<SyncList>([]);
 const dirs = [{ label: '媒体目录：', key: 'media_dir' }, { label: '本地目录：', key: 'symlink_dir' }]
 const switches = ref([
-    { label: '同步状态：', key: 'sync_enabled' },
-    { label: '实时监控：', key: 'observer_enabled' },
-    { label: '重启全同步：', key: 'restart_sync_enabled' },
-    { label: '定时同步：', key: 'sync_scheduled' },
-    { label: '定时备份：', key: 'backup_scheduled' },
+    { label: '实时监控', key: 'observer_enabled' },
+    { label: '定时同步', key: 'sync_scheduled' },
+    { label: '定时备份', key: 'backup_scheduled' },
 ]);
 
 async function fetchSyncList() {

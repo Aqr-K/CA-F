@@ -19,15 +19,10 @@
                     </div>
                 </transition>
             </v-window-item>
-            <v-window-item value="scheduled_task">
+            <v-window-item value="notification">
                 <transition name="fade-slide" appear>
                     <div>
-                    </div>
-                </transition>
-            </v-window-item>
-            <v-window-item value="sync_observer">
-                <transition name="fade-slide" appear>
-                    <div>
+                        <Notification />
                     </div>
                 </transition>
             </v-window-item>
@@ -36,13 +31,13 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, ref } from 'vue'
+import { ref } from 'vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
 import GlobalSettings from '@/views/settings/GlobalSettings.vue'
+import Notification from '@/views/settings/Notification.vue'
 
 const route = useRoute()
-const snackbarRef = ref(null)
 
 
 const activeTab = ref(route.query.tab)
@@ -50,7 +45,7 @@ const activeTab = ref(route.query.tab)
 const tabs = [
     { tab: "global_settings", icon: "mdi-cog", title: "全局设置" },
     { tab: "notification", icon: "mdi-bell", title: "通知" },
-    { tab: "sync_observer", icon: "mdi-eye", title: "实时监控" },]
+]
 
 function jumpTab(tab: string) {
     router.push('/settings?tab=' + tab)

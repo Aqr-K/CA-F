@@ -20,14 +20,11 @@
                         <v-card-item class="pt-3 justify-start">
                             <span class="text-[25px] font-bold">同步配置</span>
                         </v-card-item>
-                        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-1 ml-5">
-                            <div v-for="(swite, index) in switches" class="flex items-center flex-left">
-                                <span class="text-[14px] font-bold w-[95px] text-left">
-                                    {{ swite.label }}
-                                </span>
-                                <v-switch v-model="syncConfig[swite.key]"></v-switch>
-                            </div>
-                        </div>
+                        <v-row>
+                            <v-col v-for="(swite, index) in switches" cols="12" sm="6" md="4" lg="4" class="ml-5">
+                                <v-switch :label="swite.label" v-model="syncConfig[swite.key]"></v-switch>
+                            </v-col>
+                        </v-row>
                         <v-card-item>
                             <v-select label="元数据模式" :items="['下载模式', '本地模式']" v-model="syncConfig.metadata_copyer_mode"
                                 class="pt-3"></v-select>
@@ -68,7 +65,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SyncItem, SaveResponse } from '@/api/types';
+import { SyncItem } from '@/api/types';
 import { ref } from 'vue';
 
 const cardHeight = ref("h-[550px]")
@@ -81,8 +78,6 @@ const pathInputs = ref([
     { label: 'alist目录', key: 'alist_path' },
 ]);
 const switches = ref([
-    { label: '同步状态', key: 'sync_enabled' },
-    { label: '重启全同步', key: 'restart_sync_enabled' },
     { label: '更新软链接', key: 'symlink_creator' },
     { label: '更新元数据', key: 'metadata_copyer' },
     { label: '元数据覆盖', key: 'metadata_covered' },
