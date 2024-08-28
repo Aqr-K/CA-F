@@ -7,11 +7,11 @@
                         @update:modelValue="handleConfigChange"></v-select>
                 </v-col>
                 <v-col cols="7">
-                    <VPathInput label="选择文件夹" v-model="currentConfig.media_dir" :currentDir="currentConfig.media_dir" />
+                    <VPathInput label="选择文件夹" v-model="currentConfig.media_dir" :currentDir="initialMediaDir" />
                 </v-col>
             </v-row>
         </v-card>
-        <v-card v-for="config in configList" class="px-5 mb-5" title="同步功能">
+        <v-card class="px-5 mb-5" title="同步功能">
             <v-row class="p-5">
                 <v-col cols="7">
                     <v-row>
@@ -84,6 +84,7 @@ const currentConfig = ref<SyncItem>({
     cloud_status: false,
 })
 
+const initialMediaDir = ref("");
 
 const syncList = ref(<SyncItem[]>[{
     task_name: "",
@@ -112,6 +113,7 @@ async function fetchSyncConfig() {
         syncList.value = data
         currentConfig.value = syncList.value[0]
         selectedConfig.value = currentConfig.value.task_name
+        initialMediaDir.value = currentConfig.value.media_dir
         isLoading.value = false
     } catch (error) {
         console.error('Error fetching sync config:', error)
@@ -120,7 +122,7 @@ async function fetchSyncConfig() {
 
 async function startTask() {
     try {
-        const response: SaveResponse = await api.post(`/autosymlink/start_task`, currentConfig)
+        const response: SaveResponse = await api.post(`/autosymlink/start_task`, currentConfig.value)
         snackbarRef.value?.showSnackBar(response.success, response.message)
 
     } catch (error) {
@@ -135,6 +137,7 @@ function handleConfigChange(name) {
     if (config) {
         //深度复制,取消响应式
         currentConfig.value = JSON.parse(JSON.stringify(config));
+        initialMediaDir.value = currentConfig.value.media_dir
     } else {
         console.log('Template config not found');
     }

@@ -112,6 +112,15 @@ watch(activedDirs, newVal => {
     emit('update:modelValue', selectedPath.value)
 })
 
+const { currentDir } = toRefs(props);
+// 监听目录变化
+watch(currentDir, newVal => {
+    console.log(props.modelValue)
+    console.log(newVal);
+    initialDirs()
+})
+
+
 onMounted(() => {
     initialDirs()
 })

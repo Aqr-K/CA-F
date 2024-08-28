@@ -7,12 +7,19 @@
         <VTable hide-default-footer disable-sort>
             <tbody>
                 <tr v-for="(log, i) in extractLogDetails" :key="i" class="text-sm">
-                    <td class="text-sm info">
-                        <VChip size="small" :color="getLogColor(log.level)" variant="elevated" v-text="log.level" />
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{ log.time }}
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{ log.program }}
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <span v-html="log.content.replace(/\\hf/g, '<br><br>')"></span>
+                    <td class="text-sm info py-3">
+                        <span class="inline-block w-[85px]">
+                            <VChip size="small" :color="getLogColor(log.level)" variant="elevated" v-text="log.level" />
+                        </span>
+                        <span span class="inline-block w-[90px]">
+                            {{ log.time }}
+                        </span>
+                        <span class="inline-block mx-10 w-[140px] text-center">
+                            {{ log.program }}
+                        </span>
+                        <span class="inline-block">
+                            {{ log.content.replace(/\\hf/g, '<br><br>') }}
+                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -64,7 +71,17 @@ function extractLogDetailsFromLogs(logs: string[]): { level: string; time: strin
             const [_, level, time, program, content] = matches
             logDetails.unshift({ level, time, program, content })
         }
+        else {
+            // 如果没有成功匹配，将该字符串放到最后一个元素的 content 中
+            if (logDetails.length > 0) {
+                logDetails[0].content += `</br></br>${log}`; // 添加到最后一个元素的 content
+            } else {
+                // 如果 logDetails 为空，创建一个新元素
+                logDetails.push({ level: 'UNKNOWN', time: 'UNKNOWN', program: 'UNKNOWN', content: log });
+            }
+        }
     }
+
 
     return logDetails
 }
@@ -91,8 +108,7 @@ const extractLogDetails = computed(() => {
 })
 
 onMounted(() => {
-    fetchAllLogs(),
-        startSSELogging()
+    startSSELogging()
 })
 
 onBeforeUnmount(() => {
