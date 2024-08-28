@@ -15,35 +15,34 @@
             <v-window-item value="symlink">
                 <transition name="fade-slide" appear>
                     <div>
-                        <SymlinkSettings v-model:sync-config="syncConfig" />
+                        <SymlinkSettings v-model:syncConfig="syncConfig" v-model:syncTemplate="syncTemplate"
+                            :isNew="true" />
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="scheduled_task">
                 <transition name="fade-slide" appear>
                     <div>
-                        <ScheduledSettings v-model:sync-config="syncConfig" />
+                        <ScheduledSettings v-model:syncConfig="syncConfig" />
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="sync_observer">
                 <transition name="fade-slide" appear>
                     <div>
-                        <ObserverSettings v-model:sync-config="syncConfig" />
+                        <ObserverSettings v-model:syncConfig="syncConfig" />
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="cloud_status">
                 <transition name="fade-slide" appear>
                     <div>
-                        <CloudStatus v-model:sync-config="syncConfig" />
+                        <CloudStatus v-model:syncConfig="syncConfig" />
                     </div>
                 </transition>
             </v-window-item>
         </v-window>
-        <div class="my-10">
-            <v-btn color="#6b6e73" @click="resetConfig">重置</v-btn>
-            <span class="mx-3"></span>
+        <div class="btn-settings">
             <v-btn @click="saveConfig">保存</v-btn>
         </div>
         <SnackBar ref="snackbarRef" />
@@ -108,46 +107,54 @@ const activeTab = ref(route.query.tab)
 
 const tabs = [{ tab: "symlink", icon: "mdi-link-variant", title: "软链接" }, { tab: "scheduled_task", icon: "mdi-calendar-clock", title: "定时任务" }, { tab: "sync_observer", icon: "mdi-eye", title: "实时监控" }, { tab: "cloud_status", icon: "mdi-weather-cloudy", title: "掉盘检测" }]
 
-function resetConfig() {
-    syncConfig.value = {
-        task_name: "",
-        media_dir: "",
-        symlink_dir: "",
-        exclude_folder: "",
-        sync_scheduled: false,
-        sync_time: "30 2 * * *",
-        symlink_creator: false,
-        metadata_copyer: false,
-        metadata_covered: false,
-        metadata_skipped: false,
-        metadata_copyer_mode: "下载模式",
-        num_threads: 2,
-        symlink_dir_checker: false,
-        symlink_checker: false,
-        metadata_checker: false,
-        observer_enabled: false,
-        observer_symlink_creator: false,
-        observer_metadata_copyer: false,
-        observer_symlink_checker: false,
-        observer_metadata_checker: false,
-        observer_time: 0,
-        backup_scheduled: false,
-        backup_time: "30 2 * * *",
-        backup_ext: "*.*",
-        symlink_mode: "symlink",
-        strm_mode: "cloud",
-        symlink_size: 0,
-        cloud_type: "cd2",
-        cloud_url: "ip:19798",
-        clouddrive2_path: "",
-        alist_path: "",
-        symlink_ext: ".mkv;.iso;.ts;.mp4;.avi;.rmvb;.wmv;.m2ts;.mpg;.flv;.rm;.mov",
-        metadata_ext: ".nfo;.jpg;jpeg;.png;.svg;.ass;.srt;.sup;.mp3;.flac;.wav;.aac",
-        id: "",
-        sign_file: "",
-        sign_file_url: "",
-        cloud_status: false,
+const syncTemplate = ref(<SyncItem[]>[{
+    id: "",
+    task_name: "默认模板",
+    media_dir: "",
+    symlink_dir: "",
+    exclude_folder: "",
+    sync_scheduled: false,
+    sync_time: "30 2 * * *",
+    symlink_creator: false,
+    metadata_copyer: false,
+    metadata_covered: false,
+    metadata_skipped: false,
+    metadata_copyer_mode: "下载模式",
+    num_threads: 2,
+    symlink_dir_checker: false,
+    symlink_checker: false,
+    metadata_checker: false,
+    observer_enabled: false,
+    observer_symlink_creator: false,
+    observer_metadata_copyer: false,
+    observer_symlink_checker: false,
+    observer_metadata_checker: false,
+    observer_time: 0,
+    backup_scheduled: false,
+    backup_time: "30 2 * * *",
+    backup_ext: "*.*",
+    symlink_mode: "symlink",
+    strm_mode: "cloud",
+    symlink_size: 0,
+    cloud_type: "cd2",
+    cloud_url: "ip:19798",
+    clouddrive2_path: "",
+    alist_path: "",
+    symlink_ext: ".mkv;.iso;.ts;.mp4;.avi;.rmvb;.wmv;.m2ts;.mpg;.flv;.rm;.mov",
+    metadata_ext: ".nfo;.jpg;jpeg;.png;.svg;.ass;.srt;.sup;.mp3;.flac;.wav;.aac",
+    sign_file: "",
+    sign_file_url: "",
+    cloud_status: false,
+}])
 
+async function fetchSyncTemplate() {
+    try {
+        const data: SyncItem[] = await api.get(`/autosymlink/sync_list`)
+        if (data.length > 0) {
+            syncTemplate.value = data
+        }
+    } catch (error) {
+        console.error('Error fetching sync config:', error)
     }
 }
 
@@ -155,7 +162,9 @@ async function saveConfig() {
     try {
         const response: SaveResponse = await api.post(`/autosymlink/add_sync/save_config`, syncConfig.value)
         snackbarRef.value?.showSnackBar(response.success, response.message)
-
+        setTimeout(() => {
+            router.push('/sync_list')
+        }, 1000); // 2 秒后执行 greet 函数
     } catch (error) {
         console.error('Error fetching sync config:', error)
     }
@@ -164,6 +173,10 @@ async function saveConfig() {
 function jumpTab(tab: string) {
     router.push('/add_sync?tab=' + tab)
 }
+
+onMounted(() => {
+    fetchSyncTemplate();
+});
 </script>
 
 <style scoped>

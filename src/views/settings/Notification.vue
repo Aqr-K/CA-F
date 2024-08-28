@@ -1,31 +1,29 @@
 <template>
     <div v-if="!isLoading">
         <v-form>
-            <v-card class="px-5 mb-5" style="width: auto;">
-                <v-card-item class="pt-3 justify-start">
-                    <span class="text-[25px] font-bold">{{ normalSettings.title }}</span>
-                </v-card-item>
-                <v-switch label="启用通知" v-model="settings.switch" class="my-5 ml-3"></v-switch>
-                <v-row class="pb-5 px-3">
-                    <v-col v-for="item in normalSettings.items" cols="12" md="6" class="mb-5">
-                        <v-text-field :id="item.label" :label="item.label" v-model="settings[item.key]"
-                            :hint="item.hint" persistent-hint></v-text-field>
-                    </v-col>
-                </v-row>
-            </v-card>
-            <v-card class="px-5 mb-5" style="width: auto;">
-                <v-card-item class="pt-3 justify-start">
-                    <span class="text-[25px] font-bold">{{ notifyTypes.title }}</span>
-                </v-card-item>
-                <v-row class="pb-5">
-                    <v-col v-for="item in notifyTypes.items" cols="12" sm="4" md="3" lg="2" class="ml-5">
-                        <v-switch :label="item.label" v-model="settings[item.key]"></v-switch>
-                    </v-col>
-                </v-row>
-            </v-card>
-            <div class="mb-15">
-                <v-btn color="red" @click="deleteConfig">删除</v-btn>
-                <span class="mx-3"></span>
+            <v-row>
+                <v-col cols="12">
+                    <v-card :title="normalSettings.title">
+                        <v-switch label="启用通知" v-model="settings.switch" class="ml-3"></v-switch>
+                        <v-row class="pb-5 px-3">
+                            <v-col v-for="item in normalSettings.items" cols="12" md="6" class="mb-5">
+                                <v-text-field :id="item.label" :label="item.label" v-model="settings[item.key]"
+                                    :hint="item.hint" persistent-hint></v-text-field>
+                            </v-col>
+                        </v-row>
+                    </v-card>
+                </v-col>
+                <v-col cols="12">
+                    <v-card :title="notifyTypes.title">
+                        <v-row class="pb-5">
+                            <v-col v-for="item in notifyTypes.items" cols="12" sm="4" md="3" lg="2" class="ml-5">
+                                <v-switch :label="item.label" v-model="settings[item.key]"></v-switch>
+                            </v-col>
+                        </v-row>
+                    </v-card>
+                </v-col>
+            </v-row>
+            <div class="btn-settings">
                 <v-btn @click="saveConfig">保存</v-btn>
             </div>
         </v-form>
@@ -34,7 +32,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useRoute } from 'vue-router'
 import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api/index'
 import { TelegramSettings, SaveResponse } from '@/api/types';
@@ -98,7 +95,7 @@ async function fetchSyncConfig() {
 
 async function saveConfig() {
     try {
-        let data = { settings: settings.value, name: "notify_config" }
+        let data = { settings: { telegram: settings.value }, name: "notify_config" }
         const response: SaveResponse = await api.post(`/system/save_settings`, data)
         snackbarRef.value?.showSnackBar(response.success, response.message)
 
@@ -107,11 +104,10 @@ async function saveConfig() {
     }
 }
 
-async function deleteConfig() {
-}
 
 function updateConfigList(configs: TelegramSettings) {
     settings.value = configs
+    console.log(configs)
 }
 onMounted(fetchSyncConfig)
 

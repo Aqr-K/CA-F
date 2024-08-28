@@ -2,14 +2,14 @@
     <div>
         <v-form>
             <v-row>
-                <v-col cols="12" sm="6" md="4" lg="4">
-                    <v-card class="mb-5 pb-5 px-5" :class="cardHeight">
-                        <v-card-item class="pt-3 justify-start">
-                            <span class="text-[25px] font-bold">掉盘检测</span>
+                <v-col cols="12" md="6" title="掉盘检测">
+                    <v-card :class="cardHeight">
+                        <v-card-item class="pt-3">
+                            <v-switch label="启用检测" v-model="syncConfig.cloud_status" class="p-0 m-0"></v-switch>
                         </v-card-item>
                         <v-card-item class="pt-3">
                             <VPathInput label="文件路径" v-model="syncConfig.sign_file"
-                                hint="掉盘检测的文件路径，选中对应的文件夹后，记得加上/文件名，如'/.../sign.txt''" />
+                                hint="掉盘检测的文件路径，选中对应的文件夹后，记得加上/文件名，如'/.../sign.txt''" :fileRequired="true" />
                         </v-card-item>
                         <v-card-item class="pt-3">
                             <v-text-field label="文件链接" v-model="syncConfig.sign_file_url" class="my-10"

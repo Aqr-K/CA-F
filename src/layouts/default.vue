@@ -10,7 +10,6 @@
             <v-icon>mdi-menu</v-icon>
         </v-btn>
         <!-- 导航栏内容 -->
-        <v-toolbar-title></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn class="theme-btn mr-2" :icon="$vuetify.theme.current.dark ? 'mdi-weather-night' : 'mdi-weather-sunny'"
             @click="toggleTheme" :color="$vuetify.theme.current.dark ? 'white' : 'gray'">

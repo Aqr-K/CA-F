@@ -29,7 +29,7 @@
                     </v-col>
                 </v-row>
             </v-card>
-            <div class="mb-15">
+            <div class="btn-settings">
                 <v-btn color="red" @click="deleteConfig">删除</v-btn>
                 <span class="mx-3"></span>
                 <v-btn @click="saveConfig">保存</v-btn>

@@ -29,7 +29,7 @@
                 </v-form>
             </v-card-text>
         </v-card>
-        <div class="mb-15">
+        <div class="btn-settings">
             <v-btn color="red" @click="deleteConfig">删除</v-btn>
             <span class="mx-3"></span>
             <v-btn @click="saveConfig">保存</v-btn>
@@ -52,12 +52,10 @@ const configList = ref([])
 const snackbarRef = ref(null)
 
 
-let syncConfigId = ""
 
 async function fetchSyncConfig() {
     try {
         const data: SyncItem = await api.post(`/autosymlink/sync_config/${id}`)
-        syncConfigId = data.id
         updateConfigList(data)
 
     } catch (error) {
@@ -73,7 +71,6 @@ async function saveConfig() {
         }
     }
 
-    syncConfig["id"] = syncConfigId
     try {
         const response: SaveResponse = await api.post(`/save_sync_config`, syncConfig)
         snackbarRef.value?.showSnackBar(response.success, response.message)

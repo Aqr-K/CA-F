@@ -21,6 +21,13 @@ const router = createRouter({
           },
         },
         {
+          path: "logs",
+          component: () => import("../pages/logs.vue"),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
           path: "sync_list",
           component: () => import("../pages/sync_list.vue"),
           meta: {
@@ -38,6 +45,13 @@ const router = createRouter({
         {
           path: "add_sync",
           component: () => import("../pages/add_sync.vue"),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: "sync_task",
+          component: () => import("../pages/sync_task.vue"),
           meta: {
             requiresAuth: true,
           },

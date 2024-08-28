@@ -1,10 +1,7 @@
 <template>
     <div v-if="!isLoading">
         <v-form>
-            <v-card v-for="config in configList" class="px-5 mb-5" style="width: auto;">
-                <v-card-item class="pt-3 justify-start category my-5">
-                    <span class="text-[25px] font-bold">{{ config.title }}</span>
-                </v-card-item>
+            <v-card v-for="config in configList" class="px-5 mb-5" :title="config.title">
                 <v-row>
                     <v-col v-for="item in config.items" cols="12" class="pb-10 ml-2">
                         <div class="flex items-center flex-left">
@@ -14,7 +11,8 @@
                                 v-model="settings[item.key]" />
                             <v-text-field
                                 v-else-if="typeof settings[item.key] === 'string' || typeof settings[item.key] === 'number'"
-                                :id="item.label" :label="item.label" v-model="settings[item.key]"></v-text-field>
+                                :id="item.label" :label="item.label" v-model="settings[item.key]"
+                                :type="item.key === 'password' ? 'password' : 'text'"></v-text-field>
                             <v-row v-else-if="item.key == 'switch_group'">
                                 <v-col v-for="(swite, index) in item.switches" cols="12" sm="6" md="4" lg="4">
                                     <v-switch :label="swite.label" v-model="settings[swite.key]"></v-switch>
@@ -24,9 +22,7 @@
                     </v-col>
                 </v-row>
             </v-card>
-            <div class="mb-15">
-                <v-btn color="red" @click="deleteConfig">删除</v-btn>
-                <span class="mx-3"></span>
+            <div class="btn-settings">
                 <v-btn @click="saveConfig">保存</v-btn>
             </div>
         </v-form>
@@ -40,6 +36,7 @@ import { useRoute } from 'vue-router'
 import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api/index'
 import { GlobalSettings, SaveResponse } from '@/api/types';
+import { title } from 'process';
 const isLoading = ref(true)
 
 const configList = ref([{
@@ -50,7 +47,6 @@ const configList = ref([{
         { key: "http_proxy", label: "http代理" },
         {
             key: "switch_group", switches: [{ key: "debug_mode", label: "调试模式" },
-            { key: "config_file_watcher", label: "配置监测" },
             ]
         },
 
@@ -61,7 +57,6 @@ const configList = ref([{
     items: [
         { key: "username", label: "用户名" },
         { key: "password", label: "密码" },
-
     ]
 }])
 
@@ -103,10 +98,8 @@ async function saveConfig() {
     }
 }
 
-async function deleteConfig() {
-}
 
-function updateConfigList(configs: Settings) {
+function updateConfigList(configs: GlobalSettings) {
     settings.value = configs
 }
 onMounted(fetchSyncConfig)

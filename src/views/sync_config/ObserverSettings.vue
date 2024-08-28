@@ -2,13 +2,10 @@
     <div>
         <v-form>
             <v-row>
-                <v-col cols="12" sm="6" md="4" lg="4">
-                    <v-card class="mb-5 pb-5 px-5" :class="cardHeight">
-                        <v-card-item class="pt-3 justify-start">
-                            <span class="text-[25px] font-bold">实时监控</span>
-                        </v-card-item>
-                        <v-row>
-                            <v-col v-for="(swite, index) in observerSwites" cols="12" sm="6" md="4" lg="4" class="ml-5">
+                <v-col cols="12" md="6">
+                    <v-card :class="cardHeight" title="实时监控">
+                        <v-row class="ml-2">
+                            <v-col v-for="(swite, index) in observerSwites" cols="12" md="6">
                                 <v-switch :label="swite.label" v-model="syncConfig[swite.key]"
                                     class="no-wrap"></v-switch>
                             </v-col>

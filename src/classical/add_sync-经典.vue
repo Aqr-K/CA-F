@@ -29,7 +29,7 @@
                 </v-form>
             </v-card-text>
         </v-card>
-        <div class="mb-15">
+        <div class="btn-settings">
             <v-btn @click="saveConfig">保存</v-btn>
         </div>
     </div>

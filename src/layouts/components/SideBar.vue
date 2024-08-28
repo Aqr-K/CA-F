@@ -37,12 +37,12 @@
 import { ref, watch } from 'vue';
 
 const drawer = defineModel("drawer")
-let localDrawer = ref<boolean>(<boolean>drawer.value)
+let localDrawer = ref(<boolean>drawer.value)
 
 
 // 监听 props.modelValue 的变化,更新 localDrawer
-watch(() => drawer.value, (newVal) => {
-    localDrawer = newVal;
+watch(() => drawer.value, (newVal: boolean) => {
+    localDrawer.value = newVal;
 });
 
 // 监听本地状态的变化，并通过 emit 事件同步回父组件
@@ -56,12 +56,13 @@ const categories = [
     {
         title: "发现",
         items: [{ title: "主界面", to: "/dashboard", icon: "mdi-home", isActive: true },
-        { title: "查看日志", to: "/view_logs", icon: "mdi-format-list-bulleted", isActive: false },
+        { title: "查看日志", to: "/logs", icon: "mdi-format-list-bulleted", isActive: false },
         ]
     },
     {
         title: "软链接 | Strm",
-        items: [{ title: "目录配置", to: "/sync_list", icon: "mdi-cloud-sync-outline", isActive: false },
+        items: [{ title: "目录配置", to: "/sync_list", icon: "mdi-folder", isActive: false },
+        { title: "手动同步", to: "/sync_task", icon: "mdi-cloud-sync-outline", isActive: false },
         { title: "添加同步", to: "/add_sync", icon: "mdi-plus", isActive: false },]
     },
     {

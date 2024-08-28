@@ -2,11 +2,8 @@
     <div>
         <v-form>
             <v-row>
-                <v-col cols="12" sm="6" md="4" lg="4">
-                    <v-card class="mb-5 pb-5 px-5" :class="cardHeight">
-                        <v-card-item class="pt-3 justify-start">
-                            <span class="text-[25px] font-bold">定时任务</span>
-                        </v-card-item>
+                <v-col cols="12" md="6">
+                    <v-card :class="cardHeight" title="定时任务">
                         <v-card-item>
                             <v-switch label="定时同步" v-model="syncConfig.sync_scheduled" class="mb-5"></v-switch>
                             <v-text-field label="同步时间" v-model="syncConfig.sync_time" hint="定时同步的时间间隔:单位为秒,支持乘法表达式,比如一天就是24*3600,每隔指定的时间进行同步,

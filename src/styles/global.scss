@@ -12,12 +12,29 @@
             transition: background-color 1s linear, box-shadow 1s ease-in-out;
 }
 
-.v-messages{
-    display: flex !important;
-    justify-content: flex-start !important;
-    text-align: left !important;
+.flex-center{
+    justify-content: center !important;
+    align-items: center !important;
 }
 
+.btn-settings{
+    margin: 20px 0 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.v-card{
+    padding: 10px 10px 10px 10px !important;
+}
+
+.v-card-title{
+    margin-bottom: 10px !important;
+}
 .v-text-field .v-input__details{
     padding-inline:10px !important
+}
+
+.v-tab.v-tab.v-btn{
+    border-radius: 5px !important;
 }

@@ -14,9 +14,9 @@
                         {{ dir.label }}{{ item[dir.key] }}
                     </span>
                 </v-card-text>
-                <v-row>
-                    <v-col v-for="(swite, index) in switches" cols="12" sm="6" md="4" lg="4" class="ml-8">
-                        <v-switch :label="swite.label" v-model="item[swite.key]"></v-switch>
+                <v-row class="ml-5">
+                    <v-col v-for="(swite, index) in switches" cols="12" md="6">
+                        <v-switch :label="swite.label" v-model="item[swite.key]" @input="saveConfig(item)"></v-switch>
                     </v-col>
                 </v-row>
             </v-card>
@@ -28,7 +28,7 @@
 import { ref } from "vue"
 import api from '@/api'
 import { SyncList } from '@/api/types'
-
+import { SaveResponse } from "@/api/types";
 const syncList = ref<SyncList>([]);
 const dirs = [{ label: '媒体目录：', key: 'media_dir' }, { label: '本地目录：', key: 'symlink_dir' }]
 const switches = ref([
@@ -45,6 +45,15 @@ async function fetchSyncList() {
     } catch (error) {
         console.error('Error fetching sync list:', error)
     }
+}
+
+async function saveConfig(data: {}) {
+    try {
+        const response: SaveResponse = await api.post(`/autosymlink/save_config`, data)
+    } catch (error) {
+        console.error('Error fetching sync config:', error)
+    }
+
 }
 
 onMounted(fetchSyncList)

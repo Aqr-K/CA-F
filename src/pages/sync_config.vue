@@ -14,33 +14,33 @@
             <v-window-item value="symlink">
                 <transition name="fade-slide" appear>
                     <div>
-                        <SymlinkSettings v-model:sync-config="syncConfig" />
+                        <SymlinkSettings v-model:syncConfig="syncConfig" />
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="scheduled_task">
                 <transition name="fade-slide" appear>
                     <div>
-                        <ScheduledSettings v-model:sync-config="syncConfig" />
+                        <ScheduledSettings v-model:syncConfig="syncConfig" />
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="sync_observer">
                 <transition name="fade-slide" appear>
                     <div>
-                        <ObserverSettings v-model:sync-config="syncConfig" />
+                        <ObserverSettings v-model:syncConfig="syncConfig" />
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="cloud_status">
                 <transition name="fade-slide" appear>
                     <div>
-                        <CloudStatus v-model:sync-config="syncConfig" />
+                        <CloudStatus v-model:syncConfig="syncConfig" />
                     </div>
                 </transition>
             </v-window-item>
         </v-window>
-        <div class="my-10">
+        <div class="btn-settings">
             <v-btn color="red" @click="deleteConfig">删除</v-btn>
             <span class="mx-3"></span>
             <v-btn @click="saveConfig">保存</v-btn>
@@ -105,8 +105,6 @@ const syncConfig = ref(<SyncItem>{
     cloud_status: false,
 })
 
-let syncConfigId = ""
-
 const activeTab = ref(route.query.tab)
 
 const tabs = [{ tab: "symlink", icon: "mdi-link-variant", title: "软链接" }, { tab: "scheduled_task", icon: "mdi-calendar-clock", title: "定时任务" }, { tab: "sync_observer", icon: "mdi-eye", title: "实时监控" }, { tab: "cloud_status", icon: "mdi-weather-cloudy", title: "掉盘检测" }]
@@ -114,7 +112,6 @@ const tabs = [{ tab: "symlink", icon: "mdi-link-variant", title: "软链接" }, 
 async function fetchSyncConfig() {
     try {
         const data: SyncItem = await api.get(`/autosymlink/sync_config/${id}`)
-        syncConfigId = data.id
         syncConfig.value = data
         isLoading.value = false
     } catch (error) {
@@ -150,8 +147,9 @@ function jumpTab(tab: string) {
     router.push('/sync_config/' + syncConfig.value.id + "?tab=" + tab)
 }
 
-onMounted(fetchSyncConfig)
-
+onMounted(() => {
+    fetchSyncConfig();
+});
 </script>
 
 <style scoped>

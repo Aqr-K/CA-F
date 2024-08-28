@@ -1,11 +1,13 @@
 <template>
     <div>
         <v-form>
-            <v-row align="stretch">
-                <v-col cols="12" sm="6" md="4" lg="4">
-                    <v-card class="mb-5 pb-5 px-5" :class="cardHeight">
-                        <v-card-item class="pt-3 justify-start">
-                            <span class="text-[25px] font-bold">目录配置</span>
+            <v-row>
+                <v-col cols="12" md="6">
+                    <v-card :class="cardHeight" title="目录配置">
+                        <v-card-item v-if="props.isNew" class="pt-3">
+                            <v-select label="复制现有配置" :items="syncTempateList" v-model="selectedTemplate" class="pt-3"
+                                hint="复制现有的目录配置" persistent-hint @update:modelValue="handleTemplateChange">
+                            </v-select>
                         </v-card-item>
                         <v-card-item class="pt-3">
                             <v-text-field label="任务名称" v-model="syncConfig.task_name" class="mt-3"></v-text-field>
@@ -15,14 +17,12 @@
                         </v-card-item>
                     </v-card>
                 </v-col>
-                <v-col cols="12" sm="6" md="4" lg="4">
-                    <v-card class="mb-5 pb-5 px-5" :class="cardHeight">
-                        <v-card-item class="pt-3 justify-start">
-                            <span class="text-[25px] font-bold">同步配置</span>
-                        </v-card-item>
-                        <v-row>
-                            <v-col v-for="(swite, index) in switches" cols="12" sm="6" md="4" lg="4" class="ml-5">
-                                <v-switch :label="swite.label" v-model="syncConfig[swite.key]"></v-switch>
+                <v-col cols="12" md="6">
+                    <v-card :class="cardHeight" title="同步配置">
+                        <v-row class="ml-2">
+                            <v-col v-for="(swite, index) in switches" cols="12" md="6">
+                                <v-switch :label="swite.label" v-model="syncConfig[swite.key]"
+                                    class="p-0 m-0"></v-switch>
                             </v-col>
                         </v-row>
                         <v-card-item>
@@ -34,30 +34,34 @@
                         </v-card-item>
                     </v-card>
                 </v-col>
-                <v-col cols="12" sm="6" md="4" lg="4">
-                    <v-card class="mb-5 pb-5 px-5" :class="cardHeight">
-                        <v-card-item class="pt-3 justify-start">
-                            <span class="text-[25px] font-bold">软链接配置</span>
-                        </v-card-item>
+                <v-col cols="12" md="6">
+                    <v-card :class="cardHeight" title="软链接置">
                         <v-card-item v-for="(select, index) in selects" class="pt-3">
-                            <v-select :label="select.label" :items="select.items" v-model="syncConfig[select.key]"
-                                class="pt-3" :hint="select.hint" persistent-hint>
+                            <v-select v-if="select.items" :label="select.label" :items="select.items"
+                                v-model="syncConfig[select.key]" class="pt-3" :hint="select.hint" persistent-hint>
                             </v-select>
-                        </v-card-item>
-                        <v-card-item class="pt-3">
-                            <v-text-field label="云端地址" v-model="syncConfig.cloud_url" class="pt-3"
-                                hint="bridge下要填本机ip,不能填localhost/127.0.0.1" persistent-hint></v-text-field>
+                            <v-text-field v-else :label="select.label" v-model="syncConfig[select.key]" class="pt-3"
+                                :hint="select.hint" persistent-hint></v-text-field>
                         </v-card-item>
                     </v-card>
                 </v-col>
-                <v-col cols="12" sm="6" md="4" lg="4">
-                    <v-card class="mb-5 pb-5 px-5" :class="cardHeight">
-                        <v-card-item class="pt-3 justify-start">
-                            <span class="text-[25px] font-bold">其他配置</span>
+                <v-col cols="12" md="6">
+                    <v-card :class="cardHeight" title="根目录计算" subtitle="用于获取cd2根目录/alist根目录">
+                        <v-card-item>
+                            <VPathInput label="文件路径" v-model="testFilePath" hint="在媒体目录中选择任意一个文件"
+                                :fileRequired="true" />
                         </v-card-item>
-                        <v-text-field v-for="(textField, index) in textFields" :label="textField.label"
-                            v-model="syncConfig[textField.key]" class="my-10">
-                        </v-text-field>
+                        <v-card-item>
+                            <v-text-field label="文件链接" v-model="testFileUrl" class="pt-3" hint="该文件在cd2中的链接"
+                                persistent-hint></v-text-field>
+                        </v-card-item>
+                        <v-card-item>
+                            <v-text-field label="根目录" v-model="testRootPath" class="pt-3" hint="将根目录的值复制到对应的设置里即可"
+                                persistent-hint></v-text-field>
+                        </v-card-item>
+                        <div class="btn-settings">
+                            <v-btn @click="caculatePath">生成</v-btn>
+                        </div>
                     </v-card>
                 </v-col>
             </v-row>
@@ -68,11 +72,28 @@
 <script lang="ts" setup>
 import { SyncItem } from '@/api/types';
 import { ref } from 'vue';
+import api from '@/api';
 
-const cardHeight = ref("h-[650px]")
+const cardHeight = ref("h-[780px]")
 const syncConfig = defineModel<SyncItem>('syncConfig');
+const syncTemplate = defineModel<SyncItem[]>('syncTemplate');
+// 输入参数
+const props = defineProps({
+    type: String, // download/library
+    isNew: {
+        type: Boolean,
+        required: false,
+        default: false
+    },
+
+})
+
+const syncTempateList = computed(() => {
+    return syncTemplate.value.map(item => item.task_name);
+});
+const selectedTemplate = ref(syncTempateList[0])
 const pathInputs = ref([
-    { label: '媒体目录', key: 'media_dir', hint: "视频所在的文件夹" },
+    { label: '媒体目录', key: 'media_dir', hint: "视频所在的文件夹,如果是cd2挂载文件夹,请直接挂载网盘根目录,否则会出现路径错误等问题" },
     { label: '本地目录', key: 'symlink_dir', hint: "程序会在此文件夹中创建软链接/strm文件,同步方向为媒体目录到本地目录,多目录同步时,本地目录不能完全相同" },
     { label: '排除目录', key: 'exclude_folder', hint: "要排除同步的文件夹路径，多个路径以;隔开，被排除的文件夹不会被同步和监控" },
     { label: 'cd2根目录', key: 'clouddrive2_path', hint: "挂载类型为cd2时要填，cd2的挂载点" },
@@ -91,12 +112,37 @@ const selects = ref([
     { label: '链接模式', key: 'symlink_mode', items: ['symlink', 'strm'] },
     { label: 'Strm模式', key: 'strm_mode', items: ['cloud', 'local'], hint: "cloud模式文件内是http开头的链接,local模式文件内是文件的路径" },
     { label: '挂载类型', key: 'cloud_type', items: ['cd2', 'alist'] },
-]);
-const textFields = ref([
+    { label: '云端地址', key: 'cloud_url', hint: "cloud模式文件内是http开头的链接,local模式文件内是文件的路径" },
     { label: '软链接大小', key: 'symlink_size', },
     { label: '软链接后缀', key: 'symlink_ext' },
     { label: '元数据后缀', key: 'metadata_ext' },
 ]);
+const testFilePath = ref("")
+const testFileUrl = ref("")
+const testRootPath = ref("")
+
+async function caculatePath() {
+    let data = { path: testFilePath.value, url: testFileUrl.value }
+    try {
+        const response: string = await api.post('/autosymlink/caculate_path', data)
+        testRootPath.value = response
+    } catch (error) {
+        console.error('Error fetching sync list:', error)
+    }
+}
+
+//根据template找到对应的配置
+function handleTemplateChange(name) {
+    const templateConfig = syncTemplate.value.find(item => item.task_name === name);
+
+    if (templateConfig) {
+        //深度复制,取消响应式
+        syncConfig.value = JSON.parse(JSON.stringify(templateConfig));
+    } else {
+        console.log('Template config not found');
+    }
+}
+
 </script>
 
 <style scoped></style>

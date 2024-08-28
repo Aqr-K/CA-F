@@ -1,5 +1,6 @@
 <template>
-    <VPathList v-model="path" @update:modelValue="updatePath">
+    <VPathList v-model="path" @update:modelValue="updatePath" :fileRequired="props.fileRequired"
+        :currentDir="props.currentDir">
         <template #activator="{ menuprops }">
             <VTextField v-model="props.modelValue" @input="handleInput" v-bind="menuprops" variant="underlined"
                 :label="label" :hint="props.hint" persistent-hint />
@@ -26,11 +27,21 @@ const props = defineProps({
         type: String,
         required: false, // 必填参数
     },
+    fileRequired: {
+        type: Boolean,
+        require: false,
+        default: false
+    },
+    currentDir: {
+        type: String,
+        require: false,
+        default: "/",
+    },
 })
-const path = ref(props.modelValue)
+const path = ref(props.modelValue.length > 0 ? props.modelValue : "/")
 
 // 定义触发的自定义事件
-const emit = defineEmits(['close', 'changed', 'update:modelValue', 'update:directory'])
+const emit = defineEmits(['close', 'changed', 'update:modelValue', 'update:currentDir'])
 
 
 // const path = defineModel('path')
