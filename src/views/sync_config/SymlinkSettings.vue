@@ -3,14 +3,20 @@
         <v-form>
             <v-row>
                 <v-col cols="12" md="6">
-                    <v-card :class="cardHeight" title="目录配置">
+                    <v-card :class="cardHeight" title="基础配置">
                         <v-card-item v-if="props.isNew" class="pt-3">
                             <v-select label="复制现有配置" :items="syncTempateList" v-model="selectedTemplate" class="pt-3"
                                 hint="复制现有的目录配置" persistent-hint @update:modelValue="handleTemplateChange">
                             </v-select>
                         </v-card-item>
                         <v-card-item class="pt-3">
-                            <v-text-field label="任务名称" v-model="syncConfig.task_name" class="mt-3"></v-text-field>
+                            <v-text-field label="任务名称" v-model="syncConfig.task_name"></v-text-field>
+                        </v-card-item>
+                        <v-card-item class="pt-3">
+                            <v-select label="同步模式" :items="['常规同步', '目录树同步']" v-model="syncConfig.sync_mode"
+                                class="pt-3" hint="常规同步即对文件夹进行遍历同步,目录树同步是通过115的api生成目录树后进行同步,目录树同步仅能用于115的文件夹"
+                                persistent-hint>
+                            </v-select>
                         </v-card-item>
                         <v-card-item v-for="(input, index) in pathInputs" class="pt-3">
                             <VPathInput :label="input.label" v-model="syncConfig[input.key]" :hint="input.hint" />

@@ -41,48 +41,11 @@
 import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api';
 import { SyncItem, SaveResponse } from '@/api/types';
+import { SyncItemVar } from '@/api/variable';
 
 const snackbarRef = ref(null)
 const isLoading = ref(true)
-const currentConfig = ref<SyncItem>({
-    id: "",
-    task_name: "",
-    media_dir: "",
-    symlink_dir: "",
-    exclude_folder: "",
-    sync_scheduled: false,
-    sync_time: "",
-    symlink_creator: false,
-    metadata_copyer: false,
-    metadata_covered: false,
-    metadata_skipped: false,
-    metadata_copyer_mode: "",
-    num_threads: 0,
-    symlink_dir_checker: false,
-    symlink_checker: false,
-    metadata_checker: false,
-    observer_enabled: false,
-    observer_symlink_creator: false,
-    observer_metadata_copyer: false,
-    observer_symlink_checker: false,
-    observer_metadata_checker: false,
-    observer_time: 0,
-    backup_scheduled: false,
-    backup_time: "",
-    backup_ext: "",
-    symlink_mode: "",
-    strm_mode: "",
-    symlink_size: 0,
-    cloud_type: "",
-    cloud_url: "",
-    clouddrive2_path: "",
-    alist_path: "",
-    symlink_ext: "",
-    metadata_ext: "",
-    sign_file: "",
-    sign_file_url: "",
-    cloud_status: false,
-})
+const currentConfig = ref<SyncItem>({ ...SyncItemVar })
 
 const initialMediaDir = ref("");
 

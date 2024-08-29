@@ -3,6 +3,9 @@ export interface SyncItem {
   media_dir: string;
   symlink_dir: string;
   exclude_folder: string;
+  sync_mode: string;
+  media_dir_id: string;
+  temp_dir_id: string;
   sync_scheduled: boolean;
   sync_time: string | number; // e.g., cron expression like "30 2 * * *"
   symlink_creator: boolean;
@@ -61,6 +64,11 @@ export interface TelegramSettings {
   backup_completed: boolean;
   cloud_path_unmount: boolean;
   filetrans_enbaled: boolean;
+}
+
+export interface Settings115 {
+  name: string;
+  cookies: string;
 }
 
 export interface SaveResponse {

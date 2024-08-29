@@ -26,6 +26,13 @@
                     </div>
                 </transition>
             </v-window-item>
+            <v-window-item value="115_settings">
+                <transition name="fade-slide" appear>
+                    <div>
+                        <Settings115 />
+                    </div>
+                </transition>
+            </v-window-item>
         </v-window>
     </div>
 </template>
@@ -36,7 +43,7 @@ import router from '@/router'
 import { useRoute } from 'vue-router'
 import GlobalSettings from '@/views/settings/GlobalSettings.vue'
 import Notification from '@/views/settings/Notification.vue'
-
+import Settings115 from '@/views/settings/Settings115.vue'
 const route = useRoute()
 
 
@@ -45,6 +52,8 @@ const activeTab = ref(route.query.tab)
 const tabs = [
     { tab: "global_settings", icon: "mdi-cog", title: "全局设置" },
     { tab: "notification", icon: "mdi-bell", title: "通知" },
+    { tab: "115_settings", icon: "mdi-cookie", title: "115设置" },
+
 ]
 
 function jumpTab(tab: string) {

@@ -39,6 +39,13 @@
                     </div>
                 </transition>
             </v-window-item>
+            <v-window-item value="tree_sync">
+                <transition name="fade-slide" appear>
+                    <div>
+                        <TreeSync v-model:syncConfig="syncConfig" />
+                    </div>
+                </transition>
+            </v-window-item>
         </v-window>
         <div class="btn-settings">
             <v-btn color="red" @click="deleteConfig">删除</v-btn>
@@ -56,58 +63,22 @@ import { useRoute } from 'vue-router'
 import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api/index'
 import { SyncItem, SaveResponse } from '@/api/types';
+import { SyncItemVar } from '@/api/variable'
 import SymlinkSettings from '@/views/sync_config/SymlinkSettings.vue'
 import ScheduledSettings from '@/views/sync_config/ScheduledSettings.vue'
 import ObserverSettings from '@/views/sync_config/ObserverSettings.vue'
 import CloudStatus from '@/views/sync_config/CloudStatus.vue'
+import TreeSync from '@/views/sync_config/TreeSync.vue'
 const route = useRoute()
 const { id } = route.params
 const snackbarRef = ref(null)
 const isLoading = ref(true)
 
-const syncConfig = ref(<SyncItem>{
-    id: "",
-    task_name: "",
-    media_dir: "",
-    symlink_dir: "",
-    exclude_folder: "",
-    sync_scheduled: false,
-    sync_time: "",
-    symlink_creator: false,
-    metadata_copyer: false,
-    metadata_covered: false,
-    metadata_skipped: false,
-    metadata_copyer_mode: "",
-    num_threads: 0,
-    symlink_dir_checker: false,
-    symlink_checker: false,
-    metadata_checker: false,
-    observer_enabled: false,
-    observer_symlink_creator: false,
-    observer_metadata_copyer: false,
-    observer_symlink_checker: false,
-    observer_metadata_checker: false,
-    observer_time: 0,
-    backup_scheduled: false,
-    backup_time: "",
-    backup_ext: "",
-    symlink_mode: "",
-    strm_mode: "",
-    symlink_size: 0,
-    cloud_type: "",
-    cloud_url: "",
-    clouddrive2_path: "",
-    alist_path: "",
-    symlink_ext: "",
-    metadata_ext: "",
-    sign_file: "",
-    sign_file_url: "",
-    cloud_status: false,
-})
+const syncConfig = ref(<SyncItem>{ ...SyncItemVar })
 
 const activeTab = ref(route.query.tab)
 
-const tabs = [{ tab: "symlink", icon: "mdi-link-variant", title: "软链接" }, { tab: "scheduled_task", icon: "mdi-calendar-clock", title: "定时任务" }, { tab: "sync_observer", icon: "mdi-eye", title: "实时监控" }, { tab: "cloud_status", icon: "mdi-weather-cloudy", title: "掉盘检测" }]
+const tabs = [{ tab: "symlink", icon: "mdi-link-variant", title: "软链接" }, { tab: "scheduled_task", icon: "mdi-calendar-clock", title: "定时任务" }, { tab: "sync_observer", icon: "mdi-eye", title: "实时监控" }, { tab: "cloud_status", icon: "mdi-weather-cloudy", title: "掉盘检测" }, { tab: "tree_sync", icon: "mdi-sync", title: "目录树同步" }]
 
 async function fetchSyncConfig() {
     try {

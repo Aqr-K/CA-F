@@ -56,6 +56,7 @@ import { useRoute } from 'vue-router'
 import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api/index'
 import { SyncItem, SaveResponse } from '@/api/types';
+import { SyncItemVar, SyncTemplateVar } from '@/api/variable'
 import SymlinkSettings from '@/views/sync_config/SymlinkSettings.vue'
 import ScheduledSettings from '@/views/sync_config/ScheduledSettings.vue'
 import ObserverSettings from '@/views/sync_config/ObserverSettings.vue'
@@ -63,89 +64,13 @@ import CloudStatus from '@/views/sync_config/CloudStatus.vue'
 const route = useRoute()
 const snackbarRef = ref(null)
 
-const syncConfig = ref(<SyncItem>{
-    id: "",
-    task_name: "",
-    media_dir: "",
-    symlink_dir: "",
-    exclude_folder: "",
-    sync_scheduled: false,
-    sync_time: "30 2 * * *",
-    symlink_creator: false,
-    metadata_copyer: false,
-    metadata_covered: false,
-    metadata_skipped: false,
-    metadata_copyer_mode: "下载模式",
-    num_threads: 2,
-    symlink_dir_checker: false,
-    symlink_checker: false,
-    metadata_checker: false,
-    observer_enabled: false,
-    observer_symlink_creator: false,
-    observer_metadata_copyer: false,
-    observer_symlink_checker: false,
-    observer_metadata_checker: false,
-    observer_time: 0,
-    backup_scheduled: false,
-    backup_time: "30 2 * * *",
-    backup_ext: "*.*",
-    symlink_mode: "symlink",
-    strm_mode: "cloud",
-    symlink_size: 0,
-    cloud_type: "cd2",
-    cloud_url: "ip:19798",
-    clouddrive2_path: "",
-    alist_path: "",
-    symlink_ext: ".mkv;.iso;.ts;.mp4;.avi;.rmvb;.wmv;.m2ts;.mpg;.flv;.rm;.mov",
-    metadata_ext: ".nfo;.jpg;jpeg;.png;.svg;.ass;.srt;.sup;.mp3;.flac;.wav;.aac",
-    sign_file: "",
-    sign_file_url: "",
-    cloud_status: false,
-})
+const syncConfig = ref(<SyncItem>{ ...SyncItemVar })
 
 const activeTab = ref(route.query.tab)
 
 const tabs = [{ tab: "symlink", icon: "mdi-link-variant", title: "软链接" }, { tab: "scheduled_task", icon: "mdi-calendar-clock", title: "定时任务" }, { tab: "sync_observer", icon: "mdi-eye", title: "实时监控" }, { tab: "cloud_status", icon: "mdi-weather-cloudy", title: "掉盘检测" }]
 
-const syncTemplate = ref(<SyncItem[]>[{
-    id: "",
-    task_name: "默认模板",
-    media_dir: "",
-    symlink_dir: "",
-    exclude_folder: "",
-    sync_scheduled: false,
-    sync_time: "30 2 * * *",
-    symlink_creator: false,
-    metadata_copyer: false,
-    metadata_covered: false,
-    metadata_skipped: false,
-    metadata_copyer_mode: "下载模式",
-    num_threads: 2,
-    symlink_dir_checker: false,
-    symlink_checker: false,
-    metadata_checker: false,
-    observer_enabled: false,
-    observer_symlink_creator: false,
-    observer_metadata_copyer: false,
-    observer_symlink_checker: false,
-    observer_metadata_checker: false,
-    observer_time: 0,
-    backup_scheduled: false,
-    backup_time: "30 2 * * *",
-    backup_ext: "*.*",
-    symlink_mode: "symlink",
-    strm_mode: "cloud",
-    symlink_size: 0,
-    cloud_type: "cd2",
-    cloud_url: "ip:19798",
-    clouddrive2_path: "",
-    alist_path: "",
-    symlink_ext: ".mkv;.iso;.ts;.mp4;.avi;.rmvb;.wmv;.m2ts;.mpg;.flv;.rm;.mov",
-    metadata_ext: ".nfo;.jpg;jpeg;.png;.svg;.ass;.srt;.sup;.mp3;.flac;.wav;.aac",
-    sign_file: "",
-    sign_file_url: "",
-    cloud_status: false,
-}])
+const syncTemplate = ref(<SyncItem[]>[{ ...SyncTemplateVar }])
 
 async function fetchSyncTemplate() {
     try {

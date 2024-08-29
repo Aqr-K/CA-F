@@ -1,0 +1,28 @@
+<template>
+    <div>
+        <v-form>
+            <v-row>
+                <v-col cols="12" md="6">
+                    <v-card :class="cardHeight" title="目录树同步" subtitle='同步模式选择 "目录树同步" 后此项生效'>
+                        <v-card-item>
+                            <v-text-field label="同步文件夹id" v-model="syncConfig.media_dir_id"
+                                hint="媒体文件夹的cid,在115网页版中打开此文件夹,将链接中cid后的数字填入此处" persistent-hint></v-text-field>
+                            <v-text-field label="临时文件夹id" v-model="syncConfig.temp_dir_id" class="my-5"
+                                hint="同步文件夹生成的目录树文件将保存在此文件夹,建议新建一个临时文件夹专门用于保存目录树文件" persistent-hint></v-text-field>
+                        </v-card-item>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-form>
+
+    </div>
+</template>
+
+<script lang="ts" setup>
+import { SyncItem } from '@/api/types';
+import { ref } from 'vue';
+
+const cardHeight = ref("h-[580px]")
+const syncConfig = defineModel<SyncItem>('syncConfig');
+</script>
+<style></style>
