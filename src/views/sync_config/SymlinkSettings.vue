@@ -80,7 +80,7 @@ import { SyncItem } from '@/api/types';
 import { ref } from 'vue';
 import api from '@/api';
 
-const cardHeight = ref("h-[780px]")
+const cardHeight = ref("h-[830px]")
 const syncConfig = defineModel<SyncItem>('syncConfig');
 const syncTemplate = defineModel<SyncItem[]>('syncTemplate');
 // 输入参数

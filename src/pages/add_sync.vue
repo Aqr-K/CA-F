@@ -41,6 +41,13 @@
                     </div>
                 </transition>
             </v-window-item>
+            <v-window-item value="tree_sync">
+                <transition name="fade-slide" appear>
+                    <div>
+                        <TreeSync v-model:syncConfig="syncConfig" />
+                    </div>
+                </transition>
+            </v-window-item>
         </v-window>
         <div class="btn-settings">
             <v-btn @click="saveConfig">保存</v-btn>
@@ -61,6 +68,7 @@ import SymlinkSettings from '@/views/sync_config/SymlinkSettings.vue'
 import ScheduledSettings from '@/views/sync_config/ScheduledSettings.vue'
 import ObserverSettings from '@/views/sync_config/ObserverSettings.vue'
 import CloudStatus from '@/views/sync_config/CloudStatus.vue'
+import TreeSync from '@/views/sync_config/TreeSync.vue'
 const route = useRoute()
 const snackbarRef = ref(null)
 
@@ -68,7 +76,7 @@ const syncConfig = ref(<SyncItem>{ ...SyncItemVar })
 
 const activeTab = ref(route.query.tab)
 
-const tabs = [{ tab: "symlink", icon: "mdi-link-variant", title: "软链接" }, { tab: "scheduled_task", icon: "mdi-calendar-clock", title: "定时任务" }, { tab: "sync_observer", icon: "mdi-eye", title: "实时监控" }, { tab: "cloud_status", icon: "mdi-weather-cloudy", title: "掉盘检测" }]
+const tabs = [{ tab: "symlink", icon: "mdi-link-variant", title: "软链接" }, { tab: "scheduled_task", icon: "mdi-calendar-clock", title: "定时任务" }, { tab: "sync_observer", icon: "mdi-eye", title: "实时监控" }, { tab: "cloud_status", icon: "mdi-weather-cloudy", title: "掉盘检测" }, { tab: "tree_sync", icon: "mdi-sync", title: "目录树同步" }]
 
 const syncTemplate = ref(<SyncItem[]>[{ ...SyncTemplateVar }])
 

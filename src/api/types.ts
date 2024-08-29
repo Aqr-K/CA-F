@@ -4,8 +4,9 @@ export interface SyncItem {
   symlink_dir: string;
   exclude_folder: string;
   sync_mode: string;
-  media_dir_id: string;
-  temp_dir_id: string;
+  media_dir_id: number;
+  temp_dir_id: number;
+  settings_115: string;
   sync_scheduled: boolean;
   sync_time: string | number; // e.g., cron expression like "30 2 * * *"
   symlink_creator: boolean;

@@ -73,6 +73,7 @@ const configList = ref([
 async function fetchSyncConfig() {
     try {
         const data: SyncItem[] = await api.get(`/autosymlink/sync_list`)
+        console.log(data)
         syncList.value = data
         currentConfig.value = syncList.value[0]
         selectedConfig.value = currentConfig.value.task_name

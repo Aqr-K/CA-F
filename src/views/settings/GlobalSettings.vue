@@ -36,7 +36,6 @@ import { useRoute } from 'vue-router'
 import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api/index'
 import { GlobalSettings, SaveResponse } from '@/api/types';
-import { title } from 'process';
 const isLoading = ref(true)
 
 const configList = ref([{

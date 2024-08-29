@@ -12,8 +12,8 @@
                                 <v-icon icon="mdi-minus" />
                             </IconBtn>
                         </span>
-                        <v-card-item class="my-5">
-                            <v-text-field label=" 名称" v-model="item.name" hint="自定义该配置的名称,用于识别不同的账户"
+                        <v-card-item class="mb-5">
+                            <v-text-field label="名称" v-model="item.name" hint="自定义该配置的名称,用于识别不同的账户,该名称不可重复"
                                 persistent-hint></v-text-field>
                         </v-card-item>
                         <v-card-item class="my-5">
@@ -68,7 +68,6 @@ async function saveConfig() {
         let data = { settings: settings.value, name: "115_settings" }
         const response: SaveResponse = await api.post(`/system/save_settings`, data)
         snackbarRef.value?.showSnackBar(response.success, response.message)
-
     } catch (error) {
         console.error('Error fetching sync config:', error)
     }

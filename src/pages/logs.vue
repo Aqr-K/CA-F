@@ -17,8 +17,7 @@
                         <span class="inline-block mx-10 w-[140px] text-center">
                             {{ log.program }}
                         </span>
-                        <span class="inline-block">
-                            {{ log.content.replace(/\\hf/g, '<br><br>') }}
+                        <span v-html="log.content.replace(/\\hf/g, '<br><br>')">
                         </span>
                     </td>
                 </tr>
