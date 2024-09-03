@@ -20,11 +20,11 @@ export const SyncItemVar = {
   symlink_checker: false,
   metadata_checker: false,
   observer_enabled: false,
+  observer_mode: "事件通知",
   observer_symlink_creator: false,
   observer_metadata_copyer: false,
   observer_symlink_checker: false,
   observer_metadata_checker: false,
-  observer_time: 0,
   backup_scheduled: false,
   backup_time: "",
   backup_ext: "",
@@ -37,9 +37,8 @@ export const SyncItemVar = {
   alist_path: "",
   symlink_ext: "",
   metadata_ext: "",
-  sign_file: "",
-  sign_file_url: "",
-  cloud_status: false,
+  cloud_status_enabled: false,
+  cloud_status_group: "",
 };
 
 export const SyncTemplateVar = { ...SyncItemVar, task_name: "默认模板" };

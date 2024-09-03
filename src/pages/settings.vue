@@ -33,6 +33,13 @@
                     </div>
                 </transition>
             </v-window-item>
+            <v-window-item value="cloud_status_settings">
+                <transition name="fade-slide" appear>
+                    <div>
+                        <CloudStatus />
+                    </div>
+                </transition>
+            </v-window-item>
         </v-window>
     </div>
 </template>
@@ -44,6 +51,7 @@ import { useRoute } from 'vue-router'
 import GlobalSettings from '@/views/settings/GlobalSettings.vue'
 import Notification from '@/views/settings/Notification.vue'
 import Settings115 from '@/views/settings/Settings115.vue'
+import CloudStatus from '@/views/settings/CloudStatus.vue'
 const route = useRoute()
 
 
@@ -53,7 +61,7 @@ const tabs = [
     { tab: "global_settings", icon: "mdi-cog", title: "全局设置" },
     { tab: "notification", icon: "mdi-bell", title: "通知" },
     { tab: "115_settings", icon: "mdi-cookie", title: "115设置" },
-
+    { tab: "cloud_status_settings", icon: "mdi-eye", title: "掉盘检测" }
 ]
 
 function jumpTab(tab: string) {

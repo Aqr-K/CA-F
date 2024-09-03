@@ -4,8 +4,8 @@ export interface SyncItem {
   symlink_dir: string;
   exclude_folder: string;
   sync_mode: string;
-  media_dir_id: number;
-  temp_dir_id: number;
+  media_dir_id: string | number;
+  temp_dir_id: string | number;
   settings_115: string;
   sync_scheduled: boolean;
   sync_time: string | number; // e.g., cron expression like "30 2 * * *"
@@ -19,11 +19,11 @@ export interface SyncItem {
   symlink_checker: boolean;
   metadata_checker: boolean;
   observer_enabled: boolean;
+  observer_mode: string;
   observer_symlink_creator: boolean;
   observer_metadata_copyer: boolean;
   observer_symlink_checker: boolean;
   observer_metadata_checker: boolean;
-  observer_time: number; // e.g., time in seconds or minutes
   backup_scheduled: boolean;
   backup_time: string | number; // e.g., cron expression like "30 2 * * *"
   backup_ext: string; // e.g., file extensions like "*.*"
@@ -37,9 +37,8 @@ export interface SyncItem {
   symlink_ext: string; // e.g., ".mkv;.iso;.ts;.mp4;.avi;.rmvb;.wmv;.m2ts;.mpg;.flv;.rm;.mov"
   metadata_ext: string; // e.g., ".nfo;.jpg;jpeg;.png;.svg;.ass;.srt;.sup;.mp3;.flac;.wav;.aac"
   id: string;
-  sign_file: string;
-  sign_file_url: string;
-  cloud_status: boolean;
+  cloud_status_enabled: boolean;
+  cloud_status_group: string;
 }
 
 export interface GlobalSettings {
@@ -70,6 +69,12 @@ export interface TelegramSettings {
 export interface Settings115 {
   name: string;
   cookies: string;
+}
+
+export interface CloudStatusSettings {
+  name: string;
+  sign_file: string;
+  sign_file_url: string;
 }
 
 export interface SaveResponse {

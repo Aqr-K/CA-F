@@ -1,10 +1,10 @@
 <template>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div v-for="item in syncList" :key="item.id" class="my-5">
+    <v-row>
+        <v-col cols="12" md="6" v-for="item in syncList" :key="item.id" class="my-5">
             <v-card class="py-5 pr-5">
                 <v-card-item class="pt-3 justify-start task-name">
                     <RouterLink class=" text-[36px] text-[#2f94c3]"
-                        :to="{ name: 'SyncConfig', params: { id: item.id } }">
+                        :to="{ name: 'sync_config', params: { id: item.id } }">
                         <v-icon icon="mdi-cloud-sync-outline" class="mb-6"></v-icon>
                         <span class="ml-2">{{ item.task_name }}</span>
                     </RouterLink>
@@ -20,8 +20,8 @@
                     </v-col>
                 </v-row>
             </v-card>
-        </div>
-    </div>
+        </v-col>
+    </v-row>
 
 </template>
 <script setup lang="ts">

@@ -3,7 +3,7 @@
         <v-form>
             <v-row>
                 <v-col v-for="(item, index) in settings" cols="12" md="4">
-                    <v-card title="115设置" class="h-[450px]">
+                    <v-card title="掉盘检测" class="h-[450px]">
                         <span class="absolute top-3 right-8">
                             <IconBtn @click="addConfig">
                                 <v-icon icon="mdi-plus" />
@@ -12,13 +12,17 @@
                                 <v-icon icon="mdi-minus" />
                             </IconBtn>
                         </span>
-                        <v-card-item class="mb-5">
-                            <v-text-field label="名称" v-model="item.name" hint="自定义该配置的名称,用于识别不同的账户,该名称不可重复"
+                        <v-card-item>
+                            <v-text-field label="名称" v-model="item.name" hint="自定义该配置的名称,用于识别不同的网盘账户,该名称不可重复"
                                 persistent-hint></v-text-field>
                         </v-card-item>
-                        <v-card-item class="my-5">
-                            <v-text-field label="Cookies" v-model="item.cookies" hint="115账户的cookies,推荐抓取小程序的cookies"
-                                persistent-hint></v-text-field>
+                        <v-card-item class="mb-3">
+                            <VPathInput label="文件路径" v-model="item.sign_file" hint="掉盘检测的文件路径" :fileRequired="true" />
+                        </v-card-item>
+                        <v-card-item>
+                            <v-text-field label="文件链接" v-model="item.sign_file_url" hint="掉盘检测的文件在网盘中的下载链接"
+                                persistent-hint>
+                            </v-text-field>
                         </v-card-item>
                     </v-card>
                 </v-col>
@@ -34,18 +38,18 @@
 <script lang="ts" setup>
 import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api/index'
-import { Settings115, SaveResponse } from '@/api/types';
+import { CloudStatusSettings, SaveResponse } from '@/api/types';
 const isLoading = ref(true)
 
 
 const snackbarRef = ref(null)
 
-const settings = ref<Settings115[]>([
-    { name: "", cookies: "" }
-]);
+const settings = ref<CloudStatusSettings[]>(
+    [{ name: "", sign_file: "", sign_file_url: "" }]
+)
 
 function addConfig() {
-    settings.value.push({ name: "", cookies: "" })
+    settings.value.push({ name: "", sign_file: "", sign_file_url: "" })
 }
 
 function deleteConfig(index: number) {
@@ -55,7 +59,7 @@ function deleteConfig(index: number) {
 
 async function fetchSyncConfig() {
     try {
-        const response: Settings115[] = await api.get('/system/settings/' + '115_settings')
+        const response: CloudStatusSettings[] = await api.get('/system/settings/' + 'cloud_status_settings')
         updateConfigList(response)
         isLoading.value = false
     } catch (error) {
@@ -65,7 +69,7 @@ async function fetchSyncConfig() {
 
 async function saveConfig() {
     try {
-        let data = { settings: settings.value, name: "115_settings" }
+        let data = { settings: settings.value, name: "cloud_status_settings" }
         const response: SaveResponse = await api.post(`/system/save_settings`, data)
         snackbarRef.value?.showSnackBar(response.success, response.message)
     } catch (error) {
@@ -74,7 +78,7 @@ async function saveConfig() {
 }
 
 
-function updateConfigList(configs: Settings115[]) {
+function updateConfigList(configs: CloudStatusSettings[]) {
     settings.value = configs
 }
 onMounted(fetchSyncConfig)
