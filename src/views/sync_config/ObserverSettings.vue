@@ -3,7 +3,7 @@
         <v-form>
             <v-row>
                 <v-col cols="12" md="6">
-                    <v-card :class="cardHeight" title="实时监控">
+                    <v-card :class="cardHeight" title="实时监控" subtitle="网盘+事件通知建议开启挂载检测">
                         <v-card-item>
                             <v-select label="监控模式" :items="['事件通知', 'Webhook']" v-model="syncConfig.observer_mode"
                                 hint="新手推荐用事件通知,如果想用Webhook,请去github上根据教程进行配置" persistent-hint></v-select>
@@ -29,6 +29,7 @@ const cardHeight = ref("h-[510px]")
 const syncConfig = defineModel<SyncItem>('syncConfig');
 const observerSwites = ref([
     { label: '实时监控', key: 'observer_enabled' },
+    { label: '挂载检测', key: 'cloud_mount_watcher' },
     { label: '更新软链接', key: 'observer_symlink_creator' },
     { label: '更新元数据', key: 'observer_metadata_copyer' },
     { label: '删除软链接', key: 'observer_symlink_checker' },

@@ -99,8 +99,8 @@ const syncTempateList = computed(() => {
 });
 const selectedTemplate = ref(syncTempateList[0])
 const pathInputs = ref([
-    { label: '媒体目录', key: 'media_dir', hint: "视频所在的文件夹,如果是cd2挂载文件夹,请直接挂载网盘根目录,否则会出现路径错误等问题" },
-    { label: '本地目录', key: 'symlink_dir', hint: "程序会在此文件夹中创建软链接/strm文件,同步方向为媒体目录到本地目录,多目录同步时,本地目录不能完全相同" },
+    { label: '源目录', key: 'media_dir', hint: "视频所在的文件夹,如果是cd2挂载文件夹,请直接挂载网盘根目录,否则会出现路径错误等问题" },
+    { label: '链接目录', key: 'symlink_dir', hint: "程序会在此文件夹中创建软链接/strm文件,同步方向为媒体目录到本地目录,多目录同步时,本地目录不能完全相同" },
     { label: '排除目录', key: 'exclude_folder', hint: "要排除同步的文件夹路径，多个路径以;隔开，被排除的文件夹不会被同步和监控" },
     { label: 'cd2根目录', key: 'clouddrive2_path', hint: "挂载类型为cd2时要填，cd2的挂载点" },
     { label: 'alist目录', key: 'alist_path', hint: "挂载类型为alist时要填，alist的挂载根目录" },

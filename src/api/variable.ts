@@ -21,6 +21,7 @@ export const SyncItemVar = {
   metadata_checker: false,
   observer_enabled: false,
   observer_mode: "事件通知",
+  cloud_mount_watcher: false,
   observer_symlink_creator: false,
   observer_metadata_copyer: false,
   observer_symlink_checker: false,
