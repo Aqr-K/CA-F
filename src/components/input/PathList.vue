@@ -115,8 +115,6 @@ watch(activedDirs, newVal => {
 const { currentDir } = toRefs(props);
 // 监听目录变化
 watch(currentDir, newVal => {
-    console.log(props.modelValue)
-    console.log(newVal);
     initialDirs()
 })
 

@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer v-model="localDrawer" app class="side-bar" @wheel="handleScroll"
+    <v-navigation-drawer v-model="drawerStore.isOpen" app class="side-bar" @wheel="handleScroll"
         :style="{ background: $vuetify.theme.current.colors.background }">
 
         <template v-slot:prepend>
@@ -36,20 +36,17 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 
-const drawer = defineModel("drawer")
-let localDrawer = ref(<boolean>drawer.value)
+import { useDisplay } from 'vuetify'
+import { useDrawerStore } from '@/store/drawerStore';
 
-
-// 监听 props.modelValue 的变化,更新 localDrawer
-watch(() => drawer.value, (newVal: boolean) => {
-    localDrawer.value = newVal;
-});
-
-// 监听本地状态的变化，并通过 emit 事件同步回父组件
-watch(localDrawer, (newVal) => {
-    drawer.value = newVal
-});
-
+const { mdAndDown } = useDisplay();
+const drawerStore = useDrawerStore();
+// 根据屏幕大小初始化 drawer 状态
+if (mdAndDown.value) {
+    drawerStore.closeDrawer();
+} else {
+    drawerStore.openDrawer();
+}
 
 const route = useRoute()
 const categories = [

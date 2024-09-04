@@ -114,7 +114,6 @@ async function saveConfig() {
 
 function updateConfigList(configs: TelegramSettings) {
     settings.value = configs
-    console.log(configs)
 }
 onMounted(fetchSyncConfig)
 

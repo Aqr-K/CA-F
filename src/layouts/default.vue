@@ -1,12 +1,12 @@
 <template>
-    <SideBar v-model="drawer" />
+    <SideBar />
 
     <v-app-bar :style="{
         background: $vuetify.theme.current.colors.background,
         boxShadow: 'none',
         border: 'none'
     }" app>
-        <v-btn icon @click="drawer = !drawer" v-if="mdAndDown">
+        <v-btn icon @click="toggleDrawer" v-if="mdAndDown">
             <v-icon>mdi-menu</v-icon>
         </v-btn>
         <!-- 导航栏内容 -->
@@ -24,24 +24,37 @@
         </v-container>
     </v-main>
 </template>
+
 <script setup lang="ts">
 import { useTheme } from 'vuetify'
-import { ref } from 'vue'
-import { useDisplay } from 'vuetify'
 import { RouterView } from 'vue-router';
 import SideBar from '@/layouts/components/SideBar.vue'
+import { useDisplay } from 'vuetify'
+import { useDrawerStore } from '@/store/drawerStore';
 
-const { mdAndDown } = useDisplay()
+const { mdAndDown } = useDisplay();
+const theme = useTheme();
+const drawerStore = useDrawerStore();
 
-const theme = useTheme()
-const drawer = ref(mdAndDown.value ? false : true)
-
-function toggleTheme() {
-    theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+// 根据屏幕大小初始化 drawer 状态
+if (mdAndDown.value) {
+    drawerStore.closeDrawer();
+} else {
+    drawerStore.openDrawer();
 }
 
+const drawer = drawerStore.isOpen;
+
+function toggleDrawer() {
+    drawerStore.toggleDrawer();
+}
+
+function toggleTheme() {
+    theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
+}
 
 </script>
+
 <style lang="scss">
 .v-list-item:hover {
     color: rgba(var(--v-theme-on-surface));

@@ -14,6 +14,8 @@
     "@vueuse/components": "^10.11.1",
     "@vueuse/core": "^10.11.1",
     "axios": "^1.7.3",
+    "pinia": "^2.2.2",
+    "pinia-plugin-persistedstate": "^3.2.3",
     "unplugin-auto-import": "^0.18.2",
     "vite-plugin-vuetify": "^2.0.4",
     "vue": "^3.4.31",
