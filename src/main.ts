@@ -6,7 +6,6 @@ import App from "./App.vue";
 import "vuetify/styles";
 import router from "./router/index";
 import vuetify from "@/plugins/vuetify";
-import Vuex from "vuex";
 import { PerfectScrollbarPlugin } from "vue3-perfect-scrollbar";
 import "vue3-perfect-scrollbar/style.css";
 import PathList from "./components/input/PathList.vue";
