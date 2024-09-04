@@ -14,7 +14,14 @@
         <v-btn class="theme-btn mr-2" :icon="$vuetify.theme.current.dark ? 'mdi-weather-night' : 'mdi-weather-sunny'"
             @click="toggleTheme" :color="$vuetify.theme.current.dark ? 'white' : 'gray'">
         </v-btn>
-        <v-btn icon="mdi-cog-outline" :color="$vuetify.theme.current.dark ? 'white' : 'gray'"></v-btn>
+        <v-btn id="settings" icon="mdi-cog-outline" :color="$vuetify.theme.current.dark ? 'white' : 'gray'"></v-btn>
+        <v-menu activator="#settings">
+            <v-list>
+                <v-list-item @click="logout">
+                    <v-list-item-title>退出登录</v-list-item-title>
+                </v-list-item>
+            </v-list>
+        </v-menu>
     </v-app-bar>
 
     <v-main>
@@ -30,12 +37,17 @@ import { useTheme } from 'vuetify'
 import { RouterView } from 'vue-router';
 import SideBar from '@/layouts/components/SideBar.vue'
 import { useDisplay } from 'vuetify'
-import { useDrawerStore } from '@/store/drawerStore';
-
+import { useDrawerStore } from '@/store/drawer';
+import { useAuthStore } from '@/store/auth';
+import router from '@/router'
 const { mdAndDown } = useDisplay();
 const theme = useTheme();
 const drawerStore = useDrawerStore();
+const settingsMenu = [
+    { title: '退出登录' },
+]
 
+const authStore = useAuthStore();
 // 根据屏幕大小初始化 drawer 状态
 if (mdAndDown.value) {
     drawerStore.closeDrawer();
@@ -51,6 +63,11 @@ function toggleDrawer() {
 
 function toggleTheme() {
     theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
+}
+
+function logout() {
+    authStore.logout()
+    router.push("/login")
 }
 
 </script>

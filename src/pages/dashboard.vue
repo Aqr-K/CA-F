@@ -12,4 +12,6 @@
     </v-card>
 </template>
 <script setup lang="ts">
+import api from '@/api';
+api.get("/dashboard/test?token=CloudAssistant")
 </script>

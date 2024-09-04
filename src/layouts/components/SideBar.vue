@@ -5,9 +5,8 @@
         <template v-slot:prepend>
             <div id="logo" class="my-10 flex justify-center">
                 <!-- 放置你的标志图片，修改 'your_logo_path' 为实际路径 -->
-                <img v-if="$vuetify.theme.current.dark" src="@/assets/resource/dark.png" alt="Logo"
-                    style="max-width: 75%" />
-                <img v-else src="@/assets/resource/light2.png" alt="Logo" style="max-width: 75%;" />
+                <img v-if="$vuetify.theme.current.dark" src="@/assets/dark.png" alt="Logo" style="max-width: 75%" />
+                <img v-else src="@/assets/light2.png" alt="Logo" style="max-width: 75%;" />
             </div>
         </template>
         <PerfectScrollbar ref="scrollbar">
@@ -37,7 +36,7 @@
 import { ref, watch } from 'vue';
 
 import { useDisplay } from 'vuetify'
-import { useDrawerStore } from '@/store/drawerStore';
+import { useDrawerStore } from '@/store/drawer';
 
 const { mdAndDown } = useDisplay();
 const drawerStore = useDrawerStore();

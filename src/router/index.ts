@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import { useAuthStore } from "@/store/auth";
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -65,6 +66,31 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: "/",
+      component: () => import("../layouts/blank.vue"),
+      children: [
+        {
+          path: "login",
+          component: () => import("../pages/login.vue"),
+        },
+        {
+          path: "/:pathMatch(.*)*",
+          component: () => import("../pages/[...all].vue"),
+        },
+      ],
+    },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+  const isAuthenticated = authStore.token !== null;
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    next("/login");
+  } else {
+    next();
+  }
+});
+
 export default router;
