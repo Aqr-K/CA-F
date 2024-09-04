@@ -1,39 +1,68 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ],
-    "compilerOptions": {
-    "plugins": [
-      {
-        "name": "typescript-plugin-css-modules"
-      }
-    ],
+  "compilerOptions": {
     "baseUrl": ".",
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "module": "ESNext", // 修改这里
+    "moduleResolution": "Bundler",
+    "isolatedModules": true,
+    // "strict": true,
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,                       // 基础路径
     "paths": {
-    "@": [
-	     "src"
-	   ],
-	   "@/*": [
-	     "src/*"
-	   ],
+      "@": [
+        "src"
+      ],
+      "@/*": [
+        "src/*"
+      ],
       "@layouts/*": [
         "src/@layouts/*"
       ],
       "@layouts": [
         "src/@layouts"
-      ],
+      ]
     },
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules" // 支持 CSS 模块
+      }
+    ],
   },
+      "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost",
+      "WebWorker"
+    ],
+    "skipLibCheck": true,
+    "types": [
+      "vite/client",
+      "vite-plugin-pages/client",
+      "vite-plugin-vue-layouts/client"
+    ],
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "vite.config.*",
+    "env.d.ts",
+    "shims.d.ts",
+    "themeConfig.ts",
+    "auto-imports.d.ts",
+    "components.d.ts",
+    "src/service-worker.ts",
+    "public/service.js"
   ],
+  "exclude": [
+    "node_modules",                         // 排除 node_modules 目录
+    "dist",                                 // 排除构建输出目录
+    "**/*.spec.ts"                          // 可选：排除测试文件
+  ]
 }

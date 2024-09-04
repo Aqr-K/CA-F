@@ -65,10 +65,17 @@ const switches = ref([{ key: "symlink_creator", label: "更新软链接" },
 { key: "symlink_checker", label: "无效软链接" },
 { key: "metadata_checker", label: "无效元数据" },])
 
-const configList = ref([
+// 定义类型
+interface configListOption {
+    key: string;
+    label: string;
+    options?: string[]; // 可选属性
+}
+
+const configList = ref<configListOption[]>([
     { key: "sync_mode", label: "同步模式", options: ["常规同步", "目录树同步"] },
     { key: "metadata_copyer_mode", label: "元数据模式", options: ["下载模式", "本地模式"] },
-    { key: "num_threads", label: "同步线程数", value: 2 }
+    { key: "num_threads", label: "同步线程数" }
 ])
 
 async function fetchSyncConfig() {

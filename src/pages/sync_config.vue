@@ -74,7 +74,7 @@ const { id } = route.params
 const snackbarRef = ref(null)
 const isLoading = ref(true)
 
-const syncConfig = ref(<SyncItem>{ ...SyncItemVar })
+const syncConfig = ref<SyncItem>({ ...SyncItemVar })
 
 const activeTab = ref(route.query.tab)
 

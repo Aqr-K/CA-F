@@ -32,13 +32,26 @@
 </template>
 
 <script lang="ts" setup name="GlobalSettings">
-import { useRoute } from 'vue-router'
 import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api/index'
 import { GlobalSettings, SaveResponse } from '@/api/types';
 const isLoading = ref(true)
 
-const configList = ref([{
+// 定义每个设置项的类型
+interface SettingItem {
+    key: string;
+    label?: string;
+    switches?: SettingItem[]; // 可选属性，用于包含开关项
+    options?: string[];
+}
+
+// 定义每个配置组的类型
+interface ConfigGroup {
+    title: string;
+    items: SettingItem[];
+}
+
+const configList = ref<ConfigGroup[]>([{
     title: "常用设置",
     items: [
         { key: "start_delay", label: "延时启动" },

@@ -7,8 +7,8 @@
             <span class="text-[15px]">
                 {{ snackbarMessage }}
             </span>
-            <template v-slot:action="{ attrs }">
-                <v-btn color="black" text v-bind="attrs" @click="closeSnackBar">
+            <template v-slot:actions>
+                <v-btn color="black" @click="closeSnackBar">
                     Close
                 </v-btn>
             </template>

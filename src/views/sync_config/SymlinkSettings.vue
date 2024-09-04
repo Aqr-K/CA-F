@@ -114,7 +114,16 @@ const switches = ref([
     { label: '无效软链接', key: 'symlink_checker' },
     { label: '无效元数据', key: 'metadata_checker' },
 ]);
-const selects = ref([
+
+// 定义类型
+interface SelectOption {
+    label: string;
+    key: string;
+    items?: string[]; // 可选属性
+    hint?: string;    // 可选属性
+}
+
+const selects = ref<SelectOption[]>([
     { label: '链接模式', key: 'symlink_mode', items: ['symlink', 'strm'] },
     { label: 'Strm模式', key: 'strm_mode', items: ['cloud', 'local'], hint: "cloud模式文件内是http开头的链接,local模式文件内是文件的路径" },
     { label: '挂载类型', key: 'cloud_type', items: ['cd2', 'alist'] },

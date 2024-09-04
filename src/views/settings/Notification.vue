@@ -83,9 +83,16 @@ const settings = ref(<TelegramSettings>{
 })
 
 
+
+// 定义类型
+interface NotificationOption {
+    telegram: TelegramSettings
+}
+
+
 async function fetchSyncConfig() {
     try {
-        const response = await api.get('/system/settings/' + 'notify_config')
+        const response: NotificationOption = await api.get('/system/settings/' + 'notify_config')
         updateConfigList(response.telegram)
         isLoading.value = false
     } catch (error) {

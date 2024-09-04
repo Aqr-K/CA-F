@@ -20,7 +20,7 @@ export interface SyncItem {
   metadata_checker: boolean;
   observer_enabled: boolean;
   observer_mode: string;
-  cloud_mount_watcher: string;
+  cloud_mount_watcher: boolean;
   observer_symlink_creator: boolean;
   observer_metadata_copyer: boolean;
   observer_symlink_checker: boolean;
