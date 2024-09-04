@@ -16,5 +16,5 @@ const app = createApp(App);
 // 注册全局组件
 app.component("VPathList", PathList).component("VPathInput", PathInput);
 
-app.use(vuetify).use(PerfectScrollbarPlugin).use(router).use(store); // 注册 Vuex 实例
+app.use(vuetify).use(PerfectScrollbarPlugin).use(router); // 注册 Vuex 实例
 app.mount("#app");
