@@ -58,12 +58,12 @@ export interface TelegramSettings {
   chat_id: string;
   user_id: string;
   admin_id: string;
-  observer_started: boolean;
+  symlink_observer: boolean;
   observer_enabled: boolean;
-  cloud_watcher_enabled: boolean;
-  sync_completed: boolean;
-  backup_completed: boolean;
-  cloud_path_unmount: boolean;
+  cloud_wathcer: boolean;
+  sync_task: boolean;
+  backup_task: boolean;
+  cloud_status: boolean;
   filetrans_enbaled: boolean;
 }
 

@@ -13,5 +13,5 @@
 </template>
 <script setup lang="ts">
 import api from '@/api';
-api.get("/dashboard/test?token=CloudAssistant")
+api.get("/dashboard/test?token=cloudassistant")
 </script>

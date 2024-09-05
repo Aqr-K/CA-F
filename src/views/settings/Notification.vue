@@ -54,12 +54,12 @@ const normalSettings = ref({
 const notifyTypes = ref({
     title: "推送设置",
     items: [
-        { key: "observer_started", label: "监控状态" },
+        { key: "symlink_observer", label: "监控状态" },
         { key: "observer_enabled", label: "监控事件" },
-        { key: "cloud_watcher_enabled", label: "转存监控" },
-        { key: "sync_completed", label: "同步完成" },
-        { key: "backup_completed", label: "备份完成" },
-        { key: "cloud_path_unmount", label: "掉盘通知" },
+        { key: "cloud_wathcer", label: "转存监控" },
+        { key: "sync_task", label: "同步完成" },
+        { key: "backup_task", label: "备份完成" },
+        { key: "cloud_status", label: "掉盘通知" },
         { key: "filetrans_enbaled", label: "刮削完成" },
     ]
 })
@@ -73,12 +73,12 @@ const settings = ref(<TelegramSettings>{
     chat_id: "",
     user_id: "",
     admin_id: "",
-    observer_started: false,
+    symlink_observer: false,
     observer_enabled: false,
-    cloud_watcher_enabled: false,
-    sync_completed: false,
-    backup_completed: false,
-    cloud_path_unmount: false,
+    cloud_wathcer: false,
+    sync_task: false,
+    backup_task: false,
+    cloud_status: false,
     filetrans_enbaled: false
 })
 
