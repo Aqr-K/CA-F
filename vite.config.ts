@@ -31,16 +31,16 @@ export default defineConfig({
       // less: {
       //   javascriptEnabled: true,
       //   modifyVars: {
-      //     hack: 'true; @import "@/assets/global.less"',
+      //     hack: 'true; @import "@images/global.less"',
       //   },
       // },
     },
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"),
-      "@resource": fileURLToPath(
-        new URL("./src/assets/resource/", import.meta.url)
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "@images": fileURLToPath(
+        new URL("./src/assets/images/", import.meta.url)
       ),
       "@styles": fileURLToPath(new URL("./src/styles/", import.meta.url)),
     },

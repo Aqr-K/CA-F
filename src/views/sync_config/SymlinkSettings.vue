@@ -3,7 +3,7 @@
         <v-form>
             <v-row>
                 <v-col cols="12" md="6">
-                    <v-card :class="cardHeight" title="基础配置">
+                    <v-card class="sync-config" title="基础配置">
                         <v-card-item v-if="props.isNew" class="pt-3">
                             <v-select label="复制现有配置" :items="syncTempateList" v-model="selectedTemplate" class="pt-3"
                                 hint="复制现有的目录配置" persistent-hint @update:modelValue="handleTemplateChange">
@@ -24,7 +24,7 @@
                     </v-card>
                 </v-col>
                 <v-col cols="12" md="6">
-                    <v-card :class="cardHeight" title="同步配置">
+                    <v-card class="sync-config" title="同步配置">
                         <v-row class="ml-2">
                             <v-col v-for="(swite, index) in switches" cols="12" md="6">
                                 <v-switch :label="swite.label" v-model="syncConfig[swite.key]"
@@ -41,7 +41,7 @@
                     </v-card>
                 </v-col>
                 <v-col cols="12" md="6">
-                    <v-card :class="cardHeight" title="软链接置">
+                    <v-card class="sync-config" title="软链接置">
                         <v-card-item v-for="(select, index) in selects" class="pt-3">
                             <v-select v-if="select.items" :label="select.label" :items="select.items"
                                 v-model="syncConfig[select.key]" class="pt-3" :hint="select.hint" persistent-hint>
@@ -52,7 +52,7 @@
                     </v-card>
                 </v-col>
                 <v-col cols="12" md="6">
-                    <v-card :class="cardHeight" title="根目录计算" subtitle="用于获取cd2根目录/alist根目录">
+                    <v-card class="sync-config" title="根目录计算" subtitle="用于获取cd2根目录/alist根目录">
                         <v-card-item>
                             <VPathInput label="文件路径" v-model="testFilePath" hint="在媒体目录中选择任意一个文件"
                                 :fileRequired="true" />
@@ -72,6 +72,7 @@
                 </v-col>
             </v-row>
         </v-form>
+        <slot name="footer"></slot>
     </div>
 </template>
 
@@ -79,8 +80,7 @@
 import { SyncItem } from '@/api/types';
 import { ref } from 'vue';
 import api from '@/api';
-
-const cardHeight = ref("h-[830px]")
+import { syncConfigStore } from '@/store/syncconfig'
 const syncConfig = defineModel<SyncItem>('syncConfig');
 const syncTemplate = defineModel<SyncItem[]>('syncTemplate');
 // 输入参数
@@ -157,7 +157,6 @@ function handleTemplateChange(name) {
         console.log('Template config not found');
     }
 }
-
 </script>
 
 <style scoped></style>

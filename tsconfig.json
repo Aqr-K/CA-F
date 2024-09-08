@@ -14,9 +14,6 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,                       // 基础路径
     "paths": {
-      "@": [
-        "src"
-      ],
       "@/*": [
         "src/*"
       ],
@@ -25,7 +22,10 @@
       ],
       "@layouts": [
         "src/@layouts"
-      ]
+      ],
+      "@images/*": [
+        "src/assets/images/*"
+      ],
     },
     "plugins": [
       {
@@ -51,6 +51,7 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
+    "src/assets/*",
     "vite.config.*",
     "env.d.ts",
     "shims.d.ts",

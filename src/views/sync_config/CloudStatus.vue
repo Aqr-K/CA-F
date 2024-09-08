@@ -3,11 +3,11 @@
         <v-form>
             <v-row>
                 <v-col cols="12" md="6" title="掉盘检测">
-                    <v-card :class="cardHeight">
+                    <v-card class="sync-config">
                         <v-card-item class="pt-3">
                             <v-switch label="启用检测" v-model="syncConfig.cloud_status_enabled" class="p-0 m-0"></v-switch>
                         </v-card-item>
-                        <v-card-item class="pt-3">
+                        <v-card-item class="pt-3 mb-6">
                             <v-select label="配置组" :items="settings" v-model="syncConfig.cloud_status_group" hint=""
                                 persistent-hint></v-select>
                         </v-card-item>
@@ -15,6 +15,8 @@
                 </v-col>
             </v-row>
         </v-form>
+        <slot name="footer"></slot>
+
     </div>
 </template>
 
@@ -22,7 +24,6 @@
 import { SyncItem, CloudStatusSettings } from '@/api/types';
 import { ref } from 'vue';
 import api from '@/api';
-const cardHeight = ref("h-[510px]")
 const syncConfig = defineModel<SyncItem>('syncConfig');
 const settings = ref([]);
 

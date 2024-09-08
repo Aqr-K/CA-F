@@ -50,6 +50,7 @@ export interface GlobalSettings {
   username: string;
   password: string;
   http_proxy: string;
+  api_token: string;
 }
 
 export interface TelegramSettings {
@@ -58,13 +59,12 @@ export interface TelegramSettings {
   chat_id: string;
   user_id: string;
   admin_id: string;
-  symlink_observer: boolean;
-  observer_enabled: boolean;
+  symlink_watcher: boolean;
   cloud_wathcer: boolean;
   sync_task: boolean;
   backup_task: boolean;
   cloud_status: boolean;
-  filetrans_enbaled: boolean;
+  filetrans_task: boolean;
 }
 
 export interface Settings115 {

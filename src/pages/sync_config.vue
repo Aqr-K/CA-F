@@ -14,45 +14,84 @@
             <v-window-item value="symlink">
                 <transition name="fade-slide" appear>
                     <div>
-                        <SymlinkSettings v-model:syncConfig="syncConfig" />
+                        <SymlinkSettings v-model:syncConfig="syncConfig">
+                            <template #footer>
+                                <div class="btn-settings">
+                                    <v-btn color="red" @click="deleteConfig">删除</v-btn>
+                                    <span class="mx-3"></span>
+                                    <v-btn @click="saveConfig">保存</v-btn>
+                                </div>
+                                <SnackBar ref="snackbarRef" />
+                            </template>
+                        </SymlinkSettings>
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="scheduled_task">
                 <transition name="fade-slide" appear>
                     <div>
-                        <ScheduledSettings v-model:syncConfig="syncConfig" />
+                        <ScheduledSettings v-model:syncConfig="syncConfig">
+                            <template #footer>
+                                <div class="btn-settings">
+                                    <v-btn color="red" @click="deleteConfig">删除</v-btn>
+                                    <span class="mx-3"></span>
+                                    <v-btn @click="saveConfig">保存</v-btn>
+                                </div>
+                                <SnackBar ref="snackbarRef" />
+                            </template>
+                        </ScheduledSettings>
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="sync_observer">
                 <transition name="fade-slide" appear>
                     <div>
-                        <ObserverSettings v-model:syncConfig="syncConfig" />
+                        <ObserverSettings v-model:syncConfig="syncConfig">
+                            <template #footer>
+                                <div class="btn-settings">
+                                    <v-btn color="red" @click="deleteConfig">删除</v-btn>
+                                    <span class="mx-3"></span>
+                                    <v-btn @click="saveConfig">保存</v-btn>
+                                </div>
+                                <SnackBar ref="snackbarRef" />
+                            </template>
+                        </ObserverSettings>
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="cloud_status">
                 <transition name="fade-slide" appear>
                     <div>
-                        <CloudStatus v-model:syncConfig="syncConfig" />
+                        <CloudStatus v-model:syncConfig="syncConfig">
+                            <template #footer>
+                                <div class="btn-settings">
+                                    <v-btn color="red" @click="deleteConfig">删除</v-btn>
+                                    <span class="mx-3"></span>
+                                    <v-btn @click="saveConfig">保存</v-btn>
+                                </div>
+                                <SnackBar ref="snackbarRef" />
+                            </template>
+                        </CloudStatus>
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="tree_sync">
                 <transition name="fade-slide" appear>
                     <div>
-                        <TreeSync v-model:syncConfig="syncConfig" />
+                        <TreeSync v-model:syncConfig="syncConfig">
+                            <template #footer>
+                                <div class="btn-settings">
+                                    <v-btn color="red" @click="deleteConfig">删除</v-btn>
+                                    <span class="mx-3"></span>
+                                    <v-btn @click="saveConfig">保存</v-btn>
+                                </div>
+                                <SnackBar ref="snackbarRef" />
+                            </template>
+                        </TreeSync>
                     </div>
                 </transition>
             </v-window-item>
         </v-window>
-        <div class="btn-settings">
-            <v-btn color="red" @click="deleteConfig">删除</v-btn>
-            <span class="mx-3"></span>
-            <v-btn @click="saveConfig">保存</v-btn>
-        </div>
-        <SnackBar ref="snackbarRef" />
     </div>
 </template>
 
@@ -69,9 +108,12 @@ import ScheduledSettings from '@/views/sync_config/ScheduledSettings.vue'
 import ObserverSettings from '@/views/sync_config/ObserverSettings.vue'
 import CloudStatus from '@/views/sync_config/CloudStatus.vue'
 import TreeSync from '@/views/sync_config/TreeSync.vue'
+import { syncConfigStore } from '@/store/syncconfig'
+const store = syncConfigStore()
 const route = useRoute()
 const { id } = route.params
 const snackbarRef = ref(null)
+
 const isLoading = ref(true)
 
 const syncConfig = ref<SyncItem>({ ...SyncItemVar })
@@ -95,7 +137,6 @@ async function saveConfig() {
     try {
         const response: SaveResponse = await api.post(`/autosymlink/save_config`, syncConfig.value)
         snackbarRef.value?.showSnackBar(response.success, response.message)
-
     } catch (error) {
         console.error('Error fetching sync config:', error)
     }
