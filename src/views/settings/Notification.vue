@@ -73,13 +73,12 @@ const settings = ref(<TelegramSettings>{
     chat_id: "",
     user_id: "",
     admin_id: "",
-    symlink_observer: false,
-    observer_enabled: false,
+    symlink_watcher: false,
     cloud_wathcer: false,
     sync_task: false,
     backup_task: false,
     cloud_status: false,
-    filetrans_enbaled: false
+    filetrans_task: false
 })
 
 
