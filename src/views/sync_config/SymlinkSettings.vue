@@ -101,7 +101,8 @@ const selectedTemplate = ref(syncTempateList[0])
 const pathInputs = ref([
     { label: '源目录', key: 'media_dir', hint: "视频所在的文件夹,如果是cd2挂载文件夹,请直接挂载网盘根目录,否则会出现路径错误等问题" },
     { label: '链接目录', key: 'symlink_dir', hint: "程序会在此文件夹中创建软链接/strm文件,同步方向为媒体目录到本地目录,多目录同步时,本地目录不能完全相同" },
-    { label: '排除目录', key: 'exclude_folder', hint: "要排除同步的文件夹路径，多个路径以;隔开，被排除的文件夹不会被同步和监控" },
+    { label: '排除目录', key: 'exclude_dir_path', hint: "要排除同步的文件夹路径，多个路径以;隔开，被排除的文件夹不会被同步和监控" },
+
     { label: 'cd2根目录', key: 'clouddrive2_path', hint: "挂载类型为cd2时要填，cd2的挂载点" },
     { label: 'alist目录', key: 'alist_path', hint: "挂载类型为alist时要填，alist的挂载根目录" },
 ]);
@@ -128,7 +129,8 @@ const selects = ref<SelectOption[]>([
     { label: 'Strm模式', key: 'strm_mode', items: ['cloud', 'local'], hint: "cloud模式文件内是http开头的链接,local模式文件内是文件的路径" },
     { label: '挂载类型', key: 'cloud_type', items: ['cd2', 'alist'] },
     { label: '云端地址', key: 'cloud_url', hint: "cloud模式文件内是http开头的链接,local模式文件内是文件的路径" },
-    { label: '软链接大小', key: 'symlink_size', },
+    { label: '软链接大小', key: 'symlink_size', hint: "单位为Mb,低于设定值的视频文件会直接进行复制" },
+    { label: '排除目录名', key: 'exclude_dir_name', hint: "要排除同步的文件夹名，指定名称的文件夹不会被同步和监控" },
     { label: '软链接后缀', key: 'symlink_ext' },
     { label: '元数据后缀', key: 'metadata_ext' },
 ]);

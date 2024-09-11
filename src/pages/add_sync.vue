@@ -120,6 +120,14 @@ async function fetchSyncTemplate() {
     } catch (error) {
         console.error('Error fetching sync config:', error)
     }
+    try {
+        const data: SyncItem = await api.get(`/autosymlink/sync_template`)
+        console.log(data)
+        syncConfig.value = data
+
+    } catch (error) {
+        console.error('Error fetching sync config:', error)
+    }
 }
 
 async function saveConfig() {

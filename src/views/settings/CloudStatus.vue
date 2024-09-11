@@ -4,7 +4,7 @@
             <v-row>
                 <v-col v-for="(item, index) in settings" cols="12" md="4">
                     <v-card title="掉盘检测" class="h-[450px]">
-                        <span class="absolute top-3 right-8">
+                        <span class="absolute top-0 right-8">
                             <IconBtn @click="addConfig">
                                 <v-icon icon="mdi-plus" />
                             </IconBtn>

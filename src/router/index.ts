@@ -12,25 +12,25 @@ const router = createRouter({
     { path: "/", redirect: "/dashboard" },
     {
       path: "/",
-      component: () => import("../layouts/default.vue"),
+      component: () => import("@/layouts/default.vue"),
       children: [
         {
           path: "dashboard",
-          component: () => import("../pages/dashboard.vue"),
+          component: () => import("@/pages/dashboard.vue"),
           meta: {
             requiresAuth: true,
           },
         },
         {
           path: "logs",
-          component: () => import("../pages/logs.vue"),
+          component: () => import("@/pages/logs.vue"),
           meta: {
             requiresAuth: true,
           },
         },
         {
           path: "sync_list",
-          component: () => import("../pages/sync_list.vue"),
+          component: () => import("@/pages/sync_list.vue"),
           meta: {
             requiresAuth: true,
           },
@@ -38,28 +38,35 @@ const router = createRouter({
         {
           name: "sync_config",
           path: "sync_config/:id",
-          component: () => import("../pages/sync_config.vue"),
+          component: () => import("@/pages/sync_config.vue"),
           meta: {
             requiresAuth: true,
           },
         },
         {
           path: "add_sync",
-          component: () => import("../pages/add_sync.vue"),
+          component: () => import("@/pages/add_sync.vue"),
           meta: {
             requiresAuth: true,
           },
         },
         {
           path: "sync_task",
-          component: () => import("../pages/sync_task.vue"),
+          component: () => import("@/pages/sync_task.vue"),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: "file_manager",
+          component: () => import("@/pages/file_manager.vue"),
           meta: {
             requiresAuth: true,
           },
         },
         {
           path: "settings",
-          component: () => import("../pages/settings.vue"),
+          component: () => import("@/pages/settings.vue"),
           meta: {
             requiresAuth: true,
           },
@@ -68,15 +75,15 @@ const router = createRouter({
     },
     {
       path: "/",
-      component: () => import("../layouts/blank.vue"),
+      component: () => import("@/layouts/blank.vue"),
       children: [
         {
           path: "login",
-          component: () => import("../pages/login.vue"),
+          component: () => import("@/pages/login.vue"),
         },
         {
           path: "/:pathMatch(.*)*",
-          component: () => import("../pages/[...all].vue"),
+          component: () => import("@/pages/[...all].vue"),
         },
       ],
     },

@@ -21,7 +21,6 @@
                                     <span class="mx-3"></span>
                                     <v-btn @click="saveConfig">保存</v-btn>
                                 </div>
-                                <SnackBar ref="snackbarRef" />
                             </template>
                         </SymlinkSettings>
                     </div>
@@ -37,7 +36,6 @@
                                     <span class="mx-3"></span>
                                     <v-btn @click="saveConfig">保存</v-btn>
                                 </div>
-                                <SnackBar ref="snackbarRef" />
                             </template>
                         </ScheduledSettings>
                     </div>
@@ -53,7 +51,6 @@
                                     <span class="mx-3"></span>
                                     <v-btn @click="saveConfig">保存</v-btn>
                                 </div>
-                                <SnackBar ref="snackbarRef" />
                             </template>
                         </ObserverSettings>
                     </div>
@@ -69,7 +66,6 @@
                                     <span class="mx-3"></span>
                                     <v-btn @click="saveConfig">保存</v-btn>
                                 </div>
-                                <SnackBar ref="snackbarRef" />
                             </template>
                         </CloudStatus>
                     </div>
@@ -85,7 +81,6 @@
                                     <span class="mx-3"></span>
                                     <v-btn @click="saveConfig">保存</v-btn>
                                 </div>
-                                <SnackBar ref="snackbarRef" />
                             </template>
                         </TreeSync>
                     </div>
@@ -99,7 +94,6 @@
 import { ref } from 'vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
-import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api/index'
 import { SyncItem, SaveResponse } from '@/api/types';
 import { SyncItemVar } from '@/api/variable'
@@ -109,10 +103,14 @@ import ObserverSettings from '@/views/sync_config/ObserverSettings.vue'
 import CloudStatus from '@/views/sync_config/CloudStatus.vue'
 import TreeSync from '@/views/sync_config/TreeSync.vue'
 import { syncConfigStore } from '@/store/syncconfig'
+import { useToast } from 'vue-toast-notification';
+
+// 提示框
+const $toast = useToast()
+
 const store = syncConfigStore()
 const route = useRoute()
 const { id } = route.params
-const snackbarRef = ref(null)
 
 const isLoading = ref(true)
 
@@ -136,7 +134,12 @@ async function fetchSyncConfig() {
 async function saveConfig() {
     try {
         const response: SaveResponse = await api.post(`/autosymlink/save_config`, syncConfig.value)
-        snackbarRef.value?.showSnackBar(response.success, response.message)
+        if (response.success) {
+            $toast.success(response.message)
+        }
+        else {
+            $toast.error(response.message)
+        }
     } catch (error) {
         console.error('Error fetching sync config:', error)
     }
@@ -145,8 +148,12 @@ async function saveConfig() {
 async function deleteConfig() {
     try {
         const response: SaveResponse = await api.post(`/autosymlink/delete_config`, syncConfig.value)
-        snackbarRef.value?.showSnackBar(response.success, response.message)
-        setTimeout(() => {
+        if (response.success) {
+            $toast.success(response.message)
+        }
+        else {
+            $toast.error(response.message)
+        } setTimeout(() => {
             router.push('/sync_list')
         }, 1000); // 2 秒后执行 greet 函数
 
@@ -174,7 +181,8 @@ onMounted(() => {
     display: none !important;
 }
 
-/* .v-window-item {
+:deep(.v-btn__content) {
     transition: none !important;
-} */
+    opacity: 1 !important;
+}
 </style>

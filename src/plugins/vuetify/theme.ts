@@ -51,7 +51,7 @@ const theme: VuetifyOptions["theme"] = {
         "dragged-opacity": 0.1,
         "border-color": "#3A3541",
         "table-header-background": "#F9FAFC",
-        "custom-background": "#F9F8F9",
+        "custm-background": "#F9F8F9",
 
         // Shadows
         "shadow-key-umbra-opacity": "rgba(var(--v-theme-on-surface), 0.08)",

@@ -1,3 +1,22 @@
+html {
+    box-sizing: border-box;
+    min-height: calc(100% + env(safe-area-inset-top));
+    background: rgb(var(--v-theme-background));
+    overflow-y: overlay;
+}
+
+body {
+    overscroll-behavior-y: contain;
+    --webkit-overflow-scrolling: touch;
+    background: rgb(var(--v-theme-background));
+}
+
+body,
+#app,
+.v-application {
+    min-height: 100%;
+}
+
 // 美化滚动条
 ::-webkit-scrollbar {
     block-size: 8px;
@@ -10,6 +29,14 @@
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 20%);
         -webkit-transition: background-color 1s linear, box-shadow 1s ease-in-out;
             transition: background-color 1s linear, box-shadow 1s ease-in-out;
+}
+
+.v-container{
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top:0 !important;
+    padding-bottom: 0 !important;
+    overflow: hidden !important;
 }
 
 .flex-center{
@@ -29,9 +56,45 @@
 }
 
 .v-card{
-    padding: 10px 10px 10px 10px !important;
+    padding: 0 10px 10px 10px !important;
+    transition: none !important;
+}
+//更改分隔符的宽度
+.v-list-item__spacer{
+    width:16px !important;
 }
 
+.file-browser .v-checkbox{
+    padding-top:  0 !important;
+}
+
+.v-checkbox.v-input,
+.v-switch.v-input {
+    --v-input-control-height: auto;
+    flex: unset
+}
+
+.file-browser .v-selection-control__input{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.file-browser .v-list-item__prepend {
+    color: rgb(var(--v-theme-primary)) !important;
+    filter: brightness(1.2);
+}
+
+.v-overlay__scrim {
+    background: rgba(var(--v-overlay-scrim-background)) !important;
+    opacity: 0.3 !important;
+}
+
+
+//提示框的文本颜色
+.v-tooltip>.v-overlay__content {
+    background: #212121 !important;
+    color: white !important;
+}
 .v-card-title{
     margin-bottom: 10px !important;
 }
@@ -45,4 +108,8 @@
 
 .v-select,.v-input{
     padding-top: 0.75rem !important;
+}
+
+.v-toolbar {
+    background: rgb(var(--v-table-header-background));
 }

@@ -64,7 +64,8 @@ const categories = [
     {
         title: "刮削同步",
         items: [{ title: "目录配置", to: "/scrape_synclist", icon: "mdi-folder", isActive: false },
-        { title: "添加同步", to: "/add_scrpe_sync", icon: "mdi-plus", isActive: false },]
+        { title: "添加同步", to: "/add_scrpe_sync", icon: "mdi-plus", isActive: false },
+        { title: "文件管理", to: "/file_manager", icon: "mdi-folder-multiple-outline", isActive: false },]
     },
     {
         title: "系统",

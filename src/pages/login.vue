@@ -15,9 +15,9 @@
         <v-card class="v-theme--dark px-7 py-3 rounded-lg" :class="{ 'opacity-85': isImageLoaded }" min-width="380"
             max-width="380">
             <v-card-text>
-                <v-form @submit.prevent="login">>
+                <v-form @submit.prevent="login">
                     <div class="d-flex justify-center align-center">
-                        <img src="@images/logo.png" class="logo" />
+                        <img src="@images/logo.svg" class="logo" />
                         <div class="text-2xl title font-weight-semibold text-uppercase">Cloud Asst</div>
                     </div>
 

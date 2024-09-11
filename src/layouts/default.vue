@@ -1,5 +1,8 @@
 <template>
     <SideBar />
+    <transition name="slide-fade">
+        <v-overlay class="theme" v-model="isOverlayVisible" scroll-strategy="reposition"></v-overlay>
+    </transition>
 
     <v-app-bar :style="{
         background: $vuetify.theme.current.colors.background,
@@ -26,7 +29,7 @@
 
     <v-main>
         <!-- 主要内容区域 -->
-        <v-container class="p-0" fluid>
+        <v-container fluid>
             <RouterView></RouterView>
         </v-container>
     </v-main>
@@ -38,6 +41,8 @@ import { RouterView } from 'vue-router';
 import SideBar from '@/layouts/components/SideBar.vue'
 import { useDisplay } from 'vuetify'
 import { useDrawerStore } from '@/store/drawer';
+const isOverlayVisible = ref(false);
+
 import { useAuthStore } from '@/store/auth';
 import router from '@/router'
 const { mdAndDown } = useDisplay();
@@ -55,14 +60,14 @@ if (mdAndDown.value) {
     drawerStore.openDrawer();
 }
 
-const drawer = drawerStore.isOpen;
-
 function toggleDrawer() {
     drawerStore.toggleDrawer();
 }
 
 function toggleTheme() {
     theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
+    isOverlayVisible.value = true; // 显示纯色覆盖层
+    setTimeout(() => { isOverlayVisible.value = false }, 180)
 }
 
 function logout() {
@@ -73,6 +78,11 @@ function logout() {
 </script>
 
 <style lang="scss">
+.theme .v-overlay__scrim {
+    background: rgba(var(--v-theme-background)) !important;
+    opacity: 1 !important;
+}
+
 .v-list-item:hover {
     color: rgba(var(--v-theme-on-surface));
 }

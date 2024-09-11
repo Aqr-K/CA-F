@@ -6,9 +6,9 @@
         <VTreeview v-model:activated="activedDirs" v-model:opened="openedDirs" :items="treeItems" class="tree-node"
             :load-children="fetchDirs" item-key="path" item-title="name" item-value="path" item-type="unknown"
             activatable return-object max-height="20rem" expand-icon="mdi-folder" collapse-icon="mdi-folder-open">
-            <template v-slot:prepend="{ item, isOpen }">
-                <v-icon v-if="item.file">
-                    {{ files[item.file] }}
+            <template v-slot:prepend="{ item }">
+                <v-icon v-if="item.extension">
+                    {{ files[item.extension] }}
                 </v-icon>
             </template>
         </VTreeview>
@@ -29,7 +29,7 @@ const props = defineProps({
         require: false,
         default: false
     },
-    //是否需要罗列文件
+    //从指定目录开始索引
     currentDir: {
         type: String,
         require: false,
