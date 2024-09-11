@@ -40,7 +40,7 @@
       "scripthost",
       "WebWorker"
     ],
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "types": [
       "vite/client",
       "vite-plugin-pages/client",
