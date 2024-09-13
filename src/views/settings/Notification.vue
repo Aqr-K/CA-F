@@ -28,13 +28,13 @@
             </div>
         </v-form>
     </div>
-    <SnackBar ref="snackbarRef" />
 </template>
 
 <script lang="ts" setup>
-import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api/index'
 import { TelegramSettings, SaveResponse } from '@/api/types';
+import { useToast } from 'vue-toast-notification';
+const $toast = useToast();
 const isLoading = ref(true)
 
 const normalSettings = ref({
@@ -65,7 +65,6 @@ const notifyTypes = ref({
 })
 
 
-const snackbarRef = ref(null)
 
 const settings = ref(<TelegramSettings>{
     switch: false,
@@ -103,7 +102,11 @@ async function saveConfig() {
     try {
         let data = { settings: { telegram: settings.value }, name: "notify_config" }
         const response: SaveResponse = await api.post(`/system/save_settings`, data)
-        snackbarRef.value?.showSnackBar(response.success, response.message)
+        if (response.success) {
+            $toast.success(response.message);
+        } else {
+            $toast.error(response.message);
+        }
 
     } catch (error) {
         console.error('Error fetching sync config:', error)

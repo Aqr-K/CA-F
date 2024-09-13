@@ -18,6 +18,11 @@
                                 persistent-hint>
                             </v-select>
                         </v-card-item>
+                        <v-card-item class="pt-3">
+                            <v-select label="挂载类型" :items="['cd2', 'alist', 'custom']" v-model="syncConfig.cloud_type"
+                                class="pt-3" hint="custom是自定义模式,主要用于cd2和alist以外的网盘工具" persistent-hint>
+                            </v-select>
+                        </v-card-item>
                         <v-card-item v-for="(input, index) in pathInputs" class="pt-3">
                             <VPathInput :label="input.label" v-model="syncConfig[input.key]" :hint="input.hint" />
                         </v-card-item>
@@ -80,7 +85,6 @@
 import { SyncItem } from '@/api/types';
 import { ref } from 'vue';
 import api from '@/api';
-import { syncConfigStore } from '@/store/syncconfig'
 const syncConfig = defineModel<SyncItem>('syncConfig');
 const syncTemplate = defineModel<SyncItem[]>('syncTemplate');
 // 输入参数
@@ -102,9 +106,7 @@ const pathInputs = ref([
     { label: '源目录', key: 'media_dir', hint: "视频所在的文件夹,如果是cd2挂载文件夹,请直接挂载网盘根目录,否则会出现路径错误等问题" },
     { label: '链接目录', key: 'symlink_dir', hint: "程序会在此文件夹中创建软链接/strm文件,同步方向为媒体目录到本地目录,多目录同步时,本地目录不能完全相同" },
     { label: '排除目录', key: 'exclude_dir_path', hint: "要排除同步的文件夹路径，多个路径以;隔开，被排除的文件夹不会被同步和监控" },
-
-    { label: 'cd2根目录', key: 'clouddrive2_path', hint: "挂载类型为cd2时要填，cd2的挂载点" },
-    { label: 'alist目录', key: 'alist_path', hint: "挂载类型为alist时要填，alist的挂载根目录" },
+    { label: '云盘根目录', key: 'cloud_root_path', hint: "网盘文件夹的上级目录,如/mnt/115,就填/mnt" },
 ]);
 const switches = ref([
     { label: '更新软链接', key: 'symlink_creator' },
@@ -127,8 +129,8 @@ interface SelectOption {
 const selects = ref<SelectOption[]>([
     { label: '链接模式', key: 'symlink_mode', items: ['symlink', 'strm'] },
     { label: 'Strm模式', key: 'strm_mode', items: ['cloud', 'local'], hint: "cloud模式文件内是http开头的链接,local模式文件内是文件的路径" },
-    { label: '挂载类型', key: 'cloud_type', items: ['cd2', 'alist'] },
-    { label: '云端地址', key: 'cloud_url', hint: "cloud模式文件内是http开头的链接,local模式文件内是文件的路径" },
+    { label: '云端地址', key: 'cloud_url', hint: "以http或https开头的链接,如cd2就是http://ip:19798" },
+    { label: '云端地址后缀', key: 'cloud_url_suffix', hint: "云端地址后需要加的链接,用于拼接云端文件的下载地址,注意不要忘记首尾的'/''" },
     { label: '软链接大小', key: 'symlink_size', hint: "单位为Mb,低于设定值的视频文件会直接进行复制" },
     { label: '排除目录名', key: 'exclude_dir_name', hint: "要排除同步的文件夹名，指定名称的文件夹不会被同步和监控" },
     { label: '软链接后缀', key: 'symlink_ext' },
@@ -137,6 +139,32 @@ const selects = ref<SelectOption[]>([
 const testFilePath = ref("")
 const testFileUrl = ref("")
 const testRootPath = ref("")
+
+
+watch(() => syncConfig.value.cloud_type,
+    (newVal) => {
+        setCloudUrlSuffix()
+    });
+
+watch(() => syncConfig.value.cloud_url,
+    (newVal) => {
+        setCloudUrlSuffix()
+    });
+
+function setCloudUrlSuffix() {
+    const cloud_type = syncConfig.value.cloud_type
+    if (cloud_type === "cd2") {
+        syncConfig.value.cloud_url_suffix = `/static/${syncConfig.value.cloud_url.replace('://', '/')}/false/`;
+    }
+    else if (cloud_type == "alist") {
+        syncConfig.value.cloud_url_suffix = "/d/"
+    }
+    else {
+        syncConfig.value.cloud_url_suffix = ""
+    }
+}
+
+
 
 async function caculatePath() {
     let data = { path: testFilePath.value, url: testFileUrl.value }

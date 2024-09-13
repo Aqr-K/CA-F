@@ -70,7 +70,6 @@ const inputKeyword = ref<HTMLElement | null>(null)
 
 // 选中条目
 function selectMedia(item: TmdbItem) {
-  console.log(item.tmdbid);
   mediaId.value = item.tmdbid || item.doubanid
   emit('close')
 }

@@ -1,8 +1,6 @@
 <template>
     <SideBar />
-    <transition name="slide-fade">
-        <v-overlay class="theme" v-model="isOverlayVisible" scroll-strategy="reposition"></v-overlay>
-    </transition>
+    <v-overlay class="theme" v-model="isOverlayVisible" scroll-strategy="reposition"></v-overlay>
 
     <v-app-bar :style="{
         background: $vuetify.theme.current.colors.background,

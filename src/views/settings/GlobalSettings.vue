@@ -28,15 +28,14 @@
         </v-form>
 
     </div>
-    <SnackBar ref="snackbarRef" />
 </template>
 
 <script lang="ts" setup name="GlobalSettings">
-import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api/index'
 import { GlobalSettings, SaveResponse } from '@/api/types';
 const isLoading = ref(true)
-
+import { useToast } from 'vue-toast-notification';
+const $toast = useToast();
 // 定义每个设置项的类型
 interface SettingItem {
     key: string;
@@ -72,7 +71,6 @@ const configList = ref<ConfigGroup[]>([{
     ]
 }])
 
-const snackbarRef = ref(null)
 
 const settings = ref(<GlobalSettings>{
     start_delay: 0,
@@ -103,7 +101,11 @@ async function saveConfig() {
                 'Content-Type': 'application/json',
             },
         })
-        snackbarRef.value?.showSnackBar(response.success, response.message)
+        if (response.success) {
+            $toast.success(response.message);
+        } else {
+            $toast.error(response.message);
+        }
 
     } catch (error) {
         console.error('Error fetching sync config:', error)

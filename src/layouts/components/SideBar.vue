@@ -63,7 +63,7 @@ const categories = [
     },
     {
         title: "刮削同步",
-        items: [{ title: "目录配置", to: "/scrape_synclist", icon: "mdi-folder", isActive: false },
+        items: [{ title: "目录配置", to: "/file_transfer", icon: "mdi-folder", isActive: false },
         { title: "添加同步", to: "/add_scrpe_sync", icon: "mdi-plus", isActive: false },
         { title: "文件管理", to: "/file_manager", icon: "mdi-folder-multiple-outline", isActive: false },]
     },
@@ -91,7 +91,7 @@ const handleScroll = (event) => {
 </script>
 <style lang="scss" scoped>
 .v-list-item--active {
-    background: linear-gradient(-72.47deg, rgb(var(--v-theme-primary)) 22.16%, rgba(var(--v-theme-primary), .7) 76.47%) !important;
+    background: linear-gradient(-72.47deg, rgb(var(--v-theme-primary)) 22.16%, rgba(var(--v-theme-primary), 0.9) 76.47%) !important;
     color: white !important;
     // border-radius: 0 20px 20px 0 !important;
 }

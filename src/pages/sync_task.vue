@@ -34,16 +34,15 @@
             <v-btn @click="startTask">开始同步</v-btn>
         </div>
     </div>
-    <SnackBar ref="snackbarRef" />
 </template>
 
 <script lang="ts" setup>
-import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api';
 import { SyncItem, SaveResponse } from '@/api/types';
 import { SyncItemVar } from '@/api/variable';
+import { useToast } from 'vue-toast-notification';
+const $toast = useToast();
 
-const snackbarRef = ref(null)
 const isLoading = ref(true)
 const currentConfig = ref<SyncItem>({ ...SyncItemVar })
 
@@ -94,8 +93,11 @@ async function fetchSyncConfig() {
 async function startTask() {
     try {
         const response: SaveResponse = await api.post(`/autosymlink/start_task`, currentConfig.value)
-        snackbarRef.value?.showSnackBar(response.success, response.message)
-
+        if (response.success) {
+            $toast.success(response.message);
+        } else {
+            $toast.error(response.message);
+        }
     } catch (error) {
         console.error('Error fetching sync config:', error)
     }

@@ -3,8 +3,9 @@
         <v-card class="mx-auto">
             <v-toolbar>
                 <template v-for="(segment, index) in pathSegments" :key="index">
-                    <VBtn v-if="display.mdAndUp.value" variant="text" :input-value="index === pathSegments.length - 1"
-                        class="px-1" style="height: inherit;" color="on-primary" @click="changePath(segment, index)">
+                    <VBtn v-if="display.mdAndUp.value || index === 0" variant="text"
+                        :input-value="index === pathSegments.length - 1" class="px-1" style="height: inherit;"
+                        color="on-primary" @click="changePath(segment, index)">
                         <VIcon v-if="segment.path === '/'" icon=" mdi-folder-multiple-outline" class="mx-3" size="24" />
                         <VIcon v-else icon=" mdi-chevron-right" />
                         {{ segment.name }}
@@ -53,13 +54,13 @@
             </v-toolbar>
             <v-divider />
             <v-toolbar class="batch-toolbar" style="border-radius: 5px;">
+                <IconBtn @click="refresh">
+                    <VIcon color="primary"> mdi-refresh </VIcon>
+                </IconBtn>
                 <VSpacer />
                 <IconBtn @click="changeSelectMode">
                     <VIcon color="primary" v-if="selectMode"> mdi-selection-remove </VIcon>
                     <VIcon color="primary" v-else>mdi-select</VIcon>
-                </IconBtn>
-                <IconBtn @click="refresh">
-                    <VIcon color="primary"> mdi-refresh </VIcon>
                 </IconBtn>
                 <span v-if="selected.length > 0">
                     <IconBtn @click.stop="batchScrape">
@@ -140,7 +141,7 @@
                                         </VTooltip>
                                         <VTooltip text="删除">
                                             <template #activator="{ props }">
-                                                <IconBtn v-bind="props" @click.stop="deleteItem(item)">
+                                                <IconBtn v-bind="props" @click.stop="deleteItem(item, true)">
                                                     <VIcon icon="mdi-delete-outline" color="error" />
                                                 </IconBtn>
                                             </template>
@@ -393,7 +394,6 @@ async function recognize(path: string) {
         // 关闭进度条
         progressDialog.value = false
         if (!nameTestResult.value) $toast.error(`${path} 识别失败！`)
-        console.log(nameTestResult.value);
         nameTestDialog.value = !!nameTestResult.value?.media_info?.title
     } catch (error) {
         console.error(error)
@@ -532,7 +532,6 @@ function listItemClick(item: FileItem) {
         }
         // 去重
         selected.value = Array.from(new Set(selected.value))
-        console.log(selected.value);
         return false
     }
     fetchFiles(item)

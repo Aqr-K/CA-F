@@ -32,17 +32,14 @@
             </div>
         </v-form>
     </div>
-    <SnackBar ref="snackbarRef" />
 </template>
 
 <script lang="ts" setup>
-import SnackBar from '@/layouts/components/SnackBar.vue'
 import api from '@/api/index'
 import { CloudStatusSettings, SaveResponse } from '@/api/types';
+import { useToast } from 'vue-toast-notification';
+const $toast = useToast();
 const isLoading = ref(true)
-
-
-const snackbarRef = ref(null)
 
 const settings = ref<CloudStatusSettings[]>(
     [{ name: "", sign_file: "", sign_file_url: "" }]
@@ -71,7 +68,11 @@ async function saveConfig() {
     try {
         let data = { settings: settings.value, name: "cloud_status_settings" }
         const response: SaveResponse = await api.post(`/system/save_settings`, data)
-        snackbarRef.value?.showSnackBar(response.success, response.message)
+        if (response.success) {
+            $toast.success(response.message);
+        } else {
+            $toast.error(response.message);
+        }
     } catch (error) {
         console.error('Error fetching sync config:', error)
     }

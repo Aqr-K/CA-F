@@ -34,8 +34,8 @@ export interface SyncItem {
   symlink_size: number; // e.g., size in MB or GB
   cloud_type: string; // e.g., "cd2"
   cloud_url: string;
-  clouddrive2_path: string;
-  alist_path: string;
+  cloud_url_suffix: string;
+  cloud_root_path: string;
   symlink_ext: string; // e.g., ".mkv;.iso;.ts;.mp4;.avi;.rmvb;.wmv;.m2ts;.mpg;.flv;.rm;.mov"
   metadata_ext: string; // e.g., ".nfo;.jpg;jpeg;.png;.svg;.ass;.srt;.sup;.mp3;.flac;.wav;.aac"
   id: string;
@@ -108,12 +108,6 @@ export interface MediaDirectory {
   media_type?: string;
   // 媒体类别 动画电影/国产剧
   category?: string;
-  // 刮削媒体信息
-  scrape?: boolean;
-  // 自动二级分类，未指定类别时自动分类
-  auto_category?: boolean;
-  // 优先级
-  priority?: number;
 }
 
 // 媒体信息

@@ -1,5 +1,5 @@
 <template>
-    <VDialog scrollable max-width="50rem" :fullscreen="!display.mdAndUp.value" class="file-transfer">
+    <VDialog scrollable max-width="50rem" :fullscreen="!display.mdAndUp.value">
         <VCard :title="dialogTitle" class="rounded-t">
             <DialogCloseBtn @click="emit('close')" />
             <v-divider></v-divider>
@@ -7,7 +7,7 @@
                 <v-form>
                     <v-row>
                         <v-col cols="12" md="8">
-                            <VCombobox v-model="transferForm.target" :items="targetDirectories" label="目的路径"
+                            <VCombobox v-model="transferForm.dest_dir" :items="targetDirectories" label="目的路径"
                                 placeholder="留空自动" hint="整理目的路径，留空将自动匹配" persistent-hint />
                         </v-col>
                         <v-col v-if="props.storage == 'local'" cols="12" md="4">
@@ -45,6 +45,10 @@
                     </VRow>
                     <VRow>
                         <VCol cols="12" md="4">
+                            <VTextField v-model="transferForm.episode_part" label="指定Part" placeholder="如part1"
+                                hint="指定Part，如part1" persistent-hint />
+                        </VCol>
+                        <VCol cols="12" md="4">
                             <VTextField v-model="transferForm.episode_format" label="集数定位" placeholder="使用{ep}定位集数"
                                 hint="使用{ep}定位文件名中的集数部分以辅助识别" persistent-hint />
                         </VCol>
@@ -56,15 +60,15 @@
                             <VTextField v-model.number="transferForm.episode_offset" label="集数偏移" placeholder="如-10"
                                 hint="集数偏移运算，如-9或+9" persistent-hint />
                         </VCol>
+                        <VCol cols="12" md="4">
+                            <VTextField v-model.number="transferForm.min_filesize" label="文件大小（MB）"
+                                :rules="[numberValidator]" placeholder="0" hint="只整理大于指定值的文件" persistent-hint />
+                        </VCol>
                     </VRow>
                     <VRow>
                         <VCol cols="12" md="8">
                             <VTextField v-model="transferForm.suffix" label="自定义后缀" hint="指定整理后的文件名后缀,如指定制作组为ADWeb"
                                 persistent-hint />
-                        </VCol>
-                        <VCol cols="12" md="4">
-                            <VTextField v-model.number="transferForm.min_filesize" label="文件大小（MB）"
-                                :rules="[numberValidator]" placeholder="0" hint="只整理大于指定值的文件" persistent-hint />
                         </VCol>
                     </VRow>
                     <VRow>
@@ -97,6 +101,9 @@ import { MediaDirectory } from '@/api/types';
 import MediaIdSelector from '@/components/Selector/MediaIdSelector.vue';
 import DialogCloseBtn from '@/components/Dialog/DialogCloseBtn.vue';
 import { numberValidator } from '@/@core/@validators'
+import { useToast } from 'vue-toast-notification';
+
+const $toast = useToast()
 
 const display = useDisplay()
 // 定义事件
@@ -123,17 +130,9 @@ const dialogTitle = computed(() => {
     return '手动整理'
 })
 
-
-
 // 表单
 const transferForm = reactive({
-    storage: props.storage,
-    history_id: 0,
-    path: '',
-    drive_id: '',
-    fileid: '',
-    filetype: '',
-    target: props.target ?? null,
+    dest_dir: props.target ?? null,
     tmdbid: null,
     doubanid: null,
     season: null,
@@ -145,7 +144,7 @@ const transferForm = reactive({
     episode_offset: null,
     min_filesize: 0,
     suffix: "",
-    scrape: false,
+    scrape: true,
 })
 
 // 生成1到100季的下拉框选项
@@ -201,31 +200,47 @@ const targetDirectories = computed(() => {
     return [...new Set(directories)]
 })
 
+// // 整理文件
+// async function transfer() {
+//     if (!props.items) return
+//     // 文件整理
+//     if (props.items) {
+//         for (const item of props.items) {
+//             await handleTransfer(item)
+//         }
+//     }
+// }
+
 // 整理文件
 async function transfer() {
-    if (!props.items) return
-
+    if (!props.history_ids && !props.items) return
     // 文件整理
     if (props.items) {
-        for (const item of props.items) {
-            await handleTransfer(item)
-        }
+        await handleTransfer(props.items)
+    }
+    // 历史记录整理
+    if (props.history_ids) {
+        handleTransferLog(props.history_ids)
     }
 }
 
 // 整理文件
-async function handleTransfer(item: FileItem) {
-    transferForm.path = item.path
-    transferForm.filetype = item.type || 'dir'
-
+async function handleTransfer(items: FileItem[]) {
     try {
-        const result: { [key: string]: any } = await api.post('transfer/manual', {}, { params: transferForm })
-        if (!result.success) $toast.error(`文件 ${item.path} 整理失败：${result.message}！`)
+        const result: { [key: string]: any } = await api.post('transfer/manual', { items: items, history_ids: null, transferForm: transferForm, })
     } catch (e) {
         console.log(e)
     }
 }
 
+// 整理日志
+async function handleTransferLog(history_ids: number[]) {
+    try {
+        const result: { [key: string]: any } = await api.post('transfer/manual', { items: null, history_ids: history_ids, transferForm: transferForm })
+    } catch (e) {
+        console.log(e)
+    }
+}
 // 查询媒体库目录
 async function loadLibraryDirectories() {
     try {

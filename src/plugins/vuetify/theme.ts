@@ -10,6 +10,7 @@ const theme: VuetifyOptions["theme"] = {
         secondary: "#8A8D93",
         "on-secondary": "#fff",
         divider: "#6B7280",
+        card: "#f3f3f4",
         success: "#56CA00",
         // 滚动条颜色
         scrollbar: "#E5E5E5",
@@ -70,6 +71,7 @@ const theme: VuetifyOptions["theme"] = {
         warning: "#FFB400",
         error: "#FF4C51",
         divider: "#E7E3FC80",
+        card: "#252b3a",
         "tree-node-active": "#2D3241",
         // 滚动条颜色
         scrollbar: "#343A52",

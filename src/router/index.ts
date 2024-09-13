@@ -58,6 +58,13 @@ const router = createRouter({
           },
         },
         {
+          path: "file_transfer",
+          component: () => import("@/pages/file_transfer.vue"),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
           path: "file_manager",
           component: () => import("@/pages/file_manager.vue"),
           meta: {
