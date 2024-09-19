@@ -24,23 +24,14 @@
                                 <VPathInput label="路径" v-model="element.path" />
                             </v-card-item>
                             <v-card-item class="mb-3">
-                                <v-row>
-                                    <v-col cols="5">
-                                        <v-select label="媒体类型" :items="[{ title: '电影', value: 'movie' }, { title: '电视剧', value: 'tv' }
-                                        ]" v-model="element.media_type" class="t-select"
-                                            @update:modelValue:="updateCategory(index)"></v-select>
-                                    </v-col>
-                                    <v-col cols="7">
-                                        <v-select label="媒体类别" :items="category[element.media_type]"
-                                            v-model="element.category" class="t-select"></v-select>
-                                    </v-col>
-                                </v-row>
+                                <v-select label="媒体类型" :items="[{ title: '全部', value: '' }, { title: '电影', value: 'movie' }, { title: '电视剧', value: 'tv' }, { title: '动漫', value: 'anime' }
+                                ]" v-model="element.media_type" class="t-select"></v-select>
                             </v-card-item>
                         </v-card>
                     </template>
                 </draggable>
             </v-card-text>
-            <div class="btn-settings">
+            <div class="flex justify-center align-center mb-5">
                 <v-btn @click="saveConfig">保存</v-btn>
             </div>
         </v-card>
@@ -60,9 +51,7 @@ const mediaDirectory = {
     type: "library",
     name: "媒体库目录",
     path: "",
-    media_type: "all",
-    category: "all",
-
+    media_type: "电影",
 }
 
 const category = ref({})
@@ -71,9 +60,7 @@ const settings = ref<MediaDirectory[]>([
     mediaDirectory
 ]);
 
-function updateCategory(index: number) {
-    settings.value[index].category = category.value[settings.value[index].media_type][0]
-}
+
 
 function addConfig() {
     settings.value.push(mediaDirectory)

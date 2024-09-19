@@ -9,7 +9,7 @@
                             <v-icon icon="mdi-cloud-sync-outline" class="mb-6"></v-icon>
                             <span class="ml-2">{{ element.task_name }}</span>
                         </RouterLink>
-                        <span class="absolute top-4 right-8">
+                        <span class="absolute top-4 right-1">
                             <VTooltip text="同步">
                                 <template #activator="{ props }">
                                     <IconBtn v-bind="props" @click.stop="startTask(element)">

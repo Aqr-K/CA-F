@@ -106,7 +106,7 @@ export interface MediaDirectory {
   path?: string;
   // 媒体类型 电影/电视剧
   media_type?: string;
-  // 媒体类别 动画电影/国产剧
+  //二级分类
   category?: string;
 }
 
@@ -274,4 +274,15 @@ export interface Context {
   // 媒体信息
   media_info: MediaInfo;
   new_filename: string;
+}
+
+// 上下文信息
+export interface TransferWatcher {
+  source_dir: string; // 源目录路径
+  dest_dir: string; // 目标目录路径
+  transfer_type: string; // 传输类型，例如 'move' 或 'copy'
+  watch_mode: string; // 监视模式，例如 'Observer'
+  scrape: boolean; // 是否抓取元数据
+  switch: boolean; // 文件传输是否启用
+  id: string; // 唯一标识符，可选
 }

@@ -15,14 +15,19 @@
                     <MediaLibrary />
                 </transition>
             </v-window-item>
-            <v-window-item value="sync_filetrans">
+            <v-window-item value="transfer_watcher">
                 <transition name="fade-slide" appear>
-
+                    <TransferWatcher />
                 </transition>
             </v-window-item>
             <v-window-item value="media_config">
                 <transition name="fade-slide" appear>
-
+                    <MediaConfig />
+                </transition>
+            </v-window-item>
+            <v-window-item value="media_category">
+                <transition name="fade-slide" appear>
+                    <MediaCategory />
                 </transition>
             </v-window-item>
         </v-window>
@@ -34,16 +39,18 @@ import { ref } from 'vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
 import MediaLibrary from '@/views/file_transfer/MediaLibrary.vue';
-
+import MediaConfig from '@/views/file_transfer/MediaConfig.vue';
+import TransferWatcher from '@/views/file_transfer/TransferWatcher.vue';
+import MediaCategory from '@/views/file_transfer/MediaCategory.vue';
 const route = useRoute()
 
 
 const activeTab = ref(route.query.tab)
 
-const tabs = [{ tab: "directory", icon: "mdi-folder-outline", title: "目录配置" }, { tab: "sync_filetrans", icon: "mdi-cloud-sync-outline", title: "同步配置" }, { tab: "media_config", icon: "mdi-cog-outline", title: "刮削选项" }]
+const tabs = [{ tab: "directory", icon: "mdi-folder-outline", title: "目录配置" }, { tab: "transfer_watcher", icon: "mdi-cloud-sync-outline", title: "同步配置" }, { tab: "media_config", icon: "mdi-cog-outline", title: "刮削选项" }, { tab: "media_category", icon: "mdi-format-list-bulleted", title: "二级分类" }]
 
 function jumpTab(tab: string) {
-    router.push("/file_transfer/?tab=" + tab)
+    router.push("/file_transfer?tab=" + tab)
 }
 
 </script>

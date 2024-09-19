@@ -7,8 +7,11 @@
                 <v-form>
                     <v-row>
                         <v-col cols="12" md="8">
-                            <VCombobox v-model="transferForm.dest_dir" :items="targetDirectories" label="目的路径"
-                                placeholder="留空自动" hint="整理目的路径，留空将自动匹配" persistent-hint />
+                            <VCombobox v-if="useLibrary" v-model="transferForm.dest_dir" :items="targetDirectories"
+                                label="目的路径" placeholder="留空自动" hint="整理目的路径，留空将自动匹配" persistent-hint />
+                            <VPathInput v-else label="目的路径" v-model="transferForm.dest_dir" currentDir="/"
+                                hint="整理目的路径，留空将自动匹配" />
+
                         </v-col>
                         <v-col v-if="props.storage == 'local'" cols="12" md="4">
                             <VSelect v-model="transferForm.transfer_type" label="整理方式" :items="[
@@ -16,7 +19,7 @@
                                 { title: '移动', value: 'move' },
                                 { title: '复制', value: 'copy' },
                                 { title: '硬链接', value: 'link' },
-                                { title: '软链接', value: 'softlink' },
+                                { title: '软链接', value: 'symlink' },
                             ]" hint="文件操作整理方式" persistent-hint />
                         </v-col>
                     </v-row>
@@ -24,9 +27,9 @@
                         <VCol cols="12" md="4">
                             <VSelect v-model="transferForm.media_type" label="类型" :items="[
                                 { title: '自动', value: '' },
-                                { title: '电影', value: '电影' },
-                                { title: '电视剧', value: '电视剧' },
-                            ]" hint="文件的媒体类型" persistent-hint />
+                                { title: '电影', value: 'movie' },
+                                { title: '电视剧', value: 'tv' },
+                            ]" hint="文件媒体类型" persistent-hint />
                         </VCol>
                         <VCol cols="12" md="4">
                             <VTextField v-if="mediaSource === 'themoviedb'" v-model="transferForm.tmdbid"
@@ -39,30 +42,26 @@
                                 persistent-hint @click:append-inner="mediaSelectorDialog = true" />
                         </VCol>
                         <VCol cols="12" md="4">
-                            <VSelect v-show="transferForm.media_type === '电视剧'" v-model.number="transferForm.season"
+                            <VSelect v-show="transferForm.media_type === 'tv'" v-model.number="transferForm.season"
                                 label="季" :items="seasonItems" hint="指定季数" persistent-hint />
                         </VCol>
                     </VRow>
-                    <VRow>
-                        <VCol cols="12" md="4">
-                            <VTextField v-model="transferForm.episode_part" label="指定Part" placeholder="如part1"
-                                hint="指定Part，如part1" persistent-hint />
-                        </VCol>
-                        <VCol cols="12" md="4">
+                    <VRow v-if="transferForm.media_type === 'tv'">
+                        <VCol cols="12" md="8">
                             <VTextField v-model="transferForm.episode_format" label="集数定位" placeholder="使用{ep}定位集数"
                                 hint="使用{ep}定位文件名中的集数部分以辅助识别" persistent-hint />
                         </VCol>
                         <VCol cols="12" md="4">
+                            <VTextField v-model="transferForm.episode_part" label="指定Part" placeholder="如part1"
+                                hint="指定Part，如part1" persistent-hint />
+                        </VCol>
+                        <VCol cols="12" md="6">
                             <VTextField v-model="transferForm.episode_detail" label="指定集数" placeholder="起始集,终止集，如1或1,2"
                                 hint="指定集数或范围，如1或1,2" persistent-hint />
                         </VCol>
-                        <VCol cols="12" md="4">
+                        <VCol cols="12" md="6">
                             <VTextField v-model.number="transferForm.episode_offset" label="集数偏移" placeholder="如-10"
                                 hint="集数偏移运算，如-9或+9" persistent-hint />
-                        </VCol>
-                        <VCol cols="12" md="4">
-                            <VTextField v-model.number="transferForm.min_filesize" label="文件大小（MB）"
-                                :rules="[numberValidator]" placeholder="0" hint="只整理大于指定值的文件" persistent-hint />
                         </VCol>
                     </VRow>
                     <VRow>
@@ -70,10 +69,17 @@
                             <VTextField v-model="transferForm.suffix" label="自定义后缀" hint="指定整理后的文件名后缀,如指定制作组为ADWeb"
                                 persistent-hint />
                         </VCol>
+                        <VCol cols="12" md="4">
+                            <VTextField v-model.number="transferForm.min_filesize" label="文件大小（MB）"
+                                :rules="[numberValidator]" placeholder="0" hint="只整理大于指定值的文件" persistent-hint />
+                        </VCol>
                     </VRow>
                     <VRow>
                         <VCol cols="12" md="6">
                             <VSwitch v-model="transferForm.scrape" label="刮削元数据" hint="整理完成后自动刮削元数据" persistent-hint />
+                        </VCol>
+                        <VCol cols="12" md="6">
+                            <VSwitch v-model="useLibrary" label="选择媒体库" hint="开启后目的路径会显示媒体文件夹列表" persistent-hint />
                         </VCol>
                     </VRow>
                 </v-form>
@@ -105,6 +111,8 @@ import { useToast } from 'vue-toast-notification';
 
 const $toast = useToast()
 
+const useLibrary = ref(true)
+
 const display = useDisplay()
 // 定义事件
 const emit = defineEmits(['done', 'close'])
@@ -132,7 +140,7 @@ const dialogTitle = computed(() => {
 
 // 表单
 const transferForm = reactive({
-    dest_dir: props.target ?? null,
+    dest_dir: props.target ?? "",
     tmdbid: null,
     doubanid: null,
     season: null,
@@ -163,53 +171,13 @@ const mediaSource = ref('themoviedb')
 const mediaSelectorDialog = ref(false)
 
 // 所有媒体库目录
-const libraryDirectories = ref<MediaDirectory[]>([{
-    type: "download",
-    name: "我的电影库",
-    path: "/media/movies",
-    media_type: "电影",
-    category: "动作片",
-    scrape: true,
-    auto_category: true,
-    priority: 1,
-},
-{
-    type: "library",
-    name: "电视剧库",
-    path: "/media/tv-shows",
-    media_type: "电视剧",
-    category: "国产剧",
-    scrape: false,
-    auto_category: false,
-    priority: 2,
-},
-{
-    type: "download",
-    name: "动画电影库",
-    path: "/media/animation",
-    media_type: "电影",
-    category: "动画电影",
-    scrape: true,
-    auto_category: true,
-    priority: 3,
-},])
+const libraryDirectories = ref<MediaDirectory[]>([])
 
 // 目的目录下拉框
 const targetDirectories = computed(() => {
     const directories = libraryDirectories.value.map(item => item.path)
     return [...new Set(directories)]
 })
-
-// // 整理文件
-// async function transfer() {
-//     if (!props.items) return
-//     // 文件整理
-//     if (props.items) {
-//         for (const item of props.items) {
-//             await handleTransfer(item)
-//         }
-//     }
-// }
 
 // 整理文件
 async function transfer() {
@@ -244,15 +212,16 @@ async function handleTransferLog(history_ids: number[]) {
 // 查询媒体库目录
 async function loadLibraryDirectories() {
     try {
-        const result: { [key: string]: any } = await api.get('system/setting/LibraryDirectories')
-        if (result.success && result.data?.value) {
-            libraryDirectories.value = result.data.value
-        }
+        const response: any = await api.get('system/settings/media_directory')
+        console.log(response);
+        libraryDirectories.value = response
     } catch (error) {
         console.log(error)
     }
 }
-
+onMounted(() => {
+    loadLibraryDirectories()
+});
 </script>
 
 <style></style>

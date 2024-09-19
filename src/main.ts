@@ -13,6 +13,7 @@ import "vue3-perfect-scrollbar/style.css";
 import PathList from "./components/input/PathList.vue";
 import PathInput from "./components/input/PathInput.vue";
 import { createPinia } from "pinia";
+import { VAceEditor } from "vue3-ace-editor";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import "vue-toast-notification/dist/theme-bootstrap.css";
 
@@ -22,7 +23,10 @@ pinia.use(piniaPluginPersistedstate);
 const app = createApp(App);
 
 // 注册全局组件
-app.component("VPathList", PathList).component("VPathInput", PathInput);
+app
+  .component("VPathList", PathList)
+  .component("VPathInput", PathInput)
+  .component("VAceEditor", VAceEditor);
 
 app
   .use(pinia)
