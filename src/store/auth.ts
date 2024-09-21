@@ -8,6 +8,7 @@ export const useAuthStore = defineStore(
     const user = ref(null);
     const token = ref<string | null>(null);
     const isAuthenticated = ref(false);
+    const originalUrl = ref(null);
 
     async function login(username: string, password: string) {
       try {
@@ -41,7 +42,15 @@ export const useAuthStore = defineStore(
       }
     }
 
-    return { user, token, isAuthenticated, login, logout, initializeAuth };
+    return {
+      user,
+      token,
+      isAuthenticated,
+      originalUrl,
+      login,
+      logout,
+      initializeAuth,
+    };
   },
   {
     persist: {

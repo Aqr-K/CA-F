@@ -1,6 +1,6 @@
 <template>
     <div v-if="!isLoading">
-        <v-card title="媒体目录">
+        <v-card title="媒体目录" subtitle="设置媒体文件整理后存储目录和分类，智能匹配">
             <v-card-text>
                 <draggable :list="settings" handle=".cursor-move" delay="100" item-key="id" tag="div"
                     :component-data="{ 'class': 'grid gap-3 grid-directory' }">

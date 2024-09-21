@@ -12,8 +12,7 @@
     </template>
 
     <div class="main d-flex justify-center align-center">
-        <v-card class="v-theme--dark px-7 py-3 rounded-lg" :class="{ 'opacity-85': isImageLoaded }" min-width="380"
-            max-width="380">
+        <v-card class="px-7 py-3 rounded-lg" :class="{ 'opacity-85': isImageLoaded }" min-width="380" max-width="380">
             <v-card-text>
                 <v-form @submit.prevent="login">
                     <div class="d-flex justify-center align-center">
@@ -45,6 +44,9 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/store/auth';
 import api from '@/api';
 import { SaveResponse } from '@/api/types';
+import { checkPrefersColorSchemeIsDark } from '@/@core/utils';
+import { useTheme } from 'vuetify';
+const { global: globalTheme } = useTheme()
 
 // 表单
 const form = ref({
@@ -93,7 +95,7 @@ function login() {
             const userName = response.user_name
             authStore.token = token
             authStore.user = userName
-            router.push("/")
+            afterLogin()
         })
         .catch((error: any) => {
             // 登录失败，显示错误提示
@@ -126,6 +128,35 @@ watch(backgroundImageUrl, () => {
 // 当图片加载完成时调用
 function handleImageLoad() {
     isImageLoaded.value = true;
+}
+
+
+// 登录后处理
+async function afterLogin() {
+    // 生效主题配置
+    await setTheme()
+    // 跳转到首页或回原始页面
+    router.push(authStore.originalUrl ?? '/')
+}
+
+
+// 获取用户主题配置
+async function fetchThemeConfig() {
+    const response: string = await api.get('/system/settings/theme')
+    if (response) {
+        return response
+    }
+    return null
+}
+
+// 生效主题
+async function setTheme() {
+    let themeValue = (await fetchThemeConfig()) || localStorage.getItem('theme') || 'light'
+    const autoTheme = checkPrefersColorSchemeIsDark() ? 'dark' : 'light'
+    globalTheme.name.value = themeValue === 'auto' ? autoTheme : themeValue
+    // 存储主题到本地
+    localStorage.setItem('theme', themeValue)
+    localStorage.setItem('materio-initial-loader-bg', globalTheme.current.value.colors.background)
 }
 
 // 在 beforeMount 钩子中初始化认证状态

@@ -71,6 +71,7 @@ export interface TelegramSettings {
 export interface Settings115 {
   name: string;
   cookies: string;
+  status: boolean;
 }
 
 export interface CloudStatusSettings {

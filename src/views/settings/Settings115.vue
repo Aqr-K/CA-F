@@ -1,21 +1,24 @@
 <template>
     <div v-if="!isLoading">
-        <v-form>
-            <draggable :list="settings" handle=".cursor-move" delay="100" item-key="id" tag="v-row">
-                <template #item="{ element, index }">
-                    <v-col cols="12" md="4">
-                        <v-card title="115设置" class="h-[450px]">
-                            <span class="absolute top-0 right-3">
-                                <IconBtn @click="addConfig">
-                                    <v-icon icon="mdi-plus" />
-                                </IconBtn>
-                                <IconBtn @click="deleteConfig(index)">
-                                    <v-icon icon="mdi-minus" />
-                                </IconBtn>
-                                <IconBtn>
-                                    <VIcon class="cursor-move" icon="mdi-drag" />
-                                </IconBtn>
-                            </span>
+        <v-card title="115设置" subtitle="用于115的目录树同步,也可与cd2的115ck保持一致,程序可以自动检测ck是否失效">
+            <v-card-text>
+                <draggable :list="settings" handle=".cursor-move" delay="100" item-key="id" tag="div"
+                    :component-data="{ 'class': 'grid gap-3 grid-directory' }">
+                    <template #item="{ element, index }">
+                        <v-card color="card">
+                            <v-card-title class="py-3">
+                                <span class="absolute top-0 right-3">
+                                    <IconBtn @click="addConfig">
+                                        <v-icon icon="mdi-plus" />
+                                    </IconBtn>
+                                    <IconBtn @click="deleteConfig(index)">
+                                        <v-icon icon="mdi-minus" />
+                                    </IconBtn>
+                                    <IconBtn>
+                                        <VIcon class="cursor-move" icon="mdi-drag" />
+                                    </IconBtn>
+                                </span>
+                            </v-card-title>
                             <v-card-item class="mb-5">
                                 <v-text-field label="名称" v-model="element.name" hint="自定义该配置的名称,用于识别不同的账户,该名称不可重复"
                                     persistent-hint></v-text-field>
@@ -24,14 +27,18 @@
                                 <v-text-field label="Cookies" v-model="element.cookies"
                                     hint="115账户的cookies,推荐抓取小程序的cookies" persistent-hint></v-text-field>
                             </v-card-item>
+                            <v-card-item>
+                                <VSwitch v-model="element.status" label="风控检测" hint="判断ck对应的账号是否发生风控并自动解除验证风控"
+                                    persistent-hint />
+                            </v-card-item>
                         </v-card>
-                    </v-col>
-                </template>
-            </draggable>
-            <div class="btn-settings">
-                <v-btn @click="saveConfig">保存</v-btn>
-            </div>
-        </v-form>
+                    </template>
+                </draggable>
+                <div class="btn-settings">
+                    <v-btn @click="saveConfig">保存</v-btn>
+                </div>
+            </v-card-text>
+        </v-card>
     </div>
 </template>
 
@@ -46,11 +53,11 @@ const isLoading = ref(true)
 
 
 const settings = ref<Settings115[]>([
-    { name: "", cookies: "" }
+    { name: "", cookies: "", status: true }
 ]);
 
 function addConfig() {
-    settings.value.push({ name: "", cookies: "" })
+    settings.value.push({ name: "", cookies: "", status: true })
 }
 
 function deleteConfig(index: number) {

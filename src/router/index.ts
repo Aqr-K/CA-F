@@ -100,6 +100,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
   const isAuthenticated = authStore.token !== null;
+  // 总是记录非/login的路由
+  if (to.fullPath != "/login") authStore.originalUrl = to.fullPath;
   if (to.meta.requiresAuth && !isAuthenticated) {
     next("/login");
   } else {
