@@ -40,6 +40,10 @@
                                         hint="监控本地文件夹推荐事件通知,cd2文件夹推荐Webhook,rclone文件夹推荐轮询模式" persistent-hint></v-select>
                                 </v-card-item>
                                 <v-card-item>
+                                    <v-text-field label="屏蔽词" v-model="element.exclude_words" hint=""
+                                        persistent-hint></v-text-field>
+                                </v-card-item>
+                                <v-card-item>
                                     <v-row>
                                         <v-col cols="6">
                                             <v-switch label="刮削元数据" v-model="element.scrape" class="p-0 m-0"></v-switch>
@@ -77,6 +81,7 @@ const transferWatcher: TransferWatcher = {
     watch_mode: "observer",
     scrape: false,
     switch: false,
+    exclude_words: "",
     id: "",
 }
 

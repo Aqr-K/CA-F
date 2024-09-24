@@ -1,0 +1,50 @@
+{
+	"Vue Select Snippet": {
+		"prefix": "vselect",
+		"body": [
+			"<v-select",
+			"  :label=\"$1\"",
+			"  :items=\"$2\"",
+			"  v-model=\"$3\"",
+			"  hint=\"$4\"",
+			"  persistent-hint",
+			"></v-select>"
+		],
+		"description": "Insert a v-select component for selecting sync mode"
+	},
+	"Vue useToast snippet": {
+		"prefix": "vtoast",
+		"body": [
+			"import { useToast } from 'vue-toast-notification';",
+            "const \\$toast = useToast();"
+		],
+		"description": "Import useToast from vue-toast-notification and create a $toast instance"
+	},
+	"Toast Notification Response": {
+		"prefix": "tm",
+		"body": [
+			"if (response.success) {",
+			"    \\$toast.success(response.message);",
+			"} else {",
+			"    \\$toast.error(response.message);",
+			"}"
+		],
+		"description": "Handle toast notifications based on response success"
+	},
+		"Vuetify Text Field": {
+			"prefix": "vtext",
+			"body": [
+				"<v-text-field label=\"$1\" v-model=\"$2\" hint=\"$3\" persistent-hint></v-text-field>",
+			],
+			"description": "Handle toast notifications based on response success"
+		},
+				"Vuetify Card Item": {
+					"prefix": "vcarditem",
+					"body": [
+						"<v-card-item>",
+						"$1",
+						"</v-card-item>",
+					],
+					"description": "Handle toast notifications based on response success"
+				},
+}

@@ -8,6 +8,8 @@ const theme: VuetifyOptions["theme"] = {
       colors: {
         primary: "#3D6FD5",
         secondary: "#8A8D93",
+        //侧边栏hover后的颜色
+        navitem: "#edeef3",
         "on-secondary": "#fff",
         divider: "#6B7280",
         card: "#f3f3f4",
@@ -65,6 +67,8 @@ const theme: VuetifyOptions["theme"] = {
       colors: {
         primary: "#3D6FD5",
         secondary: "#8A8D93",
+        //侧边栏hover后的颜色
+        navitem: "#19202f",
         "on-secondary": "#fff",
         success: "#56CA00",
         info: "#16B1FF",

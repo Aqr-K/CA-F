@@ -11,7 +11,6 @@
                                 label="目的路径" placeholder="留空自动" hint="整理目的路径，留空将自动匹配" persistent-hint />
                             <VPathInput v-else label="目的路径" v-model="transferForm.dest_dir" currentDir="/"
                                 hint="整理目的路径，留空将自动匹配" />
-
                         </v-col>
                         <v-col v-if="props.storage == 'local'" cols="12" md="4">
                             <VSelect v-model="transferForm.transfer_type" label="整理方式" :items="[
@@ -210,9 +209,9 @@ async function handleTransferLog(history_ids: number[]) {
     }
 }
 // 查询媒体库目录
-async function loadLibraryDirectories() {
+function loadLibraryDirectories() {
     try {
-        const response: any = await api.get('system/settings/media_directory')
+        const response: any = api.get('system/settings/media_directory')
         console.log(response);
         libraryDirectories.value = response
     } catch (error) {

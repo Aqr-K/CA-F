@@ -133,8 +133,6 @@ function handleImageLoad() {
 
 // 登录后处理
 async function afterLogin() {
-    // 生效主题配置
-    await setTheme()
     // 跳转到首页或回原始页面
     router.push(authStore.originalUrl ?? '/')
 }
@@ -164,6 +162,7 @@ onMounted(async () => {
     if (authStore.token) {
         router.push('/')
     } else {
+        setTheme()
         // 获取背景图片
         await fetchBackgroundImage()
         // 每隔5秒更换一次背景图片

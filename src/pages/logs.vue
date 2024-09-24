@@ -3,9 +3,25 @@
         <VProgressCircular size="48" indeterminate color="primary" />
         <span class="mt-3">正在刷新 ...</span>
     </div>
-    <div class="flex flex-center mt-10">
+    <div v-if="logs.length > 0" class="flex flex-center mt-10">
         <VTable hide-default-footer disable-sort>
             <tbody>
+                <tr>
+                    <td>
+                        <div class="flex align-center">
+                            <span class="text-[20px] font-bold">
+                                实时日志
+                            </span>
+                            <a class="mx-2 px-3 py-1 inline-flex items-center justify-center"
+                                style="background: #4d5562;color:white;border-radius: 20px;cursor: pointer;"
+                                :href="allLoggingUrl()" target="_blank">
+                                <VIcon icon="mdi-open-in-new" />
+                                <span class="ms-1">查看全部日志</span>
+                            </a>
+                        </div>
+
+                    </td>
+                </tr>
                 <tr v-for="(log, i) in extractLogDetails" :key="i" class="text-sm">
                     <td class="text-sm info py-3">
                         <span class="inline-block w-[85px]">
@@ -28,27 +44,25 @@
 
 <script lang="ts" setup>
 import api from '@/api';
+import { useAuthStore } from '@/store/auth';
+const auth = useAuthStore()
 // 日志列表
 const logs = ref<string[]>([])
-const spacer = "     "
 // SSE消息对象
 let eventSource: EventSource | null = null
 
 // 获取全部日志
-async function fetchAllLogs() {
-    const response: string = await api.get('/system/logging?length=-1');
-    if (response) {
-        logs.value = response.split("\n"); // 以换行符分隔转换为数组
-    } else {
-        console.error('Failed to fetch');
-    }
+function allLoggingUrl() {
+    const token = auth.token
+    return `${import.meta.env.VITE_API_BASE_URL}system/logging?token=${token}&length=-1`
 }
 
 
 // SSE持续获取日志
 function startSSELogging() {
+    const token = auth.token
     eventSource = new EventSource(
-        `${import.meta.env.VITE_API_BASE_URL}system/logging`,
+        `${import.meta.env.VITE_API_BASE_URL}system/logging?token=${token}`,
     )
 
     eventSource.addEventListener('message', (event) => {

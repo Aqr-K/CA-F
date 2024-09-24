@@ -2,18 +2,17 @@
     <draggable :list="syncList" handle=".cursor-move" delay="100" @end="orderSyncList" item-key="id" tag="v-row">
         <template #item="{ element }">
             <v-col cols="12" md="4" class="my-5">
-                <v-card class="py-5 pr-5">
-                    <v-card-item class="pt-3 justify-start task-name">
+                <v-card class="py-5">
+                    <v-card-item class="pt-3 mb-3 justify-start task-name">
                         <RouterLink class="text-[36px] text-[#2f94c3]"
                             :to="{ name: 'sync_config', params: { id: element.id } }">
-                            <v-icon icon="mdi-cloud-sync-outline" class="mb-6"></v-icon>
-                            <span class="ml-2">{{ element.task_name }}</span>
+                            <span>{{ element.task_name }}</span>
                         </RouterLink>
                         <span class="absolute top-4 right-1">
                             <VTooltip text="同步">
                                 <template #activator="{ props }">
                                     <IconBtn v-bind="props" @click.stop="startTask(element)">
-                                        <VIcon icon="mdi-cloud-sync" />
+                                        <VIcon icon="mdi-cloud-sync-outline" />
                                     </IconBtn>
                                 </template>
                             </VTooltip>
@@ -26,12 +25,12 @@
                             </VTooltip>
                         </span>
                     </v-card-item>
-                    <v-card-text v-for="(dir, index) in dirs" :key="index" class="text-left ml-5 p-0 truncate">
+                    <v-card-text v-for="(dir, index) in dirs" :key="index" class="text-left ml-1 truncate">
                         <span class="text-[14px] font-bold" :title="element[dir.key]">
                             {{ dir.label }}{{ element[dir.key] }}
                         </span>
                     </v-card-text>
-                    <v-row class="ml-5">
+                    <v-row class="ml-2">
                         <v-col v-for="(swite, index) in switches" :key="index" cols="12" md="6">
                             <v-switch :label="swite.label" v-model="element[swite.key]"
                                 @input="saveConfig(element)"></v-switch>

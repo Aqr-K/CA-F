@@ -11,7 +11,7 @@
                         {{ segment.name }}
                     </VBtn>
                 </template>
-                <div class="flex-grow-1" />
+                <div class="flex-grow-1"></div>
                 <!-- <VTooltip text="调整排序">
                     <template #activator="{ props }">
                         <IconBtn v-bind="props" @click="changeSort">

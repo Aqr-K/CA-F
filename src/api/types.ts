@@ -21,7 +21,7 @@ export interface SyncItem {
   metadata_checker: boolean;
   observer_enabled: boolean;
   observer_mode: string;
-  cloud_mount_watcher: boolean;
+  observer_delay: number;
   observer_symlink_creator: boolean;
   observer_metadata_copyer: boolean;
   observer_symlink_checker: boolean;
@@ -29,7 +29,6 @@ export interface SyncItem {
   backup_scheduled: boolean;
   backup_time: string | number; // e.g., cron expression like "30 2 * * *"
   backup_ext: string; // e.g., file extensions like "*.*"
-  symlink_mode: string; // e.g., "symlink"
   strm_mode: string; // e.g., "cloud"
   symlink_size: number; // e.g., size in MB or GB
   cloud_type: string; // e.g., "cd2"
@@ -37,6 +36,7 @@ export interface SyncItem {
   cloud_url_suffix: string;
   cloud_root_path: string;
   symlink_ext: string; // e.g., ".mkv;.iso;.ts;.mp4;.avi;.rmvb;.wmv;.m2ts;.mpg;.flv;.rm;.mov"
+  strm_ext: string;
   metadata_ext: string; // e.g., ".nfo;.jpg;jpeg;.png;.svg;.ass;.srt;.sup;.mp3;.flac;.wav;.aac"
   id: string;
   cloud_status_enabled: boolean;
@@ -74,10 +74,15 @@ export interface Settings115 {
   status: boolean;
 }
 
-export interface CloudStatusSettings {
+export interface CloudStatus {
   name: string;
   sign_file: string;
   sign_file_url: string;
+}
+
+export interface CloudMountWatcher {
+  switch: boolean;
+  cloud_dir: string;
 }
 
 export interface SaveResponse {
@@ -285,5 +290,6 @@ export interface TransferWatcher {
   watch_mode: string; // 监视模式，例如 'Observer'
   scrape: boolean; // 是否抓取元数据
   switch: boolean; // 文件传输是否启用
+  exclude_words: string;
   id: string; // 唯一标识符，可选
 }

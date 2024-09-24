@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SyncItem, CloudStatusSettings } from '@/api/types';
+import { SyncItem, CloudStatus } from '@/api/types';
 import { ref } from 'vue';
 import api from '@/api';
 const syncConfig = defineModel<SyncItem>('syncConfig');
@@ -29,7 +29,7 @@ const settings = ref([]);
 
 async function fetchConfig() {
     try {
-        const response: CloudStatusSettings[] = await api.get('/system/settings/' + 'cloud_status_settings')
+        const response: CloudStatus[] = await api.get('/system/settings/' + 'cloud_status')
         settings.value = response.map(item => item.name);
     } catch (error) {
         console.error('Error fetching sync config:', error)

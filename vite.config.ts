@@ -13,7 +13,7 @@ export default defineConfig({
         defineModel: true,
       },
     }),
-    VueDevTools(),
+    // VueDevTools(),
     vuetify({
       autoImport: true,
     }),

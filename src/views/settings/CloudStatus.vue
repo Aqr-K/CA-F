@@ -23,12 +23,12 @@
                                 <v-text-field label="名称" v-model="element.name" hint="自定义该配置的名称,用于识别不同的网盘账户,该名称不可重复"
                                     persistent-hint></v-text-field>
                             </v-card-item>
-                            <v-card-item class="mb-3">
+                            <v-card-item class="mb-5">
                                 <!-- 选择显示文件后,下拉列表的宽度会根据文件名的大小进行变化 -->
                                 <VPathInput label="文件路径" v-model="element.sign_file" hint="掉盘检测的文件路径"
                                     :fileRequired="true" />
                             </v-card-item>
-                            <v-card-item>
+                            <v-card-item class="mb-3">
                                 <v-text-field label="文件链接" v-model="element.sign_file_url" hint="掉盘检测的文件在网盘中的下载链接"
                                     persistent-hint>
                                 </v-text-field>
@@ -47,14 +47,14 @@
 
 <script lang="ts" setup>
 import api from '@/api/index'
-import { CloudStatusSettings, SaveResponse } from '@/api/types';
+import { CloudStatus, SaveResponse } from '@/api/types';
 import { useToast } from 'vue-toast-notification';
 import draggable from 'vuedraggable'
 
 const $toast = useToast();
 const isLoading = ref(true)
 
-const settings = ref<CloudStatusSettings[]>(
+const settings = ref<CloudStatus[]>(
     [{ name: "", sign_file: "", sign_file_url: "" }]
 )
 
@@ -69,7 +69,7 @@ function deleteConfig(index: number) {
 
 async function fetchSyncConfig() {
     try {
-        const response: CloudStatusSettings[] = await api.get('/system/settings/' + 'cloud_status_settings')
+        const response: CloudStatusSettings[] = await api.get('/system/settings/' + 'cloud_status')
         updateConfigList(response)
         isLoading.value = false
     } catch (error) {
@@ -79,7 +79,7 @@ async function fetchSyncConfig() {
 
 async function saveConfig() {
     try {
-        let data = { settings: settings.value, name: "cloud_status_settings" }
+        let data = { settings: settings.value, name: "cloud_status" }
         const response: SaveResponse = await api.post(`/system/save_settings`, data)
         if (response.success) {
             $toast.success(response.message);

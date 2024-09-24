@@ -1,7 +1,5 @@
 <template>
-    <v-navigation-drawer v-model="drawerStore.isOpen" app class="side-bar" @wheel="handleScroll"
-        :style="{ background: $vuetify.theme.current.colors.background }">
-
+    <v-navigation-drawer v-model="drawerStore.isOpen" app class="side-bar" @wheel="handleScroll" color="background">
         <template v-slot:prepend>
             <div id="logo" class="my-10 flex justify-center">
                 <!-- 放置你的标志图片，修改 'your_logo_path' 为实际路径 -->
@@ -20,12 +18,22 @@
                         :style="{ 'border-color': $vuetify.theme.current.colors.divider }">
                 </div>
                 <!-- 具体分类 -->
-                <v-list-item class="h-[30px] text-[16px] my-5 pl-5"
+                <v-list-item class="h-[30px] text-[16px] my-5 pl-5 nav-link"
                     :active="route.path === item.to || (route.path.startsWith('/sync_config') && item.to.startsWith('/sync_list'))"
-                    v-for="(item, index) in category.items" :key="index" :to="item.to" :prepend-icon="item.icon" link>
+                    v-for="(item, index) in category.items" :key="index" :prepend-icon="item.icon" :to="item.to" link
+                    @touchend="handleClick(item.to)">
                     <v-list-item-title class="w-min"><span class="text-[16px] font-[450]">{{ item.title
                             }}</span></v-list-item-title>
                 </v-list-item>
+                <!-- <li class="nav-link my-5 flex align-items" :class="{ 'nav-link-active': isActive(item.to) }"
+                    v-for="(item, index) in category.items">
+                    <RouterLink :to="item.to" class="text-[16px] font-[450]">
+                        <VIcon :icon="item.icon" class="nav-item-icon mr-3" />
+                        <span class="nav-item-title">
+                            {{ item.title }}
+                        </span>
+                    </RouterLink>
+                </li> -->
             </div>
         </PerfectScrollbar>
     </v-navigation-drawer>
@@ -33,10 +41,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 
 import { useDisplay } from 'vuetify'
 import { useDrawerStore } from '@/store/drawer';
+import router from '@/router'
 
 const { mdAndDown } = useDisplay();
 const drawerStore = useDrawerStore();
@@ -46,7 +55,7 @@ if (mdAndDown.value) {
 } else {
     drawerStore.openDrawer();
 }
-
+const touched = ref(false)
 const route = useRoute()
 const categories = [
     {
@@ -87,8 +96,20 @@ const handleScroll = (event) => {
         event.preventDefault(); // 阻止事件传播
     }
 };
+function handleClick(to: string) {
+    touched.value = true
+    router.push(to)
+}
+
 </script>
 <style lang="scss" scoped>
+@media (max-width: 767.98px) {
+
+    a.v-list-item:hover span {
+        display: inline-block;
+    }
+}
+
 .v-list-item--active {
     background: linear-gradient(-72.47deg, rgb(var(--v-theme-primary)) 22.16%, rgba(var(--v-theme-primary), 0.9) 76.47%) !important;
     color: white !important;
@@ -106,13 +127,17 @@ const handleScroll = (event) => {
     /* 去除边框 */
 }
 
-:deep(.ps__thumb-y) {
-    background-color: rgba(var(--v-theme-perfect-scrollbar-thumb), 1);
-}
 
 :deep(.v-list-item__spacer) {
     width: 10px !important;
 }
+
+//滚动条
+
+:deep(.ps__thumb-y) {
+    background-color: rgba(var(--v-theme-perfect-scrollbar-thumb), 1);
+}
+
 
 :deep(.ps .ps__rail-x:hover),
 :deep(.ps .ps__rail-y:hover),

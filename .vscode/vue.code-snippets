@@ -1,0 +1,77 @@
+{
+	"Vue create app": {
+		"prefix": "create app",
+		"body": [
+			"Vue.createApp({",
+			"setup() {",
+			"$1",
+			"return {",
+			"$2",
+			"}",
+			"}",
+			"}).mount(\"#app\")",
+		],
+		"description": "Vue create app",
+	},
+	"Vue Template": {
+		"prefix": "vue3",
+		"body": [
+			"<template>",
+			"  $1",
+			"</template>",
+			"",
+			"<script lang=\"ts\" setup>",
+			"  $2",
+			"</script>",
+			"",
+			"<style>",
+			"  $3",
+			"</style>"
+		],
+		"description": "Create a new Vue.js component"
+	},
+	"Vue Scoped Style": {
+		"prefix": "scoped",
+		"body": [
+			"<style scoped>",
+			"",
+			"</style>"
+		],
+		"description": "Add a scoped style block to a Vue component"
+	},
+	"Vue Scoped Scss Style": {
+		"prefix": "scoped scss",
+		"body": [
+			"<style scoped>",
+			"",
+			"</style>"
+		],
+		"description": "Add a scoped style block to a Vue component"
+	},
+	"Import ref from Vue": {
+		"prefix": "ref",
+		"body": [
+			"import { ref } from 'vue'"
+		],
+		"description": "Import ref from Vue"
+	},
+	"Vue OnMounted Snippet": {
+		"prefix": "vonMounted",
+		"body": [
+			"onMounted(() => {",
+			"$1",
+			"});"
+		],
+		"description": "Insert onMounted lifecycle hook"
+	},
+	"Watch": {
+		"prefix": "vwatch",
+		"body": [
+			"watch(() => $1,", 
+			"(newVal, oldVal) => {",
+			"$2",
+			"});"
+		],
+		"description": "Vue 3 watch snippet"
+	}
+}
