@@ -131,7 +131,7 @@ const selects = ref<SelectOption[]>([
     { label: 'Strm模式', key: 'strm_mode', items: ['cloud', 'local'], hint: "cloud模式文件内是http开头的链接,local模式文件内是文件的路径" },
     { label: '云端地址', key: 'cloud_url', hint: "以http或https开头的链接,如cd2就是http://ip:19798" },
     { label: '云端地址后缀', key: 'cloud_url_suffix', hint: "云端地址后需要加的链接,用于拼接云端文件的下载地址,注意不要忘记首尾的'/''" },
-    { label: '软链接大小', key: 'symlink_size', hint: "单位为Mb,低于设定值的视频文件会直接进行复制" },
+    // { label: '软链接大小', key: 'symlink_size', hint: "单位为Mb,低于设定值的视频文件会直接进行复制" },
     { label: '排除目录名', key: 'exclude_dir_name', hint: "要排除同步的文件夹名，指定名称的文件夹不会被同步和监控" },
     { label: '软链接后缀', key: 'symlink_ext', hint: "指定后缀名的文件会生成软链接,常见的视频格式:.mp4;.mkv;.ts;.iso;.rmvb;.avi;.mov;.mpeg;.mpg;.wmv;.3gp;.asf;.m4v;.flv;.m2ts;.strm;.tp;.f4v" },
     { label: 'Strm后缀', key: 'strm_ext', hint: "指定后缀名的文件会生成Strm文件,常见的视频格式:.mp4;.mkv;.ts;.iso;.rmvb;.avi;.mov;.mpeg;.mpg;.wmv;.3gp;.asf;.m4v;.flv;.m2ts;.strm;.tp;.f4v" },

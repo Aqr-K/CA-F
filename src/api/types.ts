@@ -30,7 +30,7 @@ export interface SyncItem {
   backup_time: string | number; // e.g., cron expression like "30 2 * * *"
   backup_ext: string; // e.g., file extensions like "*.*"
   strm_mode: string; // e.g., "cloud"
-  symlink_size: number; // e.g., size in MB or GB
+  // symlink_size: number; // e.g., size in MB or GB
   cloud_type: string; // e.g., "cd2"
   cloud_url: string;
   cloud_url_suffix: string;

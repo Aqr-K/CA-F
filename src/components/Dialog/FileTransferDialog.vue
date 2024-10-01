@@ -209,9 +209,9 @@ async function handleTransferLog(history_ids: number[]) {
     }
 }
 // 查询媒体库目录
-function loadLibraryDirectories() {
+async function loadLibraryDirectories() {
     try {
-        const response: any = api.get('system/settings/media_directory')
+        const response: any = await api.get('system/settings/media_directory')
         console.log(response);
         libraryDirectories.value = response
     } catch (error) {

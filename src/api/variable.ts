@@ -30,7 +30,7 @@ export const SyncItemVar = {
   backup_time: "30 2 * * *",
   backup_ext: "*.*",
   strm_mode: "local",
-  symlink_size: 0,
+  // symlink_size: 0,
   cloud_type: "cd2",
   cloud_url: "http://ip:port",
   cloud_url_suffix: "",
