@@ -1,10 +1,10 @@
 <template>
     <div v-if="!isLoading">
-        <v-card title="目录同步" subtitle="实时监控目录,自动进行整理转移">
+        <v-card title="目录监控" subtitle="实时监控目录,自动进行整理转移">
             <v-card-text>
                 <draggable :list="settings" handle=".cursor-move" delay="100" item-key="id" tag="v-row">
                     <template #item="{ element, index }">
-                        <v-col cols="12" md="4">
+                        <v-col cols="12" md="6">
                             <v-card title="" color="card">
                                 <span class="absolute top-0 right-3">
                                     <IconBtn @click="addConfig">
@@ -13,6 +13,13 @@
                                     <IconBtn @click="deleteConfig(index)">
                                         <v-icon icon="mdi-minus" />
                                     </IconBtn>
+                                    <VTooltip text="同步">
+                                        <template #activator="{ props }">
+                                            <IconBtn v-bind="props" @click.stop="mannualTransfer(element)">
+                                                <VIcon icon="mdi-cloud-sync-outline" />
+                                            </IconBtn>
+                                        </template>
+                                    </VTooltip>
                                     <IconBtn>
                                         <VIcon class="cursor-move" icon="mdi-drag" />
                                     </IconBtn>
@@ -42,6 +49,14 @@
                                 <v-card-item>
                                     <v-text-field label="屏蔽词" v-model="element.exclude_words" hint=""
                                         persistent-hint></v-text-field>
+                                </v-card-item>
+                                <v-card-item>
+                                    <v-text-field label="入库消息延迟" v-model="element.interval" hint=""
+                                        persistent-hint></v-text-field>
+                                </v-card-item>
+                                <v-card-item>
+                                    <v-text-field label="定时同步" v-model="element.scheduled_time"
+                                        hint="5位cron表达式，留空关闭，如果想要5分钟同步一次，就填*/5 * * * *" persistent-hint></v-text-field>
                                 </v-card-item>
                                 <v-card-item>
                                     <v-row>
@@ -82,6 +97,8 @@ const transferWatcher: TransferWatcher = {
     scrape: false,
     switch: false,
     exclude_words: "",
+    interval: 10,
+    scheduled_time: "",
     id: "",
 }
 
@@ -101,7 +118,9 @@ function deleteConfig(index: number) {
     settings.value.splice(index, 1);
 }
 
+async function mannualTransfer(element: TransferWatcher) {
 
+}
 
 async function fetchConfig() {
     try {

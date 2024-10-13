@@ -17,14 +17,9 @@
                                 class="pt-3" hint="常规同步即对文件夹进行遍历同步,目录树同步是通过115的api生成目录树后进行同步,目录树同步仅能用于115的文件夹"
                                 persistent-hint>
                             </v-select>
-                        </v-card-item>
-                        <v-card-item class="pt-3">
-                            <v-select label="挂载类型" :items="['cd2', 'alist', 'custom']" v-model="syncConfig.cloud_type"
-                                class="pt-3" hint="custom是自定义模式,主要用于cd2和alist以外的网盘工具" persistent-hint>
-                            </v-select>
-                        </v-card-item>
-                        <v-card-item v-for="(input, index) in pathInputs" class="pt-3">
-                            <VPathInput :label="input.label" v-model="syncConfig[input.key]" :hint="input.hint" />
+                            <v-card-item v-for="(input, index) in pathInputs" class="pt-3">
+                                <VPathInput :label="input.label" v-model="syncConfig[input.key]" :hint="input.hint" />
+                            </v-card-item>
                         </v-card-item>
                     </v-card>
                 </v-col>
@@ -127,14 +122,14 @@ interface SelectOption {
 }
 
 const selects = ref<SelectOption[]>([
-    { label: '链接模式', key: 'symlink_mode', items: ['symlink', 'strm'] },
-    { label: 'Strm模式', key: 'strm_mode', items: ['cloud', 'local'], hint: "cloud模式文件内是http开头的链接,local模式文件内是文件的路径" },
+    { label: '挂载类型', key: 'cloud_type', items: ['cd2', 'alist', 'custom'], hint: "custom是自定义模式,主要用于cd2和alist以外的网盘工具" },
     { label: '云端地址', key: 'cloud_url', hint: "以http或https开头的链接,如cd2就是http://ip:19798" },
     { label: '云端地址后缀', key: 'cloud_url_suffix', hint: "云端地址后需要加的链接,用于拼接云端文件的下载地址,注意不要忘记首尾的'/''" },
-    // { label: '软链接大小', key: 'symlink_size', hint: "单位为Mb,低于设定值的视频文件会直接进行复制" },
+    { label: '链接文件大小', key: 'symlink_size', hint: "单位为Mb,低于设定值的视频文件会直接进行复制" },
     { label: '排除目录名', key: 'exclude_dir_name', hint: "要排除同步的文件夹名，指定名称的文件夹不会被同步和监控" },
-    { label: '软链接后缀', key: 'symlink_ext', hint: "指定后缀名的文件会生成软链接,常见的视频格式:.mp4;.mkv;.ts;.iso;.rmvb;.avi;.mov;.mpeg;.mpg;.wmv;.3gp;.asf;.m4v;.flv;.m2ts;.strm;.tp;.f4v" },
+    { label: 'Strm模式', key: 'strm_mode', items: ['cloud', 'local'], hint: "cloud模式文件内是http开头的链接,local模式文件内是文件的路径" },
     { label: 'Strm后缀', key: 'strm_ext', hint: "指定后缀名的文件会生成Strm文件,常见的视频格式:.mp4;.mkv;.ts;.iso;.rmvb;.avi;.mov;.mpeg;.mpg;.wmv;.3gp;.asf;.m4v;.flv;.m2ts;.strm;.tp;.f4v" },
+    { label: '软链接后缀', key: 'symlink_ext', hint: "指定后缀名的文件会生成软链接,常见的视频格式:.mp4;.mkv;.ts;.iso;.rmvb;.avi;.mov;.mpeg;.mpg;.wmv;.3gp;.asf;.m4v;.flv;.m2ts;.strm;.tp;.f4v" },
     { label: '元数据后缀', key: 'metadata_ext', hint: "指定后缀名的文件会直接同步到本地" },
 ]);
 const testFilePath = ref("")

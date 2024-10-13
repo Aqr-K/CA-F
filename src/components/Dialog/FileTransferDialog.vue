@@ -195,6 +195,7 @@ async function transfer() {
 async function handleTransfer(items: FileItem[]) {
     try {
         const result: { [key: string]: any } = await api.post('transfer/manual', { items: items, history_ids: null, transferForm: transferForm, })
+        $toast.success("已添加整理任务")
     } catch (e) {
         console.log(e)
     }
@@ -204,6 +205,8 @@ async function handleTransfer(items: FileItem[]) {
 async function handleTransferLog(history_ids: number[]) {
     try {
         const result: { [key: string]: any } = await api.post('transfer/manual', { items: null, history_ids: history_ids, transferForm: transferForm })
+        $toast.success("已添加整理任务")
+
     } catch (e) {
         console.log(e)
     }

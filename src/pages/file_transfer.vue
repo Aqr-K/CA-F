@@ -47,7 +47,7 @@ const route = useRoute()
 
 const activeTab = ref(route.query.tab)
 
-const tabs = [{ tab: "directory", icon: "mdi-folder-outline", title: "目录配置" }, { tab: "transfer_watcher", icon: "mdi-cloud-sync-outline", title: "同步配置" }, { tab: "media_config", icon: "mdi-cog-outline", title: "刮削选项" }, { tab: "media_category", icon: "mdi-format-list-bulleted", title: "二级分类" }]
+const tabs = [{ tab: "transfer_watcher", icon: "mdi-cloud-sync-outline", title: "同步配置" }, { tab: "directory", icon: "mdi-folder-outline", title: "目录配置" }, { tab: "media_config", icon: "mdi-cog-outline", title: "刮削选项" }, { tab: "media_category", icon: "mdi-format-list-bulleted", title: "二级分类" }]
 
 function jumpTab(tab: string) {
     router.push("/file_transfer?tab=" + tab)
