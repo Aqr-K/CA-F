@@ -72,7 +72,7 @@ const categories = [
     },
     {
         title: "刮削同步",
-        items: [{ title: "目录监控", to: "/file_transfer", icon: "mdi-folder", isActive: false },
+        items: [{ title: "目录配置", to: "/file_transfer", icon: "mdi-folder", isActive: false },
         { title: "文件管理", to: "/file_manager", icon: "mdi-folder-multiple-outline", isActive: false },]
     },
     {

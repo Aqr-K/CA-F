@@ -295,3 +295,9 @@ export interface TransferWatcher {
   scheduled_time: string;
   id: string; // 唯一标识符，可选
 }
+
+export interface CustomWords {
+  replace_words: string;
+  release_group: string;
+  exclude_words: string;
+}

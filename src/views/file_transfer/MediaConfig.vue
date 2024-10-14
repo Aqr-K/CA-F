@@ -22,11 +22,11 @@
                         </v-row>
                     </v-card-item>
                     <v-card-item>
-                        <v-textarea label="电视剧命名规则" v-model="settings.tv_name_rule" rows="6" outlined hint=""
+                        <v-textarea label="电视剧命名规则" v-model="settings.tv_name_rule" auto-grow outlined hint=""
                             persistent-hint></v-textarea>
                     </v-card-item>
                     <v-card-item>
-                        <v-textarea label="电影命名规则" v-model="settings.movie_name_rule" rows="6" outlined hint=""
+                        <v-textarea label="电影命名规则" v-model="settings.movie_name_rule" auto-grow outlined hint=""
                             persistent-hint></v-textarea>
                     </v-card-item>
                     <v-card-item class="mb-5">
@@ -48,7 +48,6 @@ import { SaveResponse } from '@/api/types';
 import { ref } from 'vue';
 import api from '@/api';
 import { useToast } from 'vue-toast-notification';
-import { title } from 'process';
 const $toast = useToast();
 const isLoading = ref(true);
 const settings = ref({

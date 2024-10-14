@@ -524,6 +524,9 @@ async function mkdir() {
 
 // 点击列表项
 function listItemClick(item: FileItem) {
+    if (item.type === "file") {
+        return
+    }
     if (selectMode.value) {
         if (selected.value.includes(item)) {
             selected.value = selected.value.filter(i => i !== item)
