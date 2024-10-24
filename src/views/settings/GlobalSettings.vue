@@ -1,24 +1,33 @@
 <template>
     <div v-if="!isLoading">
         <v-form>
-            <v-card v-for="config in configList" class="px-5 mb-5" :title="config.title">
+            <v-card class="px-5 mb-5" title="常用设置">
                 <v-row>
-                    <v-col v-for="item in config.items" cols="12" class="pb-10 ml-2">
+                    <v-col cols="12" class="pb-5 ml-3">
                         <div class="flex items-center flex-left">
-                            <v-select v-if="'options' in item" :id="item.label" :label="item.label"
-                                :items="item.options" v-model="settings[item.key]"></v-select>
-                            <VPathInput v-else-if="item.key === ('backup_dir')" :label="item.label"
-                                v-model="settings[item.key]" />
-                            <v-text-field
-                                v-else-if="typeof settings[item.key] === 'string' || typeof settings[item.key] === 'number'"
-                                :id="item.label" :label="item.label" v-model="settings[item.key]"
-                                :type="item.key === 'password' ? 'password' : 'text'"></v-text-field>
-                            <v-row v-else-if="item.key == 'switch_group'">
-                                <v-col v-for="(swite, index) in item.switches" cols="12" sm="6" md="4" lg="4">
-                                    <v-switch :label="swite.label" v-model="settings[swite.key]"></v-switch>
-                                </v-col>
-                            </v-row>
+                            <v-text-field v-model="settings.start_delay" label="延时启动" />
                         </div>
+                    </v-col>
+                    <v-col cols="12" class="pb-5 ml-3">
+                        <VPathInput v-model="settings.backup_dir" label="备份文件夹" />
+                    </v-col>
+                    <v-col cols="12" class="pb-5 ml-3">
+                        <v-text-field v-model="settings.http_proxy" label="http代理" />
+                    </v-col>
+                    <v-col cols="12" class="pb-5 ml-3">
+                        <v-switch v-model="settings.debug_mode" label="调试模式" />
+                    </v-col>
+                </v-row>
+            </v-card>
+            <v-card class="px-5 mb-5" title="登录设置">
+                <v-row>
+                    <v-col cols="12" class="pb-5 ml-3">
+                        <v-text-field v-model="settings.username" label="用户名" />
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="12" class="pb-5 ml-3">
+                        <v-text-field v-model="settings.password" label="密码" type="password" />
                     </v-col>
                 </v-row>
             </v-card>
@@ -49,28 +58,6 @@ interface ConfigGroup {
     title: string;
     items: SettingItem[];
 }
-
-const configList = ref<ConfigGroup[]>([{
-    title: "常用设置",
-    items: [
-        { key: "start_delay", label: "延时启动" },
-        { key: "backup_dir", label: "备份文件夹" },
-        { key: "http_proxy", label: "http代理" },
-        {
-            key: "switch_group", switches: [{ key: "debug_mode", label: "调试模式" },
-            ]
-        },
-
-    ]
-},
-{
-    title: "登录设置",
-    items: [
-        { key: "username", label: "用户名" },
-        { key: "password", label: "密码" },
-    ]
-}])
-
 
 const settings = ref(<GlobalSettings>{
     start_delay: 0,

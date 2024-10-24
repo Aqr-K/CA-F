@@ -54,7 +54,7 @@ let eventSource: EventSource | null = null
 // 获取全部日志
 function allLoggingUrl() {
     const token = auth.token
-    return `${import.meta.env.VITE_API_BASE_URL}system/logging?token=${token}&length=-1`
+    return `${import.meta.env.VITE_API_BASE_URL}/system/logging?token=${token}&length=-1`
 }
 
 
@@ -62,7 +62,7 @@ function allLoggingUrl() {
 function startSSELogging() {
     const token = auth.token
     eventSource = new EventSource(
-        `${import.meta.env.VITE_API_BASE_URL}system/logging?token=${token}`,
+        `${import.meta.env.VITE_API_BASE_URL}/system/logging?token=${token}`,
     )
 
     eventSource.addEventListener('message', (event) => {
