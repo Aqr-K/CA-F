@@ -6,7 +6,7 @@
                     <v-select label="选择配置" :items="selects" v-model="selectedConfig"
                         @update:modelValue="handleConfigChange"></v-select>
                 </v-col>
-                <v-col cols="7">
+                <v-col cols="12">
                     <VPathInput label="选择文件夹" v-model="currentConfig.media_dir" :currentDir="initialMediaDir" />
                 </v-col>
             </v-row>
