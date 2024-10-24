@@ -19,6 +19,7 @@ export const SyncItemVar = {
   metadata_checker: false,
   observer_enabled: false,
   observer_mode: "事件通知",
+  observer_delay: 0,
   observer_symlink_creator: false,
   observer_metadata_copyer: false,
   observer_symlink_checker: false,

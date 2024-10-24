@@ -69,7 +69,7 @@ function deleteConfig(index: number) {
 
 async function fetchSyncConfig() {
     try {
-        const response: CloudStatusSettings[] = await api.get('/system/settings/' + 'cloud_status')
+        const response: any = await api.get('/system/settings/' + 'cloud_status')
         updateConfigList(response)
         isLoading.value = false
     } catch (error) {
@@ -92,7 +92,7 @@ async function saveConfig() {
 }
 
 
-function updateConfigList(configs: CloudStatusSettings[]) {
+function updateConfigList(configs: any) {
     settings.value = configs
 }
 onMounted(fetchSyncConfig)
