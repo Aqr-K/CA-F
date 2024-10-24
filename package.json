@@ -6,7 +6,7 @@
   "skipLibCheck": false,
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build", 
+    "build": "vue-tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

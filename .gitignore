@@ -14,3 +14,4 @@ db/*
 *.yaml
 
 node_modules/
+dist/
