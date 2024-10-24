@@ -3,8 +3,6 @@ import vue from "@vitejs/plugin-vue";
 import vuetify from "vite-plugin-vuetify";
 import { fileURLToPath } from "node:url";
 import AutoImport from "unplugin-auto-import/vite";
-import VueDevTools from "vite-plugin-vue-devtools";
-import path from "path";
 
 export default defineConfig({
   plugins: [
@@ -13,7 +11,6 @@ export default defineConfig({
         defineModel: true,
       },
     }),
-    // VueDevTools(),
     vuetify({
       autoImport: true,
     }),
@@ -28,12 +25,6 @@ export default defineConfig({
         additionalData: ['@import "@/styles/global.scss";'], // 全局公共样式
         charset: false,
       },
-      // less: {
-      //   javascriptEnabled: true,
-      //   modifyVars: {
-      //     hack: 'true; @import "@images/global.less"',
-      //   },
-      // },
     },
   },
   resolve: {
@@ -44,5 +35,8 @@ export default defineConfig({
       ),
       "@styles": fileURLToPath(new URL("./src/styles/", import.meta.url)),
     },
+  },
+  build: {
+    chunkSizeWarningLimit: 1500, // 设置为 1000 kB
   },
 });
