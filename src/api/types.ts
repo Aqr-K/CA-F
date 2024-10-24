@@ -5,15 +5,12 @@ export interface SyncItem {
   exclude_dir_path: string;
   exclude_dir_name: string;
   sync_mode: string;
-  media_dir_id: string | number;
-  temp_dir_id: string | number;
   settings_115: string;
   sync_scheduled: boolean;
   sync_time: string | number; // e.g., cron expression like "30 2 * * *"
   symlink_creator: boolean;
   metadata_copyer: boolean;
   metadata_covered: boolean;
-  metadata_skipped: boolean;
   metadata_copyer_mode: string; // e.g., "下载模式"
   num_threads: number;
   symlink_dir_checker: boolean;

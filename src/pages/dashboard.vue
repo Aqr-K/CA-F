@@ -1,15 +1,14 @@
 <template>
-    <v-card class="mx-auto" prepend-icon="$vuetify" subtitle="The #1 Vue UI Library" width="400">
-        <template v-slot:title>
-            <span class="font-weight-black">Welcome to Vuetify</span>
-        </template>
-
-        <v-card-text class="bg-surface-light pt-4">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore
-            voluptatibus!
-            Eaque cupiditate minima, at placeat totam, magni doloremque veniam neque porro libero rerum unde voluptatem!
-        </v-card-text>
-    </v-card>
+    <div class="flex justify-center items-center mt-20">
+        <v-card class="mx-auto" prepend-icon="$vuetify" subtitle="The #1 Vue UI Library" width="400">
+            <template v-slot:title>
+                <span class="font-weight-black">Welcome to CloudAssistant</span>
+            </template>
+            <v-card-text class="bg-surface-light pt-4">
+                主界面内容还没想好，先随便写点东西吧
+            </v-card-text>
+        </v-card>
+    </div>
 </template>
 <script setup lang="ts">
 import api from '@/api';

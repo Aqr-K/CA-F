@@ -59,7 +59,6 @@ const selectedConfig = ref(syncList[0])
 const switches = ref([{ key: "symlink_creator", label: "更新软链接" },
 { key: "metadata_copyer", label: "更新元数据" },
 { key: "metadata_covered", label: "元数据覆盖" },
-{ key: "metadata_skipped", label: "元数据跳过" },
 { key: "symlink_dir_checker", label: "无效文件夹" },
 { key: "symlink_checker", label: "无效软链接" },
 { key: "metadata_checker", label: "无效元数据" },])

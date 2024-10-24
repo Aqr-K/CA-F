@@ -8,14 +8,6 @@
                             <v-select label="选择配置" :items="selects" v-model="syncConfig.settings_115" hint="选择对应的115配置"
                                 persistent-hint></v-select>
                         </v-card-item>
-                        <v-card-item>
-                            <v-text-field label="同步文件夹id" v-model="syncConfig.media_dir_id"
-                                hint="媒体文件夹的cid,在115网页版中打开此文件夹,将链接中cid后的数字填入此处" persistent-hint></v-text-field>
-                        </v-card-item>
-                        <v-card-item class="mb-5">
-                            <v-text-field label="临时文件夹id" v-model="syncConfig.temp_dir_id"
-                                hint="同步文件夹生成的目录树文件将保存在此文件夹,建议新建一个临时文件夹专门用于保存目录树文件" persistent-hint></v-text-field>
-                        </v-card-item>
                     </v-card>
                 </v-col>
             </v-row>
