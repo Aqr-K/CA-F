@@ -71,7 +71,7 @@
                     </div>
                 </transition>
             </v-window-item>
-            <v-window-item value="tree_sync">
+            <v-window-item value="115_settings">
                 <transition name="fade-slide" appear>
                     <div>
                         <TreeSync v-model:syncConfig="syncConfig">
@@ -118,7 +118,7 @@ const syncConfig = ref<SyncItem>({ ...SyncItemVar })
 
 const activeTab = ref(route.query.tab)
 
-const tabs = [{ tab: "symlink", icon: "mdi-link-variant", title: "软链接" }, { tab: "scheduled_task", icon: "mdi-calendar-clock", title: "定时任务" }, { tab: "sync_observer", icon: "mdi-eye", title: "实时监控" }, { tab: "cloud_status", icon: "mdi-weather-cloudy", title: "掉盘检测" }, { tab: "tree_sync", icon: "mdi-sync", title: "目录树同步" }]
+const tabs = [{ tab: "symlink", icon: "mdi-link-variant", title: "软链接" }, { tab: "scheduled_task", icon: "mdi-calendar-clock", title: "定时任务" }, { tab: "sync_observer", icon: "mdi-eye", title: "实时监控" }, { tab: "cloud_status", icon: "mdi-weather-cloudy", title: "掉盘检测" }, { tab: "115_settings", icon: "mdi-sync", title: "115配置" }]
 
 async function fetchSyncConfig() {
     try {

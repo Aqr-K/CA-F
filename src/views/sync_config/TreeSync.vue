@@ -3,7 +3,7 @@
         <v-form>
             <v-row>
                 <v-col cols="12" md="6">
-                    <v-card class="sync-config" title="目录树同步" subtitle='同步模式选择 "目录树同步" 后此项生效'>
+                    <v-card class="sync-config" title="115配置" subtitle='同步模式选择 "星标同步/目录树同步" 后此项生效'>
                         <v-card-item>
                             <v-select label="选择配置" :items="selects" v-model="syncConfig.settings_115" hint="选择对应的115配置"
                                 persistent-hint></v-select>

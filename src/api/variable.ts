@@ -33,6 +33,7 @@ export const SyncItemVar = {
   cloud_url: "http://ip:port",
   cloud_url_suffix: "",
   cloud_root_path: "",
+  cloud_name: "",
   symlink_ext: ".mkv;.iso;.ts;.mp4;.avi;.rmvb;.wmv;.m2ts;.mpg;.flv;.rm;.mov",
   strm_ext: ".mkv;.iso;.ts;.mp4;.avi;.rmvb;.wmv;.m2ts;.mpg;.flv;.rm;.mov",
   metadata_ext: ".nfo;.jpg;jpeg;.png;.svg;.ass;.srt;.sup;.mp3;.flac;.wav;.aac",

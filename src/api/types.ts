@@ -32,6 +32,7 @@ export interface SyncItem {
   cloud_url: string;
   cloud_url_suffix: string;
   cloud_root_path: string;
+  cloud_name: string;
   symlink_ext: string; // e.g., ".mkv;.iso;.ts;.mp4;.avi;.rmvb;.wmv;.m2ts;.mpg;.flv;.rm;.mov"
   strm_ext: string;
   metadata_ext: string; // e.g., ".nfo;.jpg;jpeg;.png;.svg;.ass;.srt;.sup;.mp3;.flac;.wav;.aac"
