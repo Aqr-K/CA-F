@@ -60,9 +60,8 @@ const mediaDirectory = {
     type: "library",
     name: "媒体库目录",
     path: "",
-    media_type: "all",
-    category: "all",
-
+    media_type: "movie",
+    category: "全部",
 }
 
 const category = ref({})
