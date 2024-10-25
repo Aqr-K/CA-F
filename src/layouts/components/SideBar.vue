@@ -25,15 +25,25 @@
                     <v-list-item-title class="w-min"><span class="text-[16px] font-[450]">{{ item.title
                             }}</span></v-list-item-title>
                 </v-list-item>
-                <!-- <li class="nav-link my-5 flex align-items" :class="{ 'nav-link-active': isActive(item.to) }"
-                    v-for="(item, index) in category.items">
-                    <RouterLink :to="item.to" class="text-[16px] font-[450]">
-                        <VIcon :icon="item.icon" class="nav-item-icon mr-3" />
-                        <span class="nav-item-title">
-                            {{ item.title }}
-                        </span>
-                    </RouterLink>
-                </li> -->
+            </div>
+            <div class="mr-5">
+                <div class="mb-2 flex items-center">
+                    <hr class="flex-1 opacity-35 divider mr-2"
+                        :style="{ 'border-color': $vuetify.theme.current.colors.divider }">
+                    <span class="version-text d-flex align-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github mr-2"
+                            width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path
+                                d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5">
+                            </path>
+                        </svg>
+                        <span>{{ app_version }}</span>
+                    </span>
+                    <hr class="flex-1 opacity-35 divider ml-2"
+                        :style="{ 'border-color': $vuetify.theme.current.colors.divider }">
+                </div>
             </div>
         </PerfectScrollbar>
     </v-navigation-drawer>
@@ -46,7 +56,8 @@ import { ref } from 'vue';
 import { useDisplay } from 'vuetify'
 import { useDrawerStore } from '@/store/drawer';
 import router from '@/router'
-
+import api from '@/api'
+const app_version = ref("")
 const { mdAndDown } = useDisplay();
 const drawerStore = useDrawerStore();
 // 根据屏幕大小初始化 drawer 状态
@@ -101,6 +112,17 @@ function handleClick(to: string) {
     router.push(to)
 }
 
+async function fetchConfig() {
+    try {
+        const response: any = await api.get('/system/app_version')
+        app_version.value = response
+    } catch (error) {
+        console.error('Error fetching sync config:', error)
+    }
+}
+onMounted(() => {
+    fetchConfig()
+});
 </script>
 <style lang="scss" scoped>
 @media (max-width: 767.98px) {

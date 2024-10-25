@@ -30,7 +30,7 @@
                             persistent-hint></v-textarea>
                     </v-card-item>
                     <v-card-item class="mb-5">
-                        <v-text-field label="最小文件大小（MB）" v-model="settings.file_size_limit" hint="只整理大于最小文件大小的文件"
+                        <v-text-field label="最小文件大小（MB）" v-model="settings.min_filesize" hint="只整理大于最小文件大小的文件"
                             persistent-hint></v-text-field>
                     </v-card-item>
                     <div class="btn-settings">
@@ -54,7 +54,7 @@ const settings = ref({
     transfer_type: "move",
     fanart_enable: false,
     scrape: true,
-    file_size_limit: 0,
+    min_filesize: 0,
     movie_name_rule: "{% if title %}{{ title }}{% endif %}{% if year %} ({{ year }}){% endif %}{% if tmdbid %} {tmdb-{{ tmdbid }}}{% endif %}/{% if title %}{{ title }}{% endif %}{% if year %} ({{ year }}){% endif %}{% if resolution %} - {{ resolution }}{% endif %}{% if source %}.{{ source }}{% endif %}{% if dolby_vision %}.{{ dolby_vision }}{% endif %}{% if color_space %}.{{ color_space }}{% endif %}{% if video_codec %}.{{ video_codec }}{% endif %}{% if audio_codec %}.{{ audio_codec }}{% endif %}{% if release_group %}-{{ release_group }}{% endif %}{{ext}}",
     tv_name_rule: "{% if title %}{{ title }}{% endif %}{% if year %} ({{ year }}){% endif %}{% if tmdbid %} {tmdb-{{ tmdbid }}}{% endif %}/{% if season %}Season {{ season  }}{% endif %}/{% if title %}{{ title }}{% endif %}{% if year %} ({{ year }}){% endif %}}{% if resolution %} - {{ resolution }}{% endif %}{% if season_episode %}.{{ season_episode  }}{% endif %}{% if part %}-{{ part }}{% endif %}{% if episode %}.第{{ episode  }}集{% endif %}{% if source %}.{{ source }}{% endif %}{% if dolby_vision %}.{{ dolby_vision }}{% endif %}{% if color_space %}.{{ color_space }}{% endif %}{% if video_codec %}.{{ video_codec }}{% endif %}{% if audio_codec %}.{{ audio_codec }}{% endif %}{% if release_group %}-{{ release_group }}{% endif %}{{ext}}"
 });
