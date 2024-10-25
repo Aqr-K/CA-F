@@ -67,8 +67,11 @@ function startSSELogging() {
 
     eventSource.addEventListener('message', (event) => {
         const message = event.data
+
         if (message)
             logs.value.push(message)
+        // 只保留最新的1000行日志
+        logs.value = logs.value.slice(-1000);
     })
 }
 

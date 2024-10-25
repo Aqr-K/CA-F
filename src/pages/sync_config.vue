@@ -74,7 +74,7 @@
             <v-window-item value="115_settings">
                 <transition name="fade-slide" appear>
                     <div>
-                        <TreeSync v-model:syncConfig="syncConfig">
+                        <Setting115 v-model:syncConfig="syncConfig">
                             <template #footer>
                                 <div class="btn-settings">
                                     <v-btn color="red" @click="deleteConfig">删除</v-btn>
@@ -82,7 +82,7 @@
                                     <v-btn @click="saveConfig">保存</v-btn>
                                 </div>
                             </template>
-                        </TreeSync>
+                        </Setting115>
                     </div>
                 </transition>
             </v-window-item>
@@ -101,7 +101,7 @@ import SymlinkSettings from '@/views/sync_config/SymlinkSettings.vue'
 import ScheduledSettings from '@/views/sync_config/ScheduledSettings.vue'
 import ObserverSettings from '@/views/sync_config/ObserverSettings.vue'
 import CloudStatus from '@/views/sync_config/CloudStatus.vue'
-import TreeSync from '@/views/sync_config/TreeSync.vue'
+import Setting115 from '@/views/sync_config/Setting115.vue'
 import { syncConfigStore } from '@/store/syncconfig'
 import { useToast } from 'vue-toast-notification';
 

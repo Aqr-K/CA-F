@@ -18,10 +18,15 @@
                                 hint="常规同步即对文件夹进行遍历同步,目录树同步是通过115的api生成目录树后进行同步,星标同步是根据115的星标文件夹进行同步,如果平时不需要星标功能可以用星标同步"
                                 persistent-hint>
                             </v-select>
-                            <v-card-item v-for="(input, index) in pathInputs" class="pt-3">
-                                <VPathInput :label="input.label" v-model="syncConfig[input.key]" :hint="input.hint" />
-                            </v-card-item>
                         </v-card-item>
+                        <v-card-item class="pt-3">
+                            <v-text-field label="云盘名称" v-model="syncConfig.cloud_name"
+                                hint="网盘目录的名称,如cd2中的115文件夹叫115网盘,就填115网盘" persistent-hint></v-text-field>
+                        </v-card-item>
+                        <v-card-item v-for="(input, index) in pathInputs" class="pt-3">
+                            <VPathInput :label="input.label" v-model="syncConfig[input.key]" :hint="input.hint" />
+                        </v-card-item>
+
                     </v-card>
                 </v-col>
                 <v-col cols="12" md="6">
@@ -103,7 +108,6 @@ const pathInputs = ref([
     { label: '链接目录', key: 'symlink_dir', hint: "程序会在此文件夹中创建软链接/strm文件,同步方向为媒体目录到本地目录,多目录同步时,本地目录不能完全相同" },
     { label: '排除目录', key: 'exclude_dir_path', hint: "要排除同步的文件夹路径，多个路径以;隔开，被排除的文件夹不会被同步和监控" },
     { label: '云盘根目录', key: 'cloud_root_path', hint: "网盘文件夹的上级目录,如/mnt/115,就填/mnt" },
-    { label: '云盘名称', key: 'cloud_name', hint: "网盘目录的名称,如cd2中的115文件夹叫115网盘,就填115网盘" },
 ]);
 const switches = ref([
     { label: '更新软链接', key: 'symlink_creator' },
