@@ -130,7 +130,6 @@ async function fetchSyncConfig() {
     }
 }
 
-
 async function saveConfig() {
     try {
         const response: SaveResponse = await api.post(`/autosymlink/save_config`, syncConfig.value)
