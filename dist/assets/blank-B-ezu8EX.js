@@ -1,1 +1,0 @@
-import{_ as o,b as t,o as n,h as c,i as s}from"./index-BcogOgP3.js";const r={},a={class:"main"};function _(i,l){const e=t("RouterView");return n(),c("div",a,[s(e)])}const d=o(r,[["render",_]]);export{d as default};
