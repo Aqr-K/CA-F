@@ -70,8 +70,8 @@ function startSSELogging() {
 
         if (message)
             logs.value.push(message)
-        // 只保留最新的1000行日志
-        logs.value = logs.value.slice(-1000);
+        // 只保留最新的100行日志
+        logs.value = logs.value.slice(-100);
     })
 }
 
