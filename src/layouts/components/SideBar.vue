@@ -26,7 +26,7 @@
                             }}</span></v-list-item-title>
                 </v-list-item>
             </div>
-            <div class="mr-5">
+            <div class="mr-5 mb-10">
                 <div class="mb-2 flex items-center">
                     <hr class="flex-1 opacity-35 divider mr-2"
                         :style="{ 'border-color': $vuetify.theme.current.colors.divider }">
