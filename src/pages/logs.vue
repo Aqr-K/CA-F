@@ -57,6 +57,7 @@ function allLoggingUrl() {
     return `${import.meta.env.VITE_API_BASE_URL}/system/logging?token=${token}&length=-1`
 }
 
+const num = ref(0)
 
 // SSE持续获取日志
 function startSSELogging() {
@@ -67,11 +68,20 @@ function startSSELogging() {
 
     eventSource.addEventListener('message', (event) => {
         const message = event.data
+        if (message) {
+            const splitMessages = message.split('HHF');
+            for (const msg of splitMessages) {
+                if (msg.trim() !== '') {
+                    logs.value.push(msg.trim());
+                    // console.log(msg.trim());
+                }
+            }
+            // num.value++
+            // console.log(num.value);
 
-        if (message)
-            logs.value.push(message)
+        }
         // 只保留最新的100行日志
-        logs.value = logs.value.slice(-100);
+        logs.value = logs.value.slice(-1000);
     })
 }
 
