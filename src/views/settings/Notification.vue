@@ -54,13 +54,13 @@ const normalSettings = ref({
 const notifyTypes = ref({
     title: "推送设置",
     items: [
-        { key: "symlink_observer", label: "监控状态" },
-        { key: "observer_enabled", label: "监控事件" },
-        { key: "cloud_wathcer", label: "转存监控" },
+        { key: "symlink_watcher", label: "实时监控" },
+        { key: "cloud_watcher", label: "转存监控" },
         { key: "sync_task", label: "同步完成" },
         { key: "backup_task", label: "备份完成" },
         { key: "cloud_status", label: "掉盘通知" },
-        { key: "filetrans_enbaled", label: "刮削完成" },
+        { key: "filetrans_task", label: "刮削完成" },
+        { key: "mediaserver", label: "媒体库通知" },
     ]
 })
 
