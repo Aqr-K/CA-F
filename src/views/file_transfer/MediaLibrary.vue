@@ -25,12 +25,12 @@
                             </v-card-item>
                             <v-card-item class="mb-3">
                                 <v-row>
-                                    <v-col cols="5">
+                                    <v-col cols="6">
                                         <v-select label="媒体类型" :items="[{ title: '电影', value: 'movie' }, { title: '电视剧', value: 'tv' }
                                         ]" v-model="element.media_type" class="t-select"
                                             @update:modelValue:="updateCategory(index)"></v-select>
                                     </v-col>
-                                    <v-col cols="7">
+                                    <v-col cols="6">
                                         <v-select label="媒体类别" :items="category[element.media_type]"
                                             v-model="element.category" class="t-select"></v-select>
                                     </v-col>
