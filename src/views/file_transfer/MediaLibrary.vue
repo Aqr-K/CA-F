@@ -40,8 +40,11 @@
                     </template>
                 </draggable>
             </v-card-text>
-            <div class="btn-settings">
-                <v-btn @click="saveConfig">保存</v-btn>
+            <div class="flex flex-row btn-settings">
+                <v-btn @click="saveConfig" class="me-3">保存</v-btn>
+                <v-btn color="success" variant="tonal" @click="addConfig">
+                    <VIcon icon="mdi-plus" />
+                </v-btn>
             </div>
         </v-card>
     </div>

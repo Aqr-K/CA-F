@@ -38,7 +38,10 @@
                     </template>
                 </draggable>
                 <div class="btn-settings">
-                    <v-btn @click="saveConfig">保存</v-btn>
+                    <v-btn @click="saveConfig" class="me-3">保存</v-btn>
+                    <v-btn color="success" variant="tonal" @click="addConfig">
+                        <VIcon icon="mdi-plus" />
+                    </v-btn>
                 </div>
             </v-card-text>
         </v-card>

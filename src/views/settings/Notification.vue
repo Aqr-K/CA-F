@@ -24,7 +24,8 @@
                 </v-col>
             </v-row>
             <div class="btn-settings">
-                <v-btn @click="saveConfig">保存</v-btn>
+                <v-btn @click="saveConfig" class="me-3">保存</v-btn>
+                <v-btn @click="testTelegram">测试</v-btn>
             </div>
         </v-form>
     </div>
@@ -36,7 +37,6 @@ import { TelegramSettings, SaveResponse } from '@/api/types';
 import { useToast } from 'vue-toast-notification';
 const $toast = useToast();
 const isLoading = ref(true)
-
 const normalSettings = ref({
     title: "通知工具",
     items: [
@@ -117,7 +117,25 @@ async function saveConfig() {
 function updateConfigList(configs: TelegramSettings) {
     settings.value = configs
 }
-onMounted(fetchSyncConfig)
+
+async function testTelegram() {
+    try {
+        const response: SaveResponse = await api.post(`/system/telegram_test`, settings.value)
+        console.log(response);
+
+        if (response.success) {
+            $toast.success(response.message);
+        } else {
+            $toast.error(response.message);
+        }
+    } catch (error) {
+        console.error('Error fetching sync config:', error)
+    }
+}
+
+onMounted(() => {
+    fetchSyncConfig()
+});
 
 </script>
 
