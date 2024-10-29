@@ -30,7 +30,7 @@
                         <span span class="inline-block w-[90px]">
                             {{ log.time }}
                         </span>
-                        <span class="inline-block mx-10 w-[140px] text-center">
+                        <span class="inline-block mx-10 w-[150px] text-center">
                             {{ log.program }}
                         </span>
                         <span v-html="log.content.replace(/\\hf/g, '<br><br>')">

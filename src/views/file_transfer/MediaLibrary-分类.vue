@@ -67,10 +67,7 @@ const mediaDirectory = {
     category: "全部",
 }
 
-const category = ref({
-    "movie": ["全部"],
-    "tv": ["全部", "动漫", "剧集",]
-})
+const category = ref({})
 
 const settings = ref<MediaDirectory[]>([
     mediaDirectory
@@ -87,6 +84,16 @@ function addConfig() {
 function deleteConfig(index: number) {
     settings.value.splice(index, 1);
 }
+
+async function fetchCategory() {
+    try {
+        const response = await api.get('/transfer/media_category')
+        category.value = response
+    } catch (error) {
+        console.error('Error fetching category:', error)
+    }
+}
+
 
 async function fetchConfig() {
     try {
@@ -117,7 +124,7 @@ function updateConfigList(configs: MediaDirectory[]) {
     settings.value = configs
 }
 onMounted(() => {
-    fetchConfig()
+    fetchConfig(), fetchCategory()
 });
 
 </script>

@@ -59,12 +59,17 @@
                                 </v-card-item>
                                 <v-card-item>
                                     <v-row>
-                                        <v-col cols="6">
+                                        <v-col cols="4">
                                             <v-switch label="刮削元数据" v-model="element.scrape" class="p-0 m-0"></v-switch>
                                         </v-col>
-                                        <v-col cols="6">
+                                        <v-col cols="4">
+                                            <v-switch label="自动分类" v-model="element.auto_category"
+                                                class="p-0 m-0"></v-switch>
+                                        </v-col>
+                                        <v-col cols="4">
                                             <v-switch label="启用" v-model="element.switch" class="p-0 m-0"></v-switch>
                                         </v-col>
+
                                     </v-row>
                                 </v-card-item>
                             </v-card>
@@ -98,6 +103,7 @@ const transferWatcher: TransferWatcher = {
     watch_mode: "observer",
     scrape: false,
     switch: false,
+    auto_category: true,
     exclude_words: "",
     interval: 10,
     scheduled_time: "",

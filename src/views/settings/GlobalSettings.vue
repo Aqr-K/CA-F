@@ -12,6 +12,9 @@
                         <VPathInput v-model="settings.backup_dir" label="备份文件夹" />
                     </v-col>
                     <v-col cols="12" class="pb-5 ml-3">
+                        <VPathInput v-model="settings.default_dir" label="文件管理根目录" />
+                    </v-col>
+                    <v-col cols="12" class="pb-5 ml-3">
                         <v-text-field v-model="settings.http_proxy" label="http代理" />
                     </v-col>
                     <v-col cols="12" class="pb-5 ml-3">
@@ -64,6 +67,7 @@ const settings = ref(<GlobalSettings>{
     debug_mode: false,
     config_file_watcher: false,
     backup_dir: "",
+    default_dir: "",
     username: "",
     password: "",
     http_proxy: "",

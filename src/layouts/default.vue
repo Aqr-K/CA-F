@@ -3,7 +3,8 @@
     <v-overlay class="theme" v-model="isOverlayVisible" scroll-strategy="reposition"></v-overlay>
 
     <v-app-bar :style="{
-        background: $vuetify.theme.current.colors.background,
+        backdropFilter: 'blur(10px)',
+        backgroundColor: 'rgba(var(--v-theme-background), 0.7)',
         boxShadow: 'none',
         border: 'none'
     }" app>
@@ -20,6 +21,12 @@
         <v-btn id="settings" icon="mdi-cog-outline" :color="btnColor"></v-btn>
         <v-menu activator="#settings">
             <v-list>
+                <v-list-item @click="stopSync">
+                    <v-list-item-title>停止同步</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="stopScrape">
+                    <v-list-item-title>停止刮削</v-list-item-title>
+                </v-list-item>
                 <v-list-item @click="logout">
                     <v-list-item-title>退出登录</v-list-item-title>
                 </v-list-item>
@@ -40,6 +47,7 @@ import api from '@/api';
 import { useTheme } from 'vuetify'
 import { RouterView } from 'vue-router';
 import SideBar from '@/layouts/components/SideBar.vue'
+import { SaveResponse } from '@/api/types';
 import { useDisplay } from 'vuetify'
 import { useDrawerStore } from '@/store/drawer';
 import { checkPrefersColorSchemeIsDark } from '@/@core/utils';
@@ -49,12 +57,12 @@ import { useAuthStore } from '@/store/auth';
 import router from '@/router'
 const { mdAndDown } = useDisplay();
 const { global: globalTheme } = useTheme()
-
+import { useToast } from 'vue-toast-notification';
+const $toast = useToast();
 const drawerStore = useDrawerStore();
 const settingsMenu = [
     { title: '退出登录' },
 ]
-
 const btnColor = computed(() => (globalTheme.current.value.dark ? 'white' : 'gray'));
 const authStore = useAuthStore();
 // 根据屏幕大小初始化 drawer 状态
@@ -78,6 +86,31 @@ async function saveConfig() {
     }
 }
 
+async function stopSync() {
+    try {
+        let response: SaveResponse = await api.post(`/system/stop_sync`)
+        if (response.success) {
+            $toast.success(response.message)
+        } else {
+            $toast.error(response.message)
+        }
+    } catch (error) {
+        console.error('Error fetching  stopSync:', error)
+    }
+}
+
+async function stopScrape() {
+    try {
+        let response: SaveResponse = await api.post(`/system/stop_scrape`)
+        if (response.success) {
+            $toast.success(response.message)
+        } else {
+            $toast.error(response.message)
+        }
+    } catch (error) {
+        console.error('Error fetching  stopScrape:', error)
+    }
+}
 
 function logout() {
     authStore.logout()

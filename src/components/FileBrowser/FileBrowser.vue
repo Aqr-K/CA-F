@@ -201,7 +201,8 @@ import DialogCloseBtn from '@/components/Dialog/DialogCloseBtn.vue'
 import ProgressDialog from '@/components/Dialog/ProgressDialog.vue';
 import MediaInfoCard from '@/components/Card/MediaInfoCard.vue';
 import { MediaInfo } from '@/api/types';
-import { config } from 'node:process';
+import { SaveResponse } from '@/api/types';
+import { log } from 'util';
 const display = useDisplay()
 
 // 目录列表
@@ -541,6 +542,9 @@ function listItemClick(item: FileItem) {
     if (!pathSegments.value.includes(item)) {
         pathSegments.value.push(item)
     }
+    for (let i = 0; i < pathSegments.value.length; i++) {
+        console.log(pathSegments.value[i]);
+    }
 }
 
 
@@ -548,6 +552,7 @@ async function fetchFiles(item: any) {
     return api
         .get('/local/listfile?path=' + item.path)
         .then((data: any) => {
+            console.log(data);
             treeItems.value = data
         })
         .catch(err => console.warn(err))
@@ -564,9 +569,16 @@ function refresh() {
 }
 
 async function initialDirs() {
-    let data: [] = await api.get('/local/listfile?path=/');
-    treeItems.value = data
-    pathSegments.value = [pathSegment]
+    try {
+        let response: SaveResponse = await api.get('/local/initial_dirs');
+        treeItems.value = response.data.files
+        for (let i = 0; i < response.data.segments.length; i++) {
+            pathSegments.value.push(response.data.segments[i])
+        }
+    }
+    catch (error) {
+        console.log(error);
+    }
 }
 // 大小控制
 const scrollStyle = ref<string>('height: calc(100vh - 13.5rem - env(safe-area-inset-bottom)')

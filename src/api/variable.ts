@@ -10,6 +10,8 @@ export const SyncItemVar = {
   sync_scheduled: false,
   sync_time: "30 2 * * *",
   symlink_creator: false,
+  force_symlink: false,
+  force_strm: false,
   metadata_copyer: false,
   metadata_covered: false,
   metadata_copyer_mode: "下载模式",

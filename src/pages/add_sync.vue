@@ -125,6 +125,10 @@ async function fetchSyncTemplate() {
 }
 
 async function saveConfig() {
+    if (syncConfig.value.task_name.trim() === '') {
+        $toast.error('任务名称不能为空')
+        return
+    }
     try {
         const response: SaveResponse = await api.post(`/autosymlink/add_sync/save_config`, syncConfig.value)
         if (response.success) {

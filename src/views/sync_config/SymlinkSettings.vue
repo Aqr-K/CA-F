@@ -21,7 +21,7 @@
                         </v-card-item>
                         <v-card-item class="pt-3">
                             <v-text-field label="云盘名称" v-model="syncConfig.cloud_name"
-                                hint="网盘目录的名称,如cd2中的115文件夹叫115网盘,就填115网盘" persistent-hint></v-text-field>
+                                hint="使用cd2/alist时填写，比如115的目录是/mnt/cd2/115网盘，就填115网盘" persistent-hint></v-text-field>
                         </v-card-item>
                         <v-card-item v-for="(input, index) in pathInputs" class="pt-3">
                             <VPathInput :label="input.label" v-model="syncConfig[input.key]" :hint="input.hint" />

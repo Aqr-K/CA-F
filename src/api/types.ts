@@ -9,6 +9,8 @@ export interface SyncItem {
   sync_scheduled: boolean;
   sync_time: string | number; // e.g., cron expression like "30 2 * * *"
   symlink_creator: boolean;
+  force_symlink: boolean;
+  force_strm: boolean;
   metadata_copyer: boolean;
   metadata_covered: boolean;
   metadata_copyer_mode: string; // e.g., "下载模式"
@@ -46,6 +48,7 @@ export interface GlobalSettings {
   debug_mode: boolean;
   config_file_watcher: boolean;
   backup_dir: string;
+  default_dir: string;
   username: string;
   password: string;
   http_proxy: string;
@@ -287,6 +290,7 @@ export interface TransferWatcher {
   transfer_type: string; // 传输类型，例如 'move' 或 'copy'
   watch_mode: string; // 监视模式，例如 'Observer'
   scrape: boolean; // 是否抓取元数据
+  auto_category: boolean; // 是否自动分类
   switch: boolean; // 文件传输是否启用
   exclude_words: string;
   interval: number;

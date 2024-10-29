@@ -74,10 +74,14 @@
                         </VCol>
                     </VRow>
                     <VRow>
-                        <VCol cols="12" md="6">
+                        <VCol cols="12" md="4">
                             <VSwitch v-model="transferForm.scrape" label="刮削元数据" hint="整理完成后自动刮削元数据" persistent-hint />
                         </VCol>
-                        <VCol cols="12" md="6">
+                        <VCol cols="12" md="4">
+                            <VSwitch v-model="transferForm.auto_category" label="自动分类" hint="自动进行二级分类"
+                                persistent-hint />
+                        </VCol>
+                        <VCol cols="12" md="4">
                             <VSwitch v-model="useLibrary" label="选择媒体库" hint="开启后目的路径会显示媒体文件夹列表" persistent-hint />
                         </VCol>
                     </VRow>
@@ -152,6 +156,7 @@ const transferForm = reactive({
     min_filesize: 0,
     suffix: "",
     scrape: true,
+    auto_category: true,
 })
 
 // 生成1到100季的下拉框选项

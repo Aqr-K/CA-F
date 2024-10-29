@@ -21,6 +21,11 @@
                         </v-col>
                     </v-row>
                 </v-col>
+                <v-col cols="7">
+                    <v-alert type="info" variant="tonal" title="">
+                        强制更新Strm｜软链接开启后，会删除本地所有的Strm｜软链接，再重新创建
+                    </v-alert>
+                </v-col>
                 <v-col v-for="item in configList" cols="7">
                     <v-select v-if="'options' in item" :id="item.label" :label="item.label" :items="item.options"
                         v-model="currentConfig[item.key]"></v-select>
@@ -61,7 +66,10 @@ const switches = ref([{ key: "symlink_creator", label: "更新软链接" },
 { key: "metadata_covered", label: "元数据覆盖" },
 { key: "symlink_dir_checker", label: "无效文件夹" },
 { key: "symlink_checker", label: "无效软链接" },
-{ key: "metadata_checker", label: "无效元数据" },])
+{ key: "metadata_checker", label: "无效元数据" },
+{ key: "force_strm", label: "强制更新Strm" },
+{ key: "force_symlink", label: "强制更新软链接" }
+])
 
 // 定义类型
 interface configListOption {
