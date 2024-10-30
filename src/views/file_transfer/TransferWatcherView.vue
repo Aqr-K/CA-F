@@ -1,6 +1,6 @@
 <template>
     <div v-if="!isLoading">
-        <v-card title="目录监控" subtitle="实时监控目录,自动进行整理转移">
+        <v-card title="目录同步" subtitle="实时监控目录,自动进行整理转移">
             <v-card-text>
                 <draggable :list="settings" handle=".cursor-move" delay="100" item-key="id" tag="v-row">
                     <template #item="{ element, index }">
@@ -48,14 +48,6 @@
                                 <v-card-item>
                                     <v-text-field label="屏蔽词" v-model="element.exclude_words" hint=""
                                         persistent-hint></v-text-field>
-                                </v-card-item>
-                                <v-card-item>
-                                    <v-text-field label="入库消息延迟" v-model="element.interval" hint=""
-                                        persistent-hint></v-text-field>
-                                </v-card-item>
-                                <v-card-item>
-                                    <v-text-field label="定时同步" v-model="element.scheduled_time"
-                                        hint="5位cron表达式，留空关闭，如果想要5分钟同步一次，就填*/5 * * * *" persistent-hint></v-text-field>
                                 </v-card-item>
                                 <v-card-item>
                                     <v-row>

@@ -293,8 +293,6 @@ export interface TransferWatcher {
   auto_category: boolean; // 是否自动分类
   switch: boolean; // 文件传输是否启用
   exclude_words: string;
-  interval: number;
-  scheduled_time: string;
   id: string; // 唯一标识符，可选
 }
 
