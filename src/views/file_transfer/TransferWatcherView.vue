@@ -40,9 +40,7 @@
                                         persistent-hint></v-select>
                                 </v-card-item>
                                 <v-card-item>
-                                    <v-select label="监控模式" :items="[
-                                        { title: '事件通知', value: 'observer' },
-                                        { title: '轮询模式', value: 'polling_observer' }]" v-model="element.watch_mode"
+                                    <v-select label="监控模式" :items="['事件通知', '轮询模式']" v-model="element.watch_mode"
                                         hint="监控本地文件夹推荐事件通知,网盘文件夹推荐轮询模式" persistent-hint></v-select>
                                 </v-card-item>
                                 <v-card-item>
