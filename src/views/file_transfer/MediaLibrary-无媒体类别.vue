@@ -63,7 +63,7 @@ const settings = ref<MediaDirectory[]>([
 
 
 function addConfig() {
-    settings.value.push(mediaDirectory)
+    settings.value.push({ ...mediaDirectory })
 }
 
 function deleteConfig(index: number) {

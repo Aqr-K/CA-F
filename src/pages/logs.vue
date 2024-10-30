@@ -43,7 +43,6 @@
 </template>
 
 <script lang="ts" setup>
-import api from '@/api';
 import { useAuthStore } from '@/store/auth';
 const auth = useAuthStore()
 // 日志列表

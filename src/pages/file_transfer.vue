@@ -12,27 +12,27 @@
         <v-window v-model="activeTab" class="mt-5 disable-tab-transition" :touch="false">
             <v-window-item value="transfer_watcher">
                 <transition name="fade-slide" appear>
-                    <TransferWatcher />
+                    <TransferWatcherView />
                 </transition>
             </v-window-item>
             <v-window-item value="directory">
                 <transition name="fade-slide" appear>
-                    <MediaLibrary />
+                    <MediaLibraryView />
                 </transition>
             </v-window-item>
             <v-window-item value="media_config">
                 <transition name="fade-slide" appear>
-                    <MediaConfig />
+                    <MediaConfigView />
                 </transition>
             </v-window-item>
             <v-window-item value="media_category">
                 <transition name="fade-slide" appear>
-                    <MediaCategory />
+                    <MediaCategoryView />
                 </transition>
             </v-window-item>
             <v-window-item value="custom_words">
                 <transition name="fade-slide" appear>
-                    <CustomWords />
+                    <CustomWordsView />
                 </transition>
             </v-window-item>
         </v-window>
@@ -43,11 +43,11 @@
 import { ref } from 'vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
-import MediaLibrary from '@/views/file_transfer/MediaLibrary.vue';
-import MediaConfig from '@/views/file_transfer/MediaConfig.vue';
-import TransferWatcher from '@/views/file_transfer/TransferWatcher.vue';
-import MediaCategory from '@/views/file_transfer/MediaCategory.vue';
-import CustomWords from '@/views/file_transfer/CustomWords.vue';
+import MediaLibraryView from '@/views/file_transfer/MediaLibraryView.vue';
+import MediaConfigView from '@/views/file_transfer/MediaConfigView.vue';
+import TransferWatcherView from '@/views/file_transfer/TransferWatcherView.vue';
+import MediaCategoryView from '@/views/file_transfer/MediaCategoryView.vue';
+import CustomWordsView from '@/views/file_transfer/CustomWordsView.vue';
 const route = useRoute()
 
 

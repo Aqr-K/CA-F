@@ -1,15 +1,15 @@
 <template>
-    <!-- <template v-if="backgroundImageUrl">
+    <template v-if="backgroundImageUrl">
         <div class="absolute inset-0">
             <VImg :src="backgroundImageUrl" class="w-full h-full" cover position="center top" @load="handleImageLoad">
                 <template #placeholder>
                     <VSkeletonLoader v-if="!isImageLoaded" class="object-cover" />
                 </template>
-<div class="absolute inset-0"
-    style="background-image: linear-gradient(rgba(45, 55, 72, 33%) 0%, rgb(26, 32, 46) 100%)" />
-</VImg>
-</div>
-</template> -->
+                <div class="absolute inset-0"
+                    style="background-image: linear-gradient(rgba(45, 55, 72, 33%) 0%, rgb(26, 32, 46) 100%)" />
+            </VImg>
+        </div>
+    </template>
 
     <div class="main d-flex justify-center align-center">
         <v-card class="px-7 py-3 rounded-lg" :class="{ 'opacity-85': isImageLoaded }" min-width="380" max-width="380">
@@ -164,9 +164,9 @@ onMounted(async () => {
     } else {
         setTheme()
         // 获取背景图片
-        // await fetchBackgroundImage()
-        // // 每隔5秒更换一次背景图片
-        // intervalTimer = setInterval(fetchBackgroundImage, 10000)
+        await fetchBackgroundImage()
+        // 每隔5秒更换一次背景图片
+        intervalTimer = setInterval(fetchBackgroundImage, 10000)
     }
 });
 onUnmounted(() => {

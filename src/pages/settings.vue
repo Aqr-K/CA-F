@@ -15,35 +15,35 @@
             <v-window-item value="global_settings">
                 <transition name="fade-slide" appear>
                     <div>
-                        <GlobalSettings />
+                        <GlobalSettingsView />
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="notification">
                 <transition name="fade-slide" appear>
                     <div>
-                        <Notification />
+                        <NotificationView />
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="115_settings">
                 <transition name="fade-slide" appear>
                     <div>
-                        <Settings115 />
+                        <Settings115View />
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="cloud_status">
                 <transition name="fade-slide" appear>
                     <div>
-                        <CloudStatus />
+                        <CloudStatusView />
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="cloud_mount_watcher">
                 <transition name="fade-slide" appear>
                     <div>
-                        <CloudMountWatcher />
+                        <CloudMountWatcherView />
                     </div>
                 </transition>
             </v-window-item>
@@ -55,11 +55,11 @@
 import { ref } from 'vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
-import GlobalSettings from '@/views/settings/GlobalSettings.vue'
-import Notification from '@/views/settings/Notification.vue'
-import Settings115 from '@/views/settings/Settings115.vue'
-import CloudStatus from '@/views/settings/CloudStatus.vue'
-import CloudMountWatcher from '@/views/settings/CloudMountWatcher.vue'
+import GlobalSettingsView from '@/views/settings/GlobalSettingsView.vue'
+import NotificationView from '@/views/settings/NotificationView.vue'
+import Settings115View from '@/views/settings/Settings115View.vue'
+import CloudStatusView from '@/views/settings/CloudStatusView.vue'
+import CloudMountWatcherView from '@/views/settings/CloudMountWatcherView.vue'
 const route = useRoute()
 
 

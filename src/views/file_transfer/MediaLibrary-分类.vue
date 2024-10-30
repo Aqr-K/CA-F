@@ -78,7 +78,7 @@ function updateCategory(index: number) {
 }
 
 function addConfig() {
-    settings.value.push(mediaDirectory)
+    settings.value.push({ ...mediaDirectory })
 }
 
 function deleteConfig(index: number) {

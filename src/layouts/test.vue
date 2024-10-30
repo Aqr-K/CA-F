@@ -8,8 +8,6 @@
         boxShadow: 'none',
         border: 'none'
     }" app>
-        <!-- 重启进度框 -->
-        <ProgressDialog v-if="progressDialog" v-model="progressDialog" text="正在重启 ..." />
         <v-btn icon @click="toggleDrawer" v-if="mdAndDown">
             <v-icon>mdi-menu</v-icon>
         </v-btn>
@@ -21,8 +19,8 @@
             @click="toggleTheme" :color="btnColor">
         </v-btn>
         <v-btn id="settings" icon="mdi-cog-outline" :color="btnColor"></v-btn>
-        <v-menu activator="#settings">
-            <v-list width="200">
+        <v-menu activator="#settings" width="200" \>
+            <v-list>
                 <VListItem @click="stopSync">
                     <template #prepend>
                         <VIcon class="me-2" icon="mdi-sync" size="22" />
@@ -68,7 +66,7 @@
 <script setup lang="ts">
 import api from '@/api';
 import { useTheme } from 'vuetify'
-
+import { useConfirm } from 'vuetify-use-dialog'
 import { RouterView } from 'vue-router';
 import SideBar from '@/layouts/components/SideBar.vue'
 import { SaveResponse } from '@/api/types';
@@ -80,20 +78,16 @@ const isOverlayVisible = ref(false);
 import { useAuthStore } from '@/store/auth';
 import router from '@/router'
 const { mdAndDown } = useDisplay();
-import ProgressDialog from '@/components/Dialog/ProgressDialog.vue';
 const { global: globalTheme } = useTheme()
 import { useToast } from 'vue-toast-notification';
-import { useConfirm } from 'vuetify-use-dialog'
+
+// 确认框
 const createConfirm = useConfirm()
 const $toast = useToast();
 const drawerStore = useDrawerStore();
-const settingsMenu = [
-    { title: '退出登录' },
-]
+
 const btnColor = computed(() => (globalTheme.current.value.dark ? 'white' : 'gray'));
 const authStore = useAuthStore();
-// 进度框
-const progressDialog = ref(false)
 // 根据屏幕大小初始化 drawer 状态
 if (mdAndDown.value) {
     drawerStore.closeDrawer();
@@ -141,7 +135,6 @@ async function stopScrape() {
     }
 }
 
-
 // 执行重启操作
 async function restart() {
     // 弹出提示
@@ -149,15 +142,13 @@ async function restart() {
         title: '确认',
         content: '确认重启系统吗？',
     })
+
     if (confirmed) {
         // 调用API重启
         try {
-            // 显示等待框
-            progressDialog.value = true
+
             const result: { [key: string]: any } = await api.get('system/restart')
             if (!result?.success) {
-                // 隐藏等待框
-                progressDialog.value = false
                 // 重启不成功
                 $toast.error(result.message)
                 return
@@ -174,7 +165,6 @@ async function restart() {
 function logout() {
     authStore.logout()
     router.push("/login")
-    window.location.reload()
 }
 
 // 生效主题

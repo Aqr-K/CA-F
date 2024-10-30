@@ -121,7 +121,6 @@ function updateConfigList(configs: TelegramSettings) {
 async function testTelegram() {
     try {
         const response: SaveResponse = await api.post(`/system/telegram_test`, settings.value)
-        console.log(response);
 
         if (response.success) {
             $toast.success(response.message);

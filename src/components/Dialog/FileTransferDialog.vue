@@ -183,6 +183,7 @@ const targetDirectories = computed(() => {
     return [...new Set(directories)]
 })
 
+
 // 整理文件
 async function transfer() {
     if (!props.history_ids && !props.items) return
@@ -194,12 +195,14 @@ async function transfer() {
     if (props.history_ids) {
         handleTransferLog(props.history_ids)
     }
+    emit('close')
 }
 
 // 整理文件
 async function handleTransfer(items: FileItem[]) {
     try {
         const result: { [key: string]: any } = await api.post('transfer/manual', { items: items, history_ids: null, transferForm: transferForm, })
+        // 关闭当前对话框
         $toast.success("已添加整理任务")
     } catch (e) {
         console.log(e)
@@ -220,7 +223,7 @@ async function handleTransferLog(history_ids: number[]) {
 async function loadLibraryDirectories() {
     try {
         const response: any = await api.get('system/settings/media_directory')
-        console.log(response);
+        // console.log(response);
         libraryDirectories.value = response
     } catch (error) {
         console.log(error)

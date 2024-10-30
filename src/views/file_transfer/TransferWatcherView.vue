@@ -59,17 +59,16 @@
                                 </v-card-item>
                                 <v-card-item>
                                     <v-row>
-                                        <v-col cols="4">
+                                        <v-col cols="12" md="4">
                                             <v-switch label="刮削元数据" v-model="element.scrape" class="p-0 m-0"></v-switch>
                                         </v-col>
-                                        <v-col cols="4">
+                                        <v-col cols="12" md="4">
                                             <v-switch label="自动分类" v-model="element.auto_category"
                                                 class="p-0 m-0"></v-switch>
                                         </v-col>
-                                        <v-col cols="4">
+                                        <v-col cols="12" md="4">
                                             <v-switch label="启用" v-model="element.switch" class="p-0 m-0"></v-switch>
                                         </v-col>
-
                                     </v-row>
                                 </v-card-item>
                             </v-card>
@@ -119,7 +118,7 @@ const settings = ref<TransferWatcher[]>([
 
 
 function addConfig() {
-    settings.value.push(transferWatcher)
+    settings.value.push({ ...transferWatcher })
 }
 
 function deleteConfig(index: number) {
@@ -133,7 +132,6 @@ async function mannualTransfer(element: TransferWatcher) {
 async function fetchConfig() {
     try {
         const response: TransferWatcher[] = await api.get('/system/settings/' + 'transfer_watcher')
-        console.log(response);
         updateConfigList(response)
         isLoading.value = false
     } catch (error) {

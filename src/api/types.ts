@@ -303,3 +303,47 @@ export interface CustomWords {
   release_group: string;
   exclude_words: string;
 }
+
+// 历史记录
+export interface TransferHistory {
+  // ID
+  id: number;
+  // 源目录
+  src?: string;
+  // 目的目录
+  dest?: string;
+  // 转移模式link/copy/move/softlink/rclone_copy/rclone_move
+  mode?: string;
+  // 类型：电影、电视剧
+  type?: string;
+  // 二级分类
+  category?: string;
+  // 标题
+  title?: string;
+  // 年份
+  year?: string;
+  // TMDBID
+  tmdbid?: number;
+  // IMDBID
+  imdbid?: string;
+  // TVDBID
+  tvdbid?: number;
+  // 豆瓣ID
+  doubanid?: string;
+  // 季Sxx
+  seasons?: string;
+  // 集Exx
+  episodes?: string;
+  // 季集
+  season_episode?: string;
+  // 海报
+  image?: string;
+  // 下载器Hash
+  download_hash?: string;
+  // 状态 1-成功，0-失败
+  status: boolean;
+  // 失败原因
+  errmsg?: string;
+  // 日期
+  date?: string;
+}

@@ -14,7 +14,7 @@
             <v-window-item value="symlink">
                 <transition name="fade-slide" appear>
                     <div>
-                        <SymlinkSettings v-model:syncConfig="syncConfig">
+                        <SymlinkSettingsView v-model:syncConfig="syncConfig">
                             <template #footer>
                                 <div class="btn-settings">
                                     <v-btn color="red" @click="deleteConfig">删除</v-btn>
@@ -22,14 +22,14 @@
                                     <v-btn @click="saveConfig">保存</v-btn>
                                 </div>
                             </template>
-                        </SymlinkSettings>
+                        </SymlinkSettingsView>
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="scheduled_task">
                 <transition name="fade-slide" appear>
                     <div>
-                        <ScheduledSettings v-model:syncConfig="syncConfig">
+                        <ScheduledSettingsView v-model:syncConfig="syncConfig">
                             <template #footer>
                                 <div class="btn-settings">
                                     <v-btn color="red" @click="deleteConfig">删除</v-btn>
@@ -37,14 +37,14 @@
                                     <v-btn @click="saveConfig">保存</v-btn>
                                 </div>
                             </template>
-                        </ScheduledSettings>
+                        </ScheduledSettingsView>
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="sync_observer">
                 <transition name="fade-slide" appear>
                     <div>
-                        <ObserverSettings v-model:syncConfig="syncConfig">
+                        <ObserverSettingsView v-model:syncConfig="syncConfig">
                             <template #footer>
                                 <div class="btn-settings">
                                     <v-btn color="red" @click="deleteConfig">删除</v-btn>
@@ -52,14 +52,14 @@
                                     <v-btn @click="saveConfig">保存</v-btn>
                                 </div>
                             </template>
-                        </ObserverSettings>
+                        </ObserverSettingsView>
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="cloud_status">
                 <transition name="fade-slide" appear>
                     <div>
-                        <CloudStatus v-model:syncConfig="syncConfig">
+                        <CloudStatusView v-model:syncConfig="syncConfig">
                             <template #footer>
                                 <div class="btn-settings">
                                     <v-btn color="red" @click="deleteConfig">删除</v-btn>
@@ -67,14 +67,14 @@
                                     <v-btn @click="saveConfig">保存</v-btn>
                                 </div>
                             </template>
-                        </CloudStatus>
+                        </CloudStatusView>
                     </div>
                 </transition>
             </v-window-item>
             <v-window-item value="115_settings">
                 <transition name="fade-slide" appear>
                     <div>
-                        <Setting115 v-model:syncConfig="syncConfig">
+                        <Setting115View v-model:syncConfig="syncConfig">
                             <template #footer>
                                 <div class="btn-settings">
                                     <v-btn color="red" @click="deleteConfig">删除</v-btn>
@@ -82,7 +82,7 @@
                                     <v-btn @click="saveConfig">保存</v-btn>
                                 </div>
                             </template>
-                        </Setting115>
+                        </Setting115View>
                     </div>
                 </transition>
             </v-window-item>
@@ -97,11 +97,11 @@ import { useRoute } from 'vue-router'
 import api from '@/api/index'
 import { SyncItem, SaveResponse } from '@/api/types';
 import { SyncItemVar } from '@/api/variable'
-import SymlinkSettings from '@/views/sync_config/SymlinkSettings.vue'
-import ScheduledSettings from '@/views/sync_config/ScheduledSettings.vue'
-import ObserverSettings from '@/views/sync_config/ObserverSettings.vue'
-import CloudStatus from '@/views/sync_config/CloudStatus.vue'
-import Setting115 from '@/views/sync_config/Setting115.vue'
+import SymlinkSettingsView from '@/views/sync_config/SymlinkSettingsView.vue';
+import ScheduledSettingsView from '@/views/sync_config/ScheduledSettingsView.vue';
+import ObserverSettingsView from '@/views/sync_config/ObserverSettingsView.vue';
+import CloudStatusView from '@/views/sync_config/CloudStatusView.vue'
+import Setting115View from '@/views/sync_config/Setting115View.vue'
 import { syncConfigStore } from '@/store/syncconfig'
 import { useToast } from 'vue-toast-notification';
 
@@ -159,6 +159,8 @@ async function deleteConfig() {
         } setTimeout(() => {
             router.push('/sync_list')
         }, 1000); // 2 秒后执行 greet 函数
+        window.location.reload()
+
 
     } catch (error) {
         console.error('Error fetching sync config:', error)

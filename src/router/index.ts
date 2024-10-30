@@ -65,6 +65,13 @@ const router = createRouter({
           },
         },
         {
+          path: "transfer_history",
+          component: () => import("@/pages/transfer_history.vue"),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
           path: "file_manager",
           component: () => import("@/pages/file_manager.vue"),
           meta: {

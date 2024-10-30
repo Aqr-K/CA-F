@@ -1,7 +1,7 @@
 <template>
     <div v-if="!isLoading">
         <v-row>
-            <v-col cols="12" md="10" title="掉盘检测">
+            <v-col cols="12" md="10">
                 <v-card>
                     <v-card-item class="mt-5">
                         <v-select label="转移方式" :items="[
@@ -12,29 +12,30 @@
                             persistent-hint></v-select>
                     </v-card-item>
                     <v-card-item>
-                        <v-row>
-                            <v-col cols="6">
-                                <v-switch label="刮削元数据" v-model="settings.scrape" class="p-0 m-0"></v-switch>
-                            </v-col>
-                            <v-col cols="6">
-                                <v-switch label="Fanart刮削" v-model="settings.fanart_enable" class="p-0 m-0"></v-switch>
-                            </v-col>
-                        </v-row>
-                    </v-card-item>
-                    <v-card-item>
-                        <v-textarea label="电视剧命名规则" v-model="settings.tv_name_rule" auto-grow outlined hint=""
+                        <v-textarea label="电影命名规则" v-model="settings.movie_name_rule" auto-grow outlined hint=""
                             persistent-hint></v-textarea>
                     </v-card-item>
                     <v-card-item>
-                        <v-textarea label="电影命名规则" v-model="settings.movie_name_rule" auto-grow outlined hint=""
+                        <v-textarea label="电视剧命名规则" v-model="settings.tv_name_rule" auto-grow outlined hint=""
                             persistent-hint></v-textarea>
                     </v-card-item>
                     <v-card-item class="mb-5">
                         <v-text-field label="最小文件大小（MB）" v-model="settings.min_filesize" hint="只整理大于最小文件大小的文件"
                             persistent-hint></v-text-field>
                     </v-card-item>
+                    <v-card-item>
+                        <v-row>
+                            <v-col cols="12" md="6">
+                                <v-switch label="刮削元数据" v-model="settings.scrape" class="p-0 m-0"></v-switch>
+                            </v-col>
+                            <v-col cols="12" md="6">
+                                <v-switch label="Fanart刮削" v-model="settings.fanart_enable" class="p-0 m-0"></v-switch>
+                            </v-col>
+                        </v-row>
+                    </v-card-item>
                     <div class="btn-settings">
-                        <v-btn @click="saveConfig">保存</v-btn>
+                        <v-btn @click="saveConfig" class="me-2">保存</v-btn>
+                        <v-btn @click="reset">重置</v-btn>
                     </div>
                 </v-card>
             </v-col>
@@ -50,22 +51,24 @@ import api from '@/api';
 import { useToast } from 'vue-toast-notification';
 const $toast = useToast();
 const isLoading = ref(true);
-const settings = ref({
+const defaultSettings = ref({
     transfer_type: "move",
-    fanart_enable: false,
+    fanart_enable: true,
     scrape: true,
     min_filesize: 0,
-    movie_name_rule: "{% if title %}{{ title }}{% endif %}{% if year %} ({{ year }}){% endif %}{% if tmdbid %} {tmdb-{{ tmdbid }}}{% endif %}/{% if title %}{{ title }}{% endif %}{% if year %} ({{ year }}){% endif %}{% if resolution %} - {{ resolution }}{% endif %}{% if source %}.{{ source }}{% endif %}{% if dolby_vision %}.{{ dolby_vision }}{% endif %}{% if color_space %}.{{ color_space }}{% endif %}{% if video_codec %}.{{ video_codec }}{% endif %}{% if audio_codec %}.{{ audio_codec }}{% endif %}{% if release_group %}-{{ release_group }}{% endif %}{{ext}}",
-    tv_name_rule: "{% if title %}{{ title }}{% endif %}{% if year %} ({{ year }}){% endif %}{% if tmdbid %} {tmdb-{{ tmdbid }}}{% endif %}/{% if season %}Season {{ season  }}{% endif %}/{% if title %}{{ title }}{% endif %}{% if year %} ({{ year }}){% endif %}}{% if resolution %} - {{ resolution }}{% endif %}{% if season_episode %}.{{ season_episode  }}{% endif %}{% if part %}-{{ part }}{% endif %}{% if episode %}.第{{ episode  }}集{% endif %}{% if source %}.{{ source }}{% endif %}{% if dolby_vision %}.{{ dolby_vision }}{% endif %}{% if color_space %}.{{ color_space }}{% endif %}{% if video_codec %}.{{ video_codec }}{% endif %}{% if audio_codec %}.{{ audio_codec }}{% endif %}{% if release_group %}-{{ release_group }}{% endif %}{{ext}}"
+    movie_name_rule: "{{title}}{% if year %} ({{year}}) {% endif %}{% if tmdbid %}{tmdbid={{tmdbid}}}{% endif %}/{{title}}{% if year %} ({{year}}) - {% endif %}{% if part %}-{{part}}{% endif %}{% if videoFormat %}{{videoFormat}}{% endif %}{% if edition %}.{{edition}}{% endif %}{% if videoCodec %}.{{videoCodec}}{% endif %}{% if audioCodec %}.{{audioCodec}}{% endif %}{% if releaseGroup %}-{{releaseGroup}}{% endif %}{{fileExt}}",
+    tv_name_rule: "{{title}}{% if year %} ({{year}}) {% endif %}{% if tmdbid %}{tmdbid={{tmdbid}}}{% endif %}/Season {{season}}/{{title}}{% if year %}.{{year}}{% endif %}.{{season_episode}}{% if part %}-{{part}}{% endif %}{% if episode %}.第{{episode}}集{% endif %}{% if videoFormat %}.{{videoFormat}}{% endif %}{% if edition %}.{{edition}}{% endif %}{% if videoCodec %}.{{videoCodec}}{% endif %}{% if audioCodec %}.{{audioCodec}}{% endif %}{% if releaseGroup %}-{{releaseGroup}}{% endif %}{{fileExt}}"
 });
+const settings = ref({ ...defaultSettings.value })
 
-
+async function reset() {
+    settings.value = { ...defaultSettings.value }
+}
 
 async function fetchConfig() {
     try {
         const response: any = await api.get('/system/settings/' + 'media_config')
         settings.value = response;
-        console.log(settings.value);
         isLoading.value = false
     } catch (error) {
         console.error('Error fetching sync config:', error)

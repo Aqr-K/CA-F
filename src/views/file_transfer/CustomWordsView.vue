@@ -22,7 +22,7 @@
                 </v-card>
             </v-col>
             <v-col cols="12">
-                <v-card title="自定义制作组" subtitle="目录名或文件名中包含屏蔽词时不进行整理">
+                <v-card title="自定义制作组" subtitle="添加无法识别的制作组/字幕组">
                     <v-card-text>
                         <v-textarea v-model="settings.replace_words" hint="支持正则表达式，特殊字符需要\转义，一行为一组"
                             placeholder="支持正则表达式，特殊字符需要\转义，一行为一组" persistent-hint auto-grow outlined></v-textarea>
@@ -67,7 +67,6 @@ async function fetchConfig() {
     try {
         const response: CustomWords = await api.get('/system/settings/' + 'custom_words')
         settings.value = response;
-        console.log(settings.value);
         isLoading.value = false
     } catch (error) {
         console.error('Error fetching sync config:', error)
