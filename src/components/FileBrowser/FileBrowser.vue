@@ -551,12 +551,14 @@ function listItemClick(item: FileItem) {
 
 
 async function fetchFiles(item: any) {
-    return api
-        .get('/local/listfile?path=' + item.path)
-        .then((data: any) => {
-            treeItems.value = data
-        })
-        .catch(err => console.warn(err))
+    try {
+        const data: any = await api.get('/local/listfile?path=' + item.path)
+        console.log("last treeItems", treeItems.value)
+        console.log("data", data)
+        treeItems.value = data
+    } catch (err) {
+        console.warn(err)
+    }
 }
 
 
