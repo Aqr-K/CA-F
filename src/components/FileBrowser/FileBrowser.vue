@@ -75,7 +75,7 @@
                 </span>
             </v-toolbar>
             <!-- 文件列表 -->
-            <v-virtual-scroll :items="treeItems" :style="scrollStyle">
+            <v-virtual-scroll :items="treeItems" :style="scrollStyle" :key="virtualScrollKey">
                 <template #default="{ item }">
                     <VHover>
                         <template #default="hover">
@@ -203,10 +203,12 @@ import ProgressDialog from '@/components/Dialog/ProgressDialog.vue';
 import MediaInfoCard from '@/components/Card/MediaInfoCard.vue';
 import { MediaInfo } from '@/api/types';
 import { SaveResponse } from '@/api/types';
+import { log } from 'console';
 const display = useDisplay()
 
 // 目录列表
 const treeItems = ref([])
+const virtualScrollKey = ref(0)
 
 
 const pathSegment: FileItem = {
@@ -390,7 +392,7 @@ async function recognize(path: string) {
             })
         }
         catch (e) {
-            $toast.error(`${path} 识别失败！`)
+            console.log(e);
         }
         // 关闭进度条
         progressDialog.value = false
@@ -553,9 +555,11 @@ function listItemClick(item: FileItem) {
 async function fetchFiles(item: any) {
     try {
         const data: any = await api.get('/local/listfile?path=' + item.path)
-        console.log("last treeItems", treeItems.value)
-        console.log("data", data)
         treeItems.value = data
+        // 强制虚拟滚动组件重新渲染
+        nextTick(() => {
+            virtualScrollKey.value++
+        })
     } catch (err) {
         console.warn(err)
     }
@@ -569,6 +573,10 @@ function refresh() {
     else {
         fetchFiles(pathSegment)
     }
+    // 强制虚拟滚动组件重新渲染
+    nextTick(() => {
+        virtualScrollKey.value++
+    })
 }
 
 async function initialDirs() {
@@ -585,7 +593,7 @@ async function initialDirs() {
     }
 }
 // 大小控制
-const scrollStyle = ref<string>('height: calc(100vh - 13.5rem - env(safe-area-inset-bottom)')
+const scrollStyle = ref<string>('height: calc(100vh - 14.5rem - env(safe-area-inset-bottom)')
 // 计算排序图标
 const sortIcon = computed(() => {
     if (sort.value === 'time') return 'mdi-sort-clock-ascending-outline'
