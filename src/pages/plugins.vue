@@ -1,26 +1,28 @@
 <template>
-    <div class="d-flex flex-wrap gap-4 pt-8">
-        <v-card v-for="plugin in plugins" :key="plugin.name" width="350" :color="plugin.color" class="plugin-card"
-            @click="router.push(`${basePath}/${plugin.path}`)">
-            <div class="flex align-center">
-                <div>
-                    <v-card-title class="text-h6">{{ plugin.name }}</v-card-title>
-                    <v-card-text>
-                        {{ plugin.desc }}
-                    </v-card-text>
+    <v-card title="插件">
+        <div class="d-flex flex-wrap gap-4  px-4 py-8">
+            <v-card v-for="plugin in plugins" :key="plugin.name" width="350" :color="plugin.color" class="plugin-card"
+                @click="router.push(`${basePath}/${plugin.path}`)">
+                <div class="flex align-center">
+                    <div>
+                        <v-card-title class="text-h6">{{ plugin.name }}</v-card-title>
+                        <v-card-text>
+                            {{ plugin.desc }}
+                        </v-card-text>
+                    </div>
+                    <VAvatar>
+                        <VImg :src="pluginIcon(plugin)" @error="pluginIconError(plugin)">
+                            <template #placeholder>
+                                <div class="w-full h-full">
+                                    <VSkeletonLoader class="object-cover aspect-w-1 aspect-h-1" />
+                                </div>
+                            </template>
+                        </VImg>
+                    </VAvatar>
                 </div>
-                <VAvatar>
-                    <VImg :src="pluginIcon(plugin)" @error="pluginIconError(plugin)">
-                        <template #placeholder>
-                            <div class="w-full h-full">
-                                <VSkeletonLoader class="object-cover aspect-w-1 aspect-h-1" />
-                            </div>
-                        </template>
-                    </VImg>
-                </VAvatar>
-            </div>
-        </v-card>
-    </div>
+            </v-card>
+        </div>
+    </v-card>
 
 </template>
 

@@ -20,7 +20,7 @@
                 </div>
                 <!-- 具体分类 -->
                 <v-list-item class="h-[30px] text-[16px] my-5 pl-5 nav-link"
-                    :active="route.path === item.to || (route.path.startsWith('/sync_config') && item.to.startsWith('/sync_list'))"
+                    :active="route.path === item.to || (route.path.startsWith('/sync_config') && item.to.startsWith('/sync_list')) || (route.path.startsWith('/plugins') && item.to.startsWith('/plugins'))"
                     v-for="(item, index) in category.items" :key="index" :prepend-icon="item.icon" :to="item.to" link
                     @touchend="handleClick(item.to)">
                     <v-list-item-title class="w-min"><span class="text-[16px] font-[450]">{{ item.title

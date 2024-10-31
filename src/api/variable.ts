@@ -70,7 +70,7 @@ export const FileIconVar = {
 // 媒体服务器默认配置
 export const MediaServerVar = {
   name: "",
-  address: "",
+  host: "",
   api_key: "",
   time_delay: 0,
   filepath_mapping: "",

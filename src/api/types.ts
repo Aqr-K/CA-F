@@ -350,7 +350,7 @@ export interface MediaServer {
   // 主机名称
   name: string;
   // 主机地址
-  address: string;
+  host: string;
   // API 密钥
   api_key: string;
   // 时间延迟（秒）
