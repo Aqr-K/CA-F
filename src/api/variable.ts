@@ -66,3 +66,13 @@ export const FileIconVar = {
   xls: "mdi-file-excel",
   other: "mdi-file-outline",
 };
+
+// 媒体服务器默认配置
+export const MediaServerVar = {
+  name: "",
+  address: "",
+  api_key: "",
+  time_delay: 0,
+  filepath_mapping: "",
+  switch: false,
+};

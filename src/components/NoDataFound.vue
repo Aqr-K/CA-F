@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import image from '@images/no-data.svg'
+import image from '@images/resources/no-data.svg'
 
 const props = defineProps<Props>()
 

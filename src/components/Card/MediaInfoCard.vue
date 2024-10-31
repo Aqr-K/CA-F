@@ -54,25 +54,24 @@
               {{ context?.media_info?.tmdbid }}
             </VChip>
             <!-- media_info -->
-            <VChip v-if="context?.media_info?.source" variant="elevated" color="error"
+            <VChip v-if="context?.media_info?.resourceType" variant="elevated" color="error"
               class="me-1 mb-1 text-white bg-red-500">
-              {{ context?.media_info?.source }}
+              {{ context?.media_info?.resourceType }}
             </VChip>
-            <VChip v-if="context?.media_info?.resolution" variant="elevated" color="error"
+            <VChip v-if="context?.media_info?.videoFormat" variant="elevated" color="error"
               class="me-1 mb-1 text-white bg-red-500">
-              {{ context?.media_info?.resolution }}
+              {{ context?.media_info?.videoFormat }}
             </VChip>
-            <VChip v-if="context?.media_info?.video_codec" variant="elevated" color="orange"
+            <VChip v-if="context?.media_info?.videoCodec" variant="elevated" color="orange"
               class=" me-1 mb-1 text-white bg-orange-500">
-              {{ context?.media_info?.video_codec }}
+              {{ context?.media_info?.videoCodec }}
             </VChip>
-            <VChip v-if="context?.media_info?.audio_codec" variant="elevated"
-              class="me-1 mb-1 text-white bg-orange-500">
-              {{ context?.media_info?.audio_codec }}
+            <VChip v-if="context?.media_info?.audioCodec" variant="elevated" class="me-1 mb-1 text-white bg-orange-500">
+              {{ context?.media_info?.audioCodec }}
             </VChip>
-            <VChip v-if="context?.media_info?.release_group" variant="elevated" color="cyan"
+            <VChip v-if="context?.media_info?.releaseGroup" variant="elevated" color="cyan"
               class="me-1 mb-1 text-white bg-cyan-500">
-              {{ context?.media_info?.release_group }}
+              {{ context?.media_info?.releaseGroup }}
             </VChip>
           </VCardItem>
         </div>

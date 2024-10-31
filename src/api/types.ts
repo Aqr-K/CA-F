@@ -135,15 +135,15 @@ export interface MediaInfo {
   season?: string;
   // 集
   episode?: string;
-  // 分辨率
-  resolution?: string;
-  season_episode?: string;
-  color_space?: string;
-  source?: string; // 默认值为 "themoviedb"
-  dolby_vision?: string;
-  video_codec?: string;
-  audio_codec?: string;
-  release_group?: string;
+  videoFormat?: string;
+  season_episode: string;
+  part: string;
+  effect: string;
+  edition: string;
+  resourceType: string;
+  videoCodec: string;
+  audioCodec: string;
+  releaseGroup: string;
   // TMDB ID
   tmdbid?: number;
   // IMDB ID
@@ -344,4 +344,19 @@ export interface TransferHistory {
   errmsg?: string;
   // 日期
   date?: string;
+}
+// 媒体服务器配置
+export interface MediaServer {
+  // 主机名称
+  name: string;
+  // 主机地址
+  address: string;
+  // API 密钥
+  api_key: string;
+  // 时间延迟（秒）
+  time_delay: number;
+  // 文件路径映射
+  filepath_mapping: string;
+  // 是否启用
+  switch: boolean;
 }

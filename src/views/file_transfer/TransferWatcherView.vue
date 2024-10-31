@@ -89,13 +89,11 @@ const transferWatcher: TransferWatcher = {
     source_dir: "",
     dest_dir: "",
     transfer_type: "move",
-    watch_mode: "observer",
+    watch_mode: "事件通知",
     scrape: false,
     switch: false,
     auto_category: true,
     exclude_words: "",
-    interval: 10,
-    scheduled_time: "",
     id: "",
 }
 

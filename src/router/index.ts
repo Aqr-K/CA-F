@@ -1,5 +1,17 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import { useAuthStore } from "@/store/auth";
+import { plugins } from "@/api/plugins";
+
+// 插件路由配置字典
+const pluginRoutes = ref(
+  plugins.reduce((routes, plugin) => {
+    routes[plugin.path] = {
+      path: `/plugins/${plugin.path}`,
+      component: plugin.component,
+    };
+    return routes;
+  }, {})
+);
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -12,6 +24,7 @@ const router = createRouter({
     { path: "/", redirect: "/dashboard" },
     {
       path: "/",
+      name: "main",
       component: () => import("@/layouts/default.vue"),
       children: [
         {
@@ -79,6 +92,13 @@ const router = createRouter({
           },
         },
         {
+          path: "plugins",
+          component: () => import("@/pages/plugins.vue"),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
           path: "settings",
           component: () => import("@/pages/settings.vue"),
           meta: {
@@ -102,6 +122,19 @@ const router = createRouter({
       ],
     },
   ],
+});
+
+const childrenRoutes = Object.values(pluginRoutes.value).map((route: any) => ({
+  path: route.path,
+  component: route.component,
+  meta: {
+    requiresAuth: true,
+  },
+}));
+
+// 使用 router.addRoute 添加子路由
+childrenRoutes.forEach((route) => {
+  router.addRoute("main", route); // 假设主路由的 name 是 'main'
 });
 
 router.beforeEach((to, from, next) => {

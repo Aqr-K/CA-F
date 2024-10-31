@@ -16,7 +16,7 @@
             <v-card-text>
                 <v-form @submit.prevent="login">
                     <div class="d-flex justify-center align-center">
-                        <img src="@images/logo.svg" class="logo" />
+                        <img src="@images/resources/logo.svg" class="logo" />
                         <div class="text-2xl title font-weight-semibold text-uppercase">Cloud Asst</div>
                     </div>
 
