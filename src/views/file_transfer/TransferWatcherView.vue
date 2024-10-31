@@ -81,7 +81,7 @@ import api from '@/api/index'
 import { SaveResponse } from '@/api/types';
 import { useToast } from 'vue-toast-notification';
 import draggable from 'vuedraggable'
-import { TransferWatcher } from '@/api/types';
+import { TransferWatcher, TransferConfig } from '@/api/types';
 const $toast = useToast();
 const isLoading = ref(true)
 
@@ -100,7 +100,7 @@ const transferWatcher: TransferWatcher = {
 const category = ref({})
 
 const settings = ref<TransferWatcher[]>([
-    transferWatcher
+    { ...transferWatcher }
 ]);
 
 
@@ -114,7 +114,21 @@ function deleteConfig(index: number) {
 }
 
 async function mannualTransfer(element: TransferWatcher) {
-
+    const transferConfig: TransferConfig = {
+        source_dir: element.source_dir,
+        dest_dir: element.dest_dir,
+        transfer_type: element.transfer_type,
+    }
+    try {
+        const response: SaveResponse = await api.post(`/transfer/manual_transfer_watcher`, transferConfig)
+        if (response.success) {
+            $toast.success(response.message);
+        } else {
+            $toast.error(response.message);
+        }
+    } catch (error) {
+        console.error('Error fetching  saveConfig:', error)
+    }
 }
 
 async function fetchConfig() {

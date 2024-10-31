@@ -133,6 +133,7 @@ const selects = ref<SelectOption[]>([
     { label: '链接文件大小', key: 'symlink_size', hint: "单位为Mb,低于设定值的视频文件会直接进行复制" },
     { label: '排除目录名', key: 'exclude_dir_name', hint: "要排除同步的文件夹名，指定名称的文件夹不会被同步和监控" },
     { label: 'Strm模式', key: 'strm_mode', items: ['cloud', 'local'], hint: "cloud模式文件内是http开头的链接,local模式文件内是文件的路径" },
+    { label: 'Strm前缀', key: 'strm_prefix', hint: "在生成Strm文件时，会删除文件路径中指定的前缀，如/mnt/115/电影/阿甘正传.mkv,前缀为/mnt/115,则生成后的文件路径为/电影/阿甘正传.mkv" },
     { label: 'Strm后缀', key: 'strm_ext', hint: "指定后缀名的文件会生成Strm文件,常见的视频格式:.mp4;.mkv;.ts;.iso;.rmvb;.avi;.mov;.mpeg;.mpg;.wmv;.3gp;.asf;.m4v;.flv;.m2ts;.strm;.tp;.f4v" },
     { label: '软链接后缀', key: 'symlink_ext', hint: "指定后缀名的文件会生成软链接,常见的视频格式:.mp4;.mkv;.ts;.iso;.rmvb;.avi;.mov;.mpeg;.mpg;.wmv;.3gp;.asf;.m4v;.flv;.m2ts;.strm;.tp;.f4v" },
     { label: '元数据后缀', key: 'metadata_ext', hint: "指定后缀名的文件会直接同步到本地" },

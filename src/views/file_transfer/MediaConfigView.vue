@@ -80,8 +80,8 @@ const defaultSettings = ref({
     fanart_enable: true,
     scrape: true,
     min_filesize: 0,
-    movie_name_rule: "{{title}}{% if year %} ({{year}}) {% endif %}{% if tmdbid %}{tmdbid={{tmdbid}}}{% endif %}/{{title}}{% if year %} ({{year}}) - {% endif %}{% if part %}-{{part}}{% endif %}{% if videoFormat %}{{videoFormat}}{% endif %}{% if edition %}.{{edition}}{% endif %}{% if videoCodec %}.{{videoCodec}}{% endif %}{% if audioCodec %}.{{audioCodec}}{% endif %}{% if releaseGroup %}-{{releaseGroup}}{% endif %}{{fileExt}}",
-    tv_name_rule: "{{title}}{% if year %} ({{year}}) {% endif %}{% if tmdbid %}{tmdbid={{tmdbid}}}{% endif %}/Season {{season}}/{{title}}{% if year %}.{{year}}{% endif %}.{{season_episode}}{% if part %}-{{part}}{% endif %}{% if episode %}.第{{episode}}集{% endif %}{% if videoFormat %}.{{videoFormat}}{% endif %}{% if edition %}.{{edition}}{% endif %}{% if videoCodec %}.{{videoCodec}}{% endif %}{% if audioCodec %}.{{audioCodec}}{% endif %}{% if releaseGroup %}-{{releaseGroup}}{% endif %}{{fileExt}}",
+    movie_name_rule: "{{title}}{% if year %} ({{year}}){% endif %}{% if tmdbid %} {tmdb-{{tmdbid}}}{% endif %}/{{title}}{% if year %} ({{year}}){% endif %}{% if part %}-{{part}}{% endif %}{% if videoFormat %} - {{videoFormat}}{% endif %}{% if edition %}.{{edition}}{% endif %}{% if videoCodec %}.{{videoCodec}}{% endif %}{% if audioCodec %}.{{audioCodec}}{% endif %}{% if releaseGroup %}-{{releaseGroup}}{% endif %}{{fileExt}}",
+    tv_name_rule: "{{title}}{% if year %} ({{year}}){% endif %}{% if tmdbid %} {tmdb-{{tmdbid}}}{% endif %}/Season {{season}}/{{title}} - {{season_episode}}{% if part %}-{{part}}{% endif %}{% if episode %} - 第{{episode}}集{% endif %}{% if videoFormat %} - {{videoFormat}}{% endif %}{% if edition %}.{{edition}}{% endif %}{% if videoCodec %}.{{videoCodec}}{% endif %}{% if audioCodec %}.{{audioCodec}}{% endif %}{% if releaseGroup %}-{{releaseGroup}}{% endif %}{{fileExt}}",
     interval: 10,
     scheduled_time: ""
 });

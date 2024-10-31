@@ -29,6 +29,7 @@ export interface SyncItem {
   backup_time: string | number; // e.g., cron expression like "30 2 * * *"
   backup_ext: string; // e.g., file extensions like "*.*"
   strm_mode: string; // e.g., "cloud"
+  strm_prefix: string;
   symlink_size: number; // e.g., size in MB or GB
   cloud_type: string; // e.g., "cd2"
   cloud_url: string;
@@ -359,4 +360,43 @@ export interface MediaServer {
   filepath_mapping: string;
   // 是否启用
   switch: boolean;
+}
+
+export interface TransferConfig {
+  // 源目录
+  source_dir: string | null;
+  // 目标目录
+  dest_dir?: string;
+  // 文件列表
+  file_list?: string[];
+  // 文件路径
+  file_path?: string;
+  // TMDB ID
+  tmdbid?: string;
+  // 豆瓣 ID
+  doubanid?: string;
+  // 季数
+  season?: number;
+  // 媒体类型
+  media_type?: string;
+  // 转移类型
+  transfer_type: string;
+  // 剧集格式
+  episode_format?: string;
+  // 剧集详情
+  episode_detail?: string;
+  // 剧集分段
+  episode_part?: string;
+  // 剧集偏移
+  episode_offset?: number;
+  // 最小文件大小
+  min_filesize: number;
+  // 后缀
+  suffix: string;
+  // 是否刮削
+  scrape: boolean;
+  // 是否自动分类
+  auto_category: boolean;
+  // 是否强制
+  force: boolean;
 }

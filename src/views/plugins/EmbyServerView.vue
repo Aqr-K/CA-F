@@ -41,7 +41,9 @@
         </v-alert>
         <v-alert type="info" variant="tonal" class="mt-2 mb-5">
           <span v-html="`
-          Emby媒体服务器通知：需要设置媒体服务器Webhook，回调相对路径为 /api/v1/webhook/mediamsg/emby?token=cloudassistant（8095端口），其中 cloudassistant 为设置的 API_TOKEN。
+          Emby媒体服务器通知：需要设置媒体服务器Webhook，回调相对路径为 /api/v1/webhook/mediamsg/emby/{Emby IP:端口}/{Emby API Key}?token=cloudassistant（8095端口），其中 cloudassistant 为设置的 API_TOKEN。
+
+          示例：http://127.0.0.1:8095/api/v1/webhook/mediamsg/emby/127.0.0.1:8096/770131037e8e49459618af98c14de06c?token=cloudassistant
           `" class="text-[16px]" />
         </v-alert>
         <v-alert type="info" variant="tonal">
