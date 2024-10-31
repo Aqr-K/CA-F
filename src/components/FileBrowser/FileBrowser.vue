@@ -1,5 +1,5 @@
 <template>
-    <div class="file-browser">
+    <div v-if="!isLoading" class="file-browser">
         <v-card class="mx-auto">
             <v-toolbar>
                 <template v-for="(segment, index) in pathSegments" :key="index">
@@ -202,7 +202,6 @@ import ProgressDialog from '@/components/Dialog/ProgressDialog.vue';
 import MediaInfoCard from '@/components/Card/MediaInfoCard.vue';
 import { MediaInfo } from '@/api/types';
 import { SaveResponse } from '@/api/types';
-import { log } from 'util';
 const display = useDisplay()
 
 // 目录列表
@@ -231,7 +230,7 @@ const $toast = useToast()
 const selectMode = ref(false)
 
 // 是否正在加载
-const loading = ref(true)
+const isLoading = ref(true)
 
 // 重命名loading
 const renameLoading = ref(false)
@@ -571,6 +570,7 @@ async function initialDirs() {
         for (let i = 0; i < response.data.segments.length; i++) {
             pathSegments.value.push(response.data.segments[i])
         }
+        isLoading.value = false
     }
     catch (error) {
         console.log(error);
