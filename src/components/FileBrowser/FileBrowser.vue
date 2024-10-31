@@ -74,6 +74,7 @@
                     </IconBtn>
                 </span>
             </v-toolbar>
+            <!-- 文件列表 -->
             <v-virtual-scroll :items="treeItems" :style="scrollStyle">
                 <template #default="{ item }">
                     <VHover>
@@ -538,6 +539,11 @@ function listItemClick(item: FileItem) {
         return false
     }
     fetchFiles(item)
+    console.log(item);
+    for (let i = 0; i < pathSegments.value.length; i++) {
+        console.log(pathSegments.value[i]);
+    }
+
     if (!pathSegments.value.includes(item)) {
         pathSegments.value.push(item)
     }
