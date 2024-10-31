@@ -128,7 +128,7 @@ async function testPlexServer(config: MediaServer) {
   }
 }
 
-function updateConfigList(configs: Settings115[]) {
+function updateConfigList(configs: MediaServer[]) {
   settings.value = configs
 }
 onMounted(fetchSyncConfig)
