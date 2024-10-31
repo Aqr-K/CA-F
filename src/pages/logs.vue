@@ -27,13 +27,13 @@
                         <span class="inline-block w-[85px]">
                             <VChip size="small" :color="getLogColor(log.level)" variant="elevated" v-text="log.level" />
                         </span>
-                        <span span class="inline-block w-[90px]">
+                        <span class="inline-block w-[90px]">
                             {{ log.time }}
                         </span>
-                        <span class="inline-block mx-10 w-[150px] text-center">
+                        <span class="inline-block mx-10 text-center" :class="{ 'w-[100px]': !mdAndDown }">
                             {{ log.program }}
                         </span>
-                        <span v-html="log.content.replace(/\\hf/g, '<br><br>')">
+                        <span v-html="log.content.replace(/\\hf/g, '<br><br>')" class="inline-bolock whitespace-normal">
                         </span>
                     </td>
                 </tr>
@@ -44,6 +44,10 @@
 
 <script lang="ts" setup>
 import { useAuthStore } from '@/store/auth';
+import { useDisplay } from 'vuetify';
+
+const { mdAndDown } = useDisplay();
+
 const auth = useAuthStore()
 // 日志列表
 const logs = ref<string[]>([])

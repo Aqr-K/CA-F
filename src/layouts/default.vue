@@ -87,9 +87,7 @@ import { useConfirm } from 'vuetify-use-dialog'
 const createConfirm = useConfirm()
 const $toast = useToast();
 const drawerStore = useDrawerStore();
-const settingsMenu = [
-    { title: '退出登录' },
-]
+
 const btnColor = computed(() => (globalTheme.current.value.dark ? 'white' : 'gray'));
 const authStore = useAuthStore();
 // 进度框
